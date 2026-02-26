@@ -340,11 +340,11 @@ const ExamPage = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
                         </svg>
                     </div>
-                    <h2 className="text-5xl font-bold text-white mb-4">Assessment Terminated</h2>
-                    <p className="text-xl text-red-400 font-medium mb-2 uppercase tracking-widest">{proctorReason}</p>
+                    <h2 className="text-5xl font-bold text-white mb-4">Disqualified</h2>
+                    <p className="text-xl text-red-400 font-medium mb-2 uppercase tracking-widest">You are disqualified due to cheating</p>
                     <p className="text-gray-400 max-w-lg mb-10">
-                        Our AI Proctoring system has detected a high-level integrity violation (Mobile Device / Forbidden Object).
-                        As per strict anti-cheating policy, this session is invalid and you are being logged out.
+                        Our AI Proctoring system has detected a high-level integrity violation.
+                        As per strict anti-cheating policy, you have been disqualified from this assessment.
                     </p>
                     <div className="text-secondary animate-pulse">
                         Logging out in 5 seconds...
