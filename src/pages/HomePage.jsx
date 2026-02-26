@@ -21,7 +21,7 @@ const HomePage = () => {
                         </h1>
                         <p className="text-xl text-secondary mt-6 max-w-2xl mx-auto mb-10">
                             An intelligent examination platform that adapts in real-time to your skill level,
-                            evaluating C & C++ development capabilities with pinpoint accuracy.
+                            evaluating development capabilities with pinpoint accuracy.
                         </p>
                         <button
                             onClick={() => navigate('/login')}
@@ -54,7 +54,7 @@ const HomePage = () => {
                         </div>
                         <h3 className="text-xl font-bold mb-3 text-white">Live Code Editor</h3>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Integrated C/C++ compiler simulation. Write, run, and test code directly in the browser.
+                            Integrated compiler simulation. Write, run, and test code directly in the browser.
                         </p>
                     </div>
 
