@@ -26,6 +26,10 @@ const ExamPage = () => {
     const [examFinished, setExamFinished] = useState(false);
     const [timeRemaining, setTimeRemaining] = useState(0);
 
+    // Anti-Cheat State
+    const [cheatWarnings, setCheatWarnings] = useState(0);
+    const [lostFocusThisQuestion, setLostFocusThisQuestion] = useState(false);
+
     // AI Proctoring State
     const [isTerminated, setIsTerminated] = useState(false);
     const [proctorReason, setProctorReason] = useState('');
