@@ -1,0 +1,268 @@
+[
+    {
+        "id": "q1",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which of the following is the correct syntax for an if-else statement in C?",
+        "options": [
+            "if (condition) { } else { }",
+            "if condition { } else { }",
+            "if { } else (condition) { }",
+            "if-else (condition) { }"
+        ],
+        "correctAnswer": "if (condition) { } else { }",
+        "timeLimit": 30
+    },
+    {
+        "id": "q2",
+        "language": "C++",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a C++ program that prints 'Hello World' to the standard output. Include necessary headers and the main function.",
+        "expectedOutput": "Hello World",
+        "timeLimit": 60
+    },
+    {
+        "id": "q3",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which loop is guaranteed to execute at least once?",
+        "options": [
+            "for",
+            "while",
+            "do-while",
+            "None of the above"
+        ],
+        "correctAnswer": "do-while",
+        "timeLimit": 30
+    },
+    {
+        "id": "q4",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C++ program that prints the numbers exactly as: '1 2 3 4 5' separated by spaces. Use a loop.",
+        "expectedOutput": "1 2 3 4 5",
+        "timeLimit": 90
+    },
+    {
+        "id": "q5",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "In C, if an array is declared as `int arr[5];`, what is the index of the last element?",
+        "options": [
+            "5",
+            "4",
+            "6",
+            "Unknown"
+        ],
+        "correctAnswer": "4",
+        "timeLimit": 30
+    },
+    {
+        "id": "q6",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C program that prints the first element of an integer array initialized with {10, 20, 30}.",
+        "expectedOutput": "10",
+        "timeLimit": 90
+    },
+    {
+        "id": "q7",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the return type of a function that does not return any value?",
+        "options": [
+            "int",
+            "void",
+            "null",
+            "empty"
+        ],
+        "correctAnswer": "void",
+        "timeLimit": 30
+    },
+    {
+        "id": "q8",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a complete C++ program containing a recursive function `factorial(int n)` computing the factorial. In `main`, compute and print the factorial of 5.",
+        "expectedOutput": "120",
+        "timeLimit": 150
+    },
+    {
+        "id": "q9",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which operator is used to get the value at the address stored in a pointer?",
+        "options": [
+            "&",
+            "*",
+            "->",
+            "."
+        ],
+        "correctAnswer": "*",
+        "timeLimit": 45
+    },
+    {
+        "id": "q10",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program that declares an integer variable `x = 42`, a pointer `p` to `x`, and prints the value of `x` by dereferencing `p`.",
+        "expectedOutput": "42",
+        "timeLimit": 120
+    },
+    {
+        "id": "q11",
+        "language": "C++",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "In C++, which STL container provides a dynamic array?",
+        "options": [
+            "std::list",
+            "std::vector",
+            "std::map",
+            "std::set"
+        ],
+        "correctAnswer": "std::vector",
+        "timeLimit": 45
+    },
+    {
+        "id": "q12",
+        "language": "C++",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ program using std::vector. Add integers 5 and 10 to it. Print the size of the vector.",
+        "expectedOutput": "2",
+        "timeLimit": 180
+    },
+    {
+        "id": "q13",
+        "language": "C",
+        "topic": "Time Complexity",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the worst-case time complexity of QuickSort?",
+        "options": [
+            "O(n log n)",
+            "O(n)",
+            "O(n^2)",
+            "O(log n)"
+        ],
+        "correctAnswer": "O(n^2)",
+        "timeLimit": 30
+    },
+    {
+        "id": "q14",
+        "language": "C",
+        "topic": "Basic Algorithms",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a complete C program to perform a linear search. Given array {2, 4, 6, 8, 10}, search for 6 and print its index. Assume 0-based indexing.",
+        "expectedOutput": "2",
+        "timeLimit": 150
+    },
+    {
+        "id": "q15",
+        "language": "C++",
+        "topic": "Basic Algorithms",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which algorithm uses the divide and conquer paradigm?",
+        "options": [
+            "Bubble Sort",
+            "Merge Sort",
+            "Insertion Sort",
+            "Selection Sort"
+        ],
+        "correctAnswer": "Merge Sort",
+        "timeLimit": 45
+    },
+    {
+        "id": "q16",
+        "language": "C++",
+        "topic": "Time Complexity",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the time complexity of accessing an element in an array by its index?",
+        "options": [
+            "O(1)",
+            "O(n)",
+            "O(log n)",
+            "O(n^2)"
+        ],
+        "correctAnswer": "O(1)",
+        "timeLimit": 30
+    },
+    {
+        "id": "q17",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Can a C function return multiple values directly?",
+        "options": [
+            "Yes, using commas",
+            "No, it must use pointers or structs",
+            "Yes, using arrays",
+            "None of the above"
+        ],
+        "correctAnswer": "No, it must use pointers or structs",
+        "timeLimit": 45
+    },
+    {
+        "id": "q18",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ program that uses a while loop to calculate the sum of integers from 1 to 5, and prints the sum.",
+        "expectedOutput": "15",
+        "timeLimit": 120
+    },
+    {
+        "id": "q19",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C program that checks if 10 is even or odd, and prints 'Even' or 'Odd'.",
+        "expectedOutput": "Even",
+        "timeLimit": 90
+    },
+    {
+        "id": "q20",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a characteristic of a 'dangling pointer'?",
+        "options": [
+            "It points to a newly allocated memory block",
+            "It points to a memory location that has been freed",
+            "It is simply set to nullptr",
+            "It cannot be dereferenced by compiler design"
+        ],
+        "correctAnswer": "It points to a memory location that has been freed",
+        "timeLimit": 45
+    }
+]
