@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../utils/AuthContext';
 import { useAnalytics } from '../analytics/useAnalytics';
 import { useNavigate } from 'react-router-dom';
+import ChatBot from '../components/ChatBot';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -185,6 +186,9 @@ const Dashboard = () => {
                     ⚠️ Attention: Your account has flagged {analytics.focusLossCount} attention warnings (tab switching/focus loss). Maintaining focus improves your analytics accuracy.
                 </div>
             )}
+
+            {/* AI ChatBot Assistant */}
+            <ChatBot apiKey={import.meta.env.VITE_OPENROUTER_KEY} />
         </div>
     );
 };
