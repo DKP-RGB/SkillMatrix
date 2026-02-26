@@ -231,6 +231,20 @@ export const AnalyticsProvider = ({ children }) => {
             startAssessment,
             finishAssessment,
             fetchAllTimeStats,
+            getHistoricalQuestionIds: async () => {
+                if (!user) return [];
+                try {
+                    const { data, error } = await supabase
+                        .from('question_attempts')
+                        .select('question_id')
+                        .eq('user_id', user.id);
+                    if (error) throw error;
+                    return data.map(d => d.question_id);
+                } catch (err) {
+                    console.error("Error fetching historical IDs:", err);
+                    return [];
+                }
+            },
             topicStats,
             isSaving
         }}>

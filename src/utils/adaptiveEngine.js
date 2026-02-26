@@ -27,13 +27,13 @@ export const getInitialQuestion = (allQuestions, setupSelection) => {
     );
     if (exactMatches.length > 0) return exactMatches[Math.floor(Math.random() * exactMatches.length)];
 
-    // Fallback: Just match language and topic
-    const looseMatches = allQuestions.filter(q =>
+    // STRICTOR Topic-first fallback
+    const topicMatches = allQuestions.filter(q =>
         q.language === language && q.topic === topic
     );
-    if (looseMatches.length > 0) return looseMatches[Math.floor(Math.random() * looseMatches.length)];
+    if (topicMatches.length > 0) return topicMatches[Math.floor(Math.random() * topicMatches.length)];
 
-    // Ultimate fallback: Just match language
+    // Language match only as a last resort
     const langMatches = allQuestions.filter(q => q.language === language);
     return langMatches.length > 0 ? langMatches[Math.floor(Math.random() * langMatches.length)] : allQuestions[0];
 };
@@ -56,48 +56,68 @@ export const getNextQuestion = (
     currentDifficulty,
     topicStats,
     targetLanguage,
-    targetType
+    targetType,
+    targetTopic
 ) => {
-    let nextDifficultyLevel = DIFFICULTY_LEVELS[currentDifficulty];
+    let nextLevel = DIFFICULTY_LEVELS[currentDifficulty] || 2;
 
-    // Logic: Adjust Difficulty based on correctness
+    // 1. Logic: Adjust Difficulty based on correctness
     if (lastIsCorrect) {
-        if (nextDifficultyLevel < 3) {
-            nextDifficultyLevel += 1;
+        if (nextLevel < 3) {
+            // Correct and fast? Go up 1 level
+            if (lastTimeTaken < (lastTimeLimit / 2)) nextLevel = Math.min(3, nextLevel + 1);
+            // Default: stay or go up slow
         }
     } else {
-        if (nextDifficultyLevel > 1) {
-            nextDifficultyLevel -= 1;
+        if (nextLevel > 1) {
+            nextLevel = Math.max(1, nextLevel - 1);
         }
     }
 
-    const nextDifficultyStr = LEVEL_TO_STRING[nextDifficultyLevel];
+    const nextDifficultyStr = LEVEL_TO_STRING[nextLevel];
 
-    // STRICTLY filter by Language AND Type
-    const availableQuestions = allQuestions.filter(q =>
+    // 2. Filter Pool: RESILIENCE FALLBACK
+    // a. STRICTLY filter by Language, Type, AND Topic
+    let availableQuestions = allQuestions.filter(q =>
         !attemptedIds.includes(q.id) &&
         q.language === targetLanguage &&
-        q.type === targetType
+        q.type === targetType &&
+        q.topic === targetTopic
     );
 
+    // b. Relax Topic first if specific combo is exhausted
     if (availableQuestions.length === 0) {
-        return null;
+        availableQuestions = allQuestions.filter(q =>
+            !attemptedIds.includes(q.id) &&
+            q.language === targetLanguage &&
+            q.type === targetType
+        );
     }
 
-    // Find the weakest topic
-    let weakestTopic = null;
-    let lowestAcc = 101;
-    Object.entries(topicStats || {}).forEach(([topic, stats]) => {
-        if (stats.attempted > 0) {
-            const acc = stats.correct / stats.attempted;
-            if (acc < lowestAcc) {
-                lowestAcc = acc;
-                weakestTopic = topic;
-            }
-        }
-    });
+    // c. Relax Type too if still exhausted
+    if (availableQuestions.length === 0) {
+        availableQuestions = allQuestions.filter(q =>
+            !attemptedIds.includes(q.id) &&
+            q.language === targetLanguage
+        );
+    }
 
-    // 1. Weak topic + Exact difficulty
+    if (availableQuestions.length === 0) {
+        return null; // Exhausted entire language bank
+    }
+
+    // 3. Selection Strategy
+    // Find weakest topic in current pool based on history
+    let weakestTopic = null;
+    if (topicStats && Object.keys(topicStats).length > 0) {
+        weakestTopic = Object.keys(topicStats).reduce((a, b) => {
+            const accA = (topicStats[a]?.attempted > 0) ? (topicStats[a].correct / topicStats[a].attempted) : 1;
+            const accB = (topicStats[b]?.attempted > 0) ? (topicStats[b].correct / topicStats[b].attempted) : 1;
+            return accA < accB ? a : b;
+        }, Object.keys(topicStats)[0]);
+    }
+
+    // Priority 1: Weak topic + Target Difficulty
     if (weakestTopic) {
         const weakTopicQuestions = availableQuestions.filter(
             q => q.topic === weakestTopic && q.difficulty === nextDifficultyStr
@@ -107,7 +127,7 @@ export const getNextQuestion = (
         }
     }
 
-    // 2. Exact difficulty
+    // Priority 2: Target Difficulty (any topic in pool)
     const exactDifficultyQuestions = availableQuestions.filter(
         q => q.difficulty === nextDifficultyStr
     );
@@ -115,7 +135,7 @@ export const getNextQuestion = (
         return exactDifficultyQuestions[Math.floor(Math.random() * exactDifficultyQuestions.length)];
     }
 
-    // 3. Fallback: Search for any question with the closest available difficulty
+    // Priority 3: Closest Difficulty
     const sortedDifficulties = ['hard', 'medium', 'easy'];
     for (const diff of sortedDifficulties) {
         const fallbackQuestions = availableQuestions.filter(q => q.difficulty === diff);
@@ -124,6 +144,6 @@ export const getNextQuestion = (
         }
     }
 
-    // Ultimate safeguard (should not be logicially reached if availableQuestions.length > 0)
+    // Ultimate safeguard
     return availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
 };

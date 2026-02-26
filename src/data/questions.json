@@ -1242,5 +1242,1343 @@
         "question": "Create a 2D slice `[][]int` with two inner slices `[]int{1, 2}` and `[]int{3, 4}`. Print only the value `4`.",
         "expectedOutput": "4",
         "timeLimit": 120
+    },
+    {
+        "id": "q151",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the correct way to initialize an array in C?",
+        "options": [
+            "int a[3] = {1, 2, 3};",
+            "int a = {1, 2, 3};",
+            "array a = [1, 2, 3];",
+            "int a[3] = (1, 2, 3);"
+        ],
+        "correctAnswer": "int a[3] = {1, 2, 3};",
+        "timeLimit": 30
+    },
+    {
+        "id": "q152",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "In C, if you access `arr[5]` on an array of size 5, what happens?",
+        "options": [
+            "Compile error",
+            "Returns 0",
+            "Out of bounds access (Undefined Behavior)",
+            "Returns -1"
+        ],
+        "correctAnswer": "Out of bounds access (Undefined Behavior)",
+        "timeLimit": 30
+    },
+    {
+        "id": "q153",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How is a multi-dimensional array stored in memory in C?",
+        "options": [
+            "Row-major order",
+            "Column-major order",
+            "Randomly",
+            "In a linked list"
+        ],
+        "correctAnswer": "Row-major order",
+        "timeLimit": 45
+    },
+    {
+        "id": "q154",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the relationship between `arr` and `&arr[0]` in C?",
+        "options": [
+            "They are the same memory address",
+            "They are different",
+            "They refer to different variables",
+            "None of the above"
+        ],
+        "correctAnswer": "They are the same memory address",
+        "timeLimit": 30
+    },
+    {
+        "id": "q155",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which operator cannot be applied to an array name in C?",
+        "options": [
+            "sizeof",
+            "& (address-of)",
+            "++ (increment)",
+            "index ([])"
+        ],
+        "correctAnswer": "++ (increment)",
+        "timeLimit": 45
+    },
+    {
+        "id": "q156",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "A pointer to an array of 10 integers is declared as:",
+        "options": [
+            "int (*p)[10];",
+            "int *p[10];",
+            "int p(10);",
+            "int *p;"
+        ],
+        "correctAnswer": "int (*p)[10];",
+        "timeLimit": 60
+    },
+    {
+        "id": "q157",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a C program to print the first element of `int arr[] = {7, 8, 9};`.",
+        "expectedOutput": "7",
+        "timeLimit": 60
+    },
+    {
+        "id": "q158",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C program to print the size (in elements) of `int arr[10];` using `sizeof`.",
+        "expectedOutput": "10",
+        "timeLimit": 90
+    },
+    {
+        "id": "q159",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program that calculates the sum of `{1, 1, 1, 1, 1}` and prints the result.",
+        "expectedOutput": "5",
+        "timeLimit": 120
+    },
+    {
+        "id": "q160",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which keyword is used to skip the rest of the loop body and start the next iteration?",
+        "options": [
+            "break",
+            "continue",
+            "skip",
+            "next"
+        ],
+        "correctAnswer": "continue",
+        "timeLimit": 20
+    },
+    {
+        "id": "q161",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is an infinite loop?",
+        "options": [
+            "A loop that never starts",
+            "A loop that never ends",
+            "A loop that runs 100 times",
+            "A loop with no condition"
+        ],
+        "correctAnswer": "A loop that never ends",
+        "timeLimit": 30
+    },
+    {
+        "id": "q162",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C program using a `for` loop to print 'X' three times as 'XXX'.",
+        "expectedOutput": "XXX",
+        "timeLimit": 60
+    },
+    {
+        "id": "q163",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which header is required for `std::array` in C++?",
+        "options": [
+            "<array>",
+            "<vector>",
+            "<list>",
+            "<iostream>"
+        ],
+        "correctAnswer": "<array>",
+        "timeLimit": 20
+    },
+    {
+        "id": "q164",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the difference between `std::vector` and a static C-style array?",
+        "options": [
+            "Vector is dynamic and can resize",
+            "Static array is dynamic",
+            "Vector is faster",
+            "There is no difference"
+        ],
+        "correctAnswer": "Vector is dynamic and can resize",
+        "timeLimit": 45
+    },
+    {
+        "id": "q165",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C++ snippet to output the size of `std::vector<int> v = {1, 2, 3, 4};`.",
+        "expectedOutput": "4",
+        "timeLimit": 60
+    },
+    {
+        "id": "q166",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ program that uses `std::sort` on an array `{3, 1, 2}` and prints the first element.",
+        "expectedOutput": "1",
+        "timeLimit": 120
+    },
+    {
+        "id": "q167",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which loop style was introduced in C++11 for iterating over collections?",
+        "options": [
+            "Range-based for loop",
+            "do-while",
+            "foreach",
+            "while-each"
+        ],
+        "correctAnswer": "Range-based for loop",
+        "timeLimit": 30
+    },
+    {
+        "id": "q168",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "In a range-based for loop `for (int x : arr)`, what is `x`?",
+        "options": [
+            "The index",
+            "A copy of the element",
+            "A reference to the element",
+            "The address"
+        ],
+        "correctAnswer": "A copy of the element",
+        "timeLimit": 30
+    },
+    {
+        "id": "q169",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ program to find the sum of {2, 4, 6} using a range-based for loop and print it.",
+        "expectedOutput": "12",
+        "timeLimit": 120
+    },
+    {
+        "id": "q170",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a C++ loop that prints 'OK' twice as 'OKOK'.",
+        "expectedOutput": "OKOK",
+        "timeLimit": 45
+    },
+    {
+        "id": "q171",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which method is used to add an element to the end of an array in JS?",
+        "options": [
+            "pop()",
+            "push()",
+            "shift()",
+            "unshift()"
+        ],
+        "correctAnswer": "push()",
+        "timeLimit": 20
+    },
+    {
+        "id": "q172",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which method is used to remove the first element of an array in JS?",
+        "options": [
+            "pop()",
+            "push()",
+            "shift()",
+            "unshift()"
+        ],
+        "correctAnswer": "shift()",
+        "timeLimit": 20
+    },
+    {
+        "id": "q173",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What does `array.slice(1, 3)` do?",
+        "options": [
+            "Returns elements from index 1 to 2",
+            "Returns elements from index 1 to 3",
+            "Removes elements",
+            "Changes the array in place"
+        ],
+        "correctAnswer": "Returns elements from index 1 to 2",
+        "timeLimit": 45
+    },
+    {
+        "id": "q174",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Convert `[1, 2, 3]` to string '1-2-3' using `.join('-')` and print it.",
+        "expectedOutput": "1-2-3",
+        "timeLimit": 60
+    },
+    {
+        "id": "q175",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Use `.filter(x => x > 10)` on `[5, 12, 8, 20]` and print the resulting array length.",
+        "expectedOutput": "2",
+        "timeLimit": 90
+    },
+    {
+        "id": "q176",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How do you add an element to a list in Python?",
+        "options": [
+            "list.add(x)",
+            "list.append(x)",
+            "list.push(x)",
+            "list.insert_end(x)"
+        ],
+        "correctAnswer": "list.append(x)",
+        "timeLimit": 20
+    },
+    {
+        "id": "q177",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is negative indexing in Python Lists?",
+        "options": [
+            "Indexing from the end of the list",
+            "Illegal indexing",
+            "Indexing negative values",
+            "None of the above"
+        ],
+        "correctAnswer": "Indexing from the end of the list",
+        "timeLimit": 30
+    },
+    {
+        "id": "q178",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Given `l = [10, 20, 30, 40]`, print `l[-1]`.",
+        "expectedOutput": "40",
+        "timeLimit": 45
+    },
+    {
+        "id": "q179",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print the result of `len([x for x in range(10) if x % 2 == 0])`.",
+        "expectedOutput": "5",
+        "timeLimit": 60
+    },
+    {
+        "id": "q180",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is a `java.util.ArrayList`?",
+        "options": [
+            "A fixed-size array",
+            "A dynamic-size array",
+            "A linked list",
+            "A set of unique elements"
+        ],
+        "correctAnswer": "A dynamic-size array",
+        "timeLimit": 30
+    },
+    {
+        "id": "q181",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How do you sort an array in Java?",
+        "options": [
+            "Arrays.sort(arr)",
+            "arr.sort()",
+            "Collections.sort(arr)",
+            "sort(arr)"
+        ],
+        "correctAnswer": "Arrays.sort(arr)",
+        "timeLimit": 45
+    },
+    {
+        "id": "q182",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Java snippet to print the element at index 1 of `{5, 10, 15}`.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q183",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Convert an array `{1, 2}` to string using `Arrays.toString(arr)` and print it (exact: '[1, 2]').",
+        "expectedOutput": "[1, 2]",
+        "timeLimit": 90
+    },
+    {
+        "id": "q184",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the difference between an array and a slice in Go?",
+        "options": [
+            "Arrays have fixed size, slices are dynamic",
+            "Slices have fixed size",
+            "There is no difference",
+            "Arrays are faster"
+        ],
+        "correctAnswer": "Arrays have fixed size, slices are dynamic",
+        "timeLimit": 45
+    },
+    {
+        "id": "q185",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What does the `make` function do for slices in Go?",
+        "options": [
+            "Allocates memory and initializes",
+            "Deletes the slice",
+            "Copies the slice",
+            "Prints the slice"
+        ],
+        "correctAnswer": "Allocates memory and initializes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q186",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Go snippet that prints the length of `s := make([]int, 5)`.",
+        "expectedOutput": "5",
+        "timeLimit": 60
+    },
+    {
+        "id": "q187",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Given `s := []int{1, 2, 3}`, use `append(s, 4, 5)` and print the length of result.",
+        "expectedOutput": "5",
+        "timeLimit": 90
+    },
+    {
+        "id": "q188",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which of the following correctly declares an array of 5 integers in C?",
+        "options": [
+            "int a[5];",
+            "int a = 5;",
+            "int a(5);",
+            "a = int[5];"
+        ],
+        "correctAnswer": "int a[5];",
+        "timeLimit": 20
+    },
+    {
+        "id": "q189",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the index of the third element in a C array?",
+        "options": [
+            "3",
+            "2",
+            "1",
+            "4"
+        ],
+        "correctAnswer": "2",
+        "timeLimit": 20
+    },
+    {
+        "id": "q190",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "If `ptr` is a pointer to an array, what does `ptr + 1` point to?",
+        "options": [
+            "The next element",
+            "The next byte",
+            "The next array (if in an array of arrays)",
+            "NULL"
+        ],
+        "correctAnswer": "The next element",
+        "timeLimit": 45
+    },
+    {
+        "id": "q200",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the size of a pointer in C on a 64-bit system?",
+        "options": [
+            "4 bytes",
+            "8 bytes",
+            "16 bytes",
+            "2 bytes"
+        ],
+        "correctAnswer": "8 bytes",
+        "timeLimit": 30
+    },
+    {
+        "id": "q201",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is a void pointer in C?",
+        "options": [
+            "A pointer that points to nothing",
+            "A pointer that can point to any data type",
+            "An invalid pointer",
+            "A pointer to a function"
+        ],
+        "correctAnswer": "A pointer that can point to any data type",
+        "timeLimit": 30
+    },
+    {
+        "id": "q202",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a double pointer (pointer to a pointer) used for?",
+        "options": [
+            "To store two addresses",
+            "To modify a pointer passed to a function",
+            "To make code faster",
+            "None of the above"
+        ],
+        "correctAnswer": "To modify a pointer passed to a function",
+        "timeLimit": 45
+    },
+    {
+        "id": "q203",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C snippet to print the address of an int variable `x` using a pointer `p`.",
+        "expectedOutput": "p = &x",
+        "timeLimit": 60
+    },
+    {
+        "id": "q204",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program that uses a pointer to swap two integers `{5, 10}` and prints them as '10 5'.",
+        "expectedOutput": "10 5",
+        "timeLimit": 150
+    },
+    {
+        "id": "q205",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `nullptr` in C++?",
+        "options": [
+            "A macro for 0",
+            "A typesafe null pointer constant",
+            "A pointer to address zero",
+            "An object"
+        ],
+        "correctAnswer": "A typesafe null pointer constant",
+        "timeLimit": 20
+    },
+    {
+        "id": "q206",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the difference between `unique_ptr` and `shared_ptr`?",
+        "options": [
+            "unique_ptr has one owner, shared_ptr can have many",
+            "shared_ptr is faster",
+            "There is no difference",
+            "unique_ptr is for arrays only"
+        ],
+        "correctAnswer": "unique_ptr has one owner, shared_ptr can have many",
+        "timeLimit": 45
+    },
+    {
+        "id": "q207",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C++ snippet using `std::unique_ptr<int>` to store 500 and print it.",
+        "expectedOutput": "500",
+        "timeLimit": 90
+    },
+    {
+        "id": "q208",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is a 'lambda' in C++?",
+        "options": [
+            "An anonymous function",
+            "A type of loop",
+            "A Greek letter variable",
+            "A class"
+        ],
+        "correctAnswer": "An anonymous function",
+        "timeLimit": 30
+    },
+    {
+        "id": "q209",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ lambda that returns the square of 5 and print it.",
+        "expectedOutput": "25",
+        "timeLimit": 60
+    },
+    {
+        "id": "q210",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is a decorator in Python?",
+        "options": [
+            "A way to style code",
+            "A function that modifies another function",
+            "A type of class",
+            "A comment"
+        ],
+        "correctAnswer": "A function that modifies another function",
+        "timeLimit": 45
+    },
+    {
+        "id": "q211",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a lambda in Python that multiplies two numbers and use it on 2 and 3. Print the result.",
+        "expectedOutput": "6",
+        "timeLimit": 45
+    },
+    {
+        "id": "q212",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the truth value of an empty string in Python?",
+        "options": [
+            "True",
+            "False",
+            "None",
+            "Error"
+        ],
+        "correctAnswer": "False",
+        "timeLimit": 20
+    },
+    {
+        "id": "q213",
+        "language": "Java",
+        "topic": "OOP",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which keyword is used to inherit a class in Java?",
+        "options": [
+            "extends",
+            "implements",
+            "inherits",
+            "parent"
+        ],
+        "correctAnswer": "extends",
+        "timeLimit": 20
+    },
+    {
+        "id": "q214",
+        "language": "Java",
+        "topic": "OOP",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Java class `A` with a field `x=5`. Print `new A().x`.",
+        "expectedOutput": "5",
+        "timeLimit": 60
+    },
+    {
+        "id": "q215",
+        "language": "JavaScript",
+        "topic": "Closures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a closure in JavaScript?",
+        "options": [
+            "A function inside a function",
+            "A function that remembers its lexical scope",
+            "Closing a file",
+            "Stopping a loop"
+        ],
+        "correctAnswer": "A function that remembers its lexical scope",
+        "timeLimit": 45
+    },
+    {
+        "id": "q216",
+        "language": "JavaScript",
+        "topic": "Async",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a JavaScript code that uses `Promise.resolve('OK')` and prints it using `.then()`.",
+        "expectedOutput": "OK",
+        "timeLimit": 60
+    },
+    {
+        "id": "q217",
+        "language": "Go",
+        "topic": "Concurrency",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a goroutine in Go?",
+        "options": [
+            "A heavy process",
+            "A lightweight thread of execution",
+            "A function that returns an error",
+            "A type of loop"
+        ],
+        "correctAnswer": "A lightweight thread of execution",
+        "timeLimit": 45
+    },
+    {
+        "id": "q218",
+        "language": "Go",
+        "topic": "Concurrency",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How do you communicate between goroutines in Go?",
+        "options": [
+            "Shared variables",
+            "Channels",
+            "Global state",
+            "Pointers"
+        ],
+        "correctAnswer": "Channels",
+        "timeLimit": 45
+    },
+    {
+        "id": "q219",
+        "language": "Go",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Go snippet that declares an int `x=10`, a pointer `p := &x`, and prints `*p`.",
+        "expectedOutput": "10",
+        "timeLimit": 45
+    },
+    {
+        "id": "q220",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Can array size be negative in C?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is a pointer",
+            "Sometimes"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 15
+    },
+    {
+        "id": "q221",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the result of `sizeof(int[10]) / sizeof(int)`?",
+        "options": [
+            "10",
+            "40",
+            "4",
+            "Unknown"
+        ],
+        "correctAnswer": "10",
+        "timeLimit": 30
+    },
+    {
+        "id": "q222",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which of the following creates a dynamic array in C++?",
+        "options": [
+            "int a[10];",
+            "int *a = new int[10];",
+            "int a = vector(10);",
+            "malloc(int, 10);"
+        ],
+        "correctAnswer": "int *a = new int[10];",
+        "timeLimit": 40
+    },
+    {
+        "id": "q223",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Create an array `{1, 2}` in C++ and print the sum.",
+        "expectedOutput": "3",
+        "timeLimit": 60
+    },
+    {
+        "id": "q224",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a Python loop to print 'Hi' 2 times as 'HiHi'.",
+        "expectedOutput": "HiHi",
+        "timeLimit": 45
+    },
+    {
+        "id": "q225",
+        "language": "Java",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Can you use a String in a switch statement in Java 7+?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is short",
+            "Only if matched by length"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 20
+    },
+    {
+        "id": "q226",
+        "language": "JavaScript",
+        "topic": "Objects",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How do you access a property 'name' in an object 'obj'?",
+        "options": [
+            "obj.name",
+            "obj['name']",
+            "Both are correct",
+            "obj->name"
+        ],
+        "correctAnswer": "Both are correct",
+        "timeLimit": 20
+    },
+    {
+        "id": "q227",
+        "language": "Go",
+        "topic": "Structs",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How do you define a struct in Go?",
+        "options": [
+            "type S struct {}",
+            "struct S {}",
+            "define struct S",
+            "class S {}"
+        ],
+        "correctAnswer": "type S struct {}",
+        "timeLimit": 30
+    },
+    {
+        "id": "q228",
+        "language": "C",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the bitwise AND operator in C?",
+        "options": [
+            "&&",
+            "&",
+            "|",
+            "^"
+        ],
+        "correctAnswer": "&",
+        "timeLimit": 15
+    },
+    {
+        "id": "q229",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How many 'else' blocks can an if statement have?",
+        "options": [
+            "0 or 1",
+            "As many as needed",
+            "Only 1",
+            "Infinite"
+        ],
+        "correctAnswer": "0 or 1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q230",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `true || false && false` in C++?",
+        "options": [
+            "true",
+            "false",
+            "Error",
+            "undefined"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 30
+    },
+    {
+        "id": "q231",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the output of `[1] + [2]`?",
+        "options": [
+            "[1, 2]",
+            "[3]",
+            "[[1], [2]]",
+            "Error"
+        ],
+        "correctAnswer": "[1, 2]",
+        "timeLimit": 20
+    },
+    {
+        "id": "q232",
+        "language": "Java",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which loop is best when the number of iterations is known?",
+        "options": [
+            "for",
+            "while",
+            "do-while",
+            "None"
+        ],
+        "correctAnswer": "for",
+        "timeLimit": 20
+    },
+    {
+        "id": "q233",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a function `f()` that returns 1. Print `f()`.",
+        "expectedOutput": "1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q234",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Is `0` truthy in Go?",
+        "options": [
+            "Yes",
+            "No",
+            "Only in if statements",
+            "Go doesn't have truthy values, only bool"
+        ],
+        "correctAnswer": "Go doesn't have truthy values, only bool",
+        "timeLimit": 45
+    },
+    {
+        "id": "q235",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What does '*' do when used in a declaration like `int *p`?",
+        "options": [
+            "Declares a pointer",
+            "Dereferences a pointer",
+            "Multiplies numbers",
+            "None"
+        ],
+        "correctAnswer": "Declares a pointer",
+        "timeLimit": 15
+    },
+    {
+        "id": "q236",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you get the address of a variable `x` in C++?",
+        "options": [
+            "&x",
+            "*x",
+            "address(x)",
+            "ptr(x)"
+        ],
+        "correctAnswer": "&x",
+        "timeLimit": 15
+    },
+    {
+        "id": "q237",
+        "language": "Python",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you write 'else if' in Python?",
+        "options": [
+            "else if",
+            "elseif",
+            "elif",
+            "elsif"
+        ],
+        "correctAnswer": "elif",
+        "timeLimit": 10
+    },
+    {
+        "id": "q238",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is method overriding?",
+        "options": [
+            "Same name, different parameters",
+            "Same name, same parameters in child class",
+            "Too many methods",
+            "None"
+        ],
+        "correctAnswer": "Same name, same parameters in child class",
+        "timeLimit": 45
+    },
+    {
+        "id": "q239",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `1 === '1'`?",
+        "options": [
+            "true",
+            "false",
+            "undefined",
+            "Error"
+        ],
+        "correctAnswer": "false",
+        "timeLimit": 20
+    },
+    {
+        "id": "q240",
+        "language": "Go",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Go loop that prints 'A' three times: 'AAA'.",
+        "expectedOutput": "AAA",
+        "timeLimit": 60
+    },
+    {
+        "id": "q241",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the starting point of every C program?",
+        "options": [
+            "start()",
+            "main()",
+            "begin()",
+            "init()"
+        ],
+        "correctAnswer": "main()",
+        "timeLimit": 15
+    },
+    {
+        "id": "q242",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the return type of a constructor?",
+        "options": [
+            "void",
+            "int",
+            "The class type",
+            "None"
+        ],
+        "correctAnswer": "None",
+        "timeLimit": 30
+    },
+    {
+        "id": "q243",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you define a function in Python?",
+        "options": [
+            "def func():",
+            "func():",
+            "function func():",
+            "define func():"
+        ],
+        "correctAnswer": "def func():",
+        "timeLimit": 15
+    },
+    {
+        "id": "q244",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which of these is used to call a parent constructor?",
+        "options": [
+            "super()",
+            "this()",
+            "parent()",
+            "base()"
+        ],
+        "correctAnswer": "super()",
+        "timeLimit": 20
+    },
+    {
+        "id": "q245",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you declare a function in JS?",
+        "options": [
+            "function f() {}",
+            "f() {}",
+            "def f() {}",
+            "func f() {}"
+        ],
+        "correctAnswer": "function f() {}",
+        "timeLimit": 15
+    },
+    {
+        "id": "q246",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you declare a function in Go?",
+        "options": [
+            "func f() {}",
+            "function f() {}",
+            "def f() {}",
+            "f := func() {}"
+        ],
+        "correctAnswer": "func f() {}",
+        "timeLimit": 15
+    },
+    {
+        "id": "q247",
+        "language": "C",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `5 % 2`?",
+        "options": [
+            "2.5",
+            "1",
+            "2",
+            "0"
+        ],
+        "correctAnswer": "1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q248",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `10 / 4` in C++ if both are ints?",
+        "options": [
+            "2.5",
+            "2",
+            "3",
+            "Error"
+        ],
+        "correctAnswer": "2",
+        "timeLimit": 20
+    },
+    {
+        "id": "q249",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `10 // 3`?",
+        "options": [
+            "3.33",
+            "3",
+            "4",
+            "1"
+        ],
+        "correctAnswer": "3",
+        "timeLimit": 15
+    },
+    {
+        "id": "q250",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `!true`?",
+        "options": [
+            "false",
+            "true",
+            "null",
+            "undefined"
+        ],
+        "correctAnswer": "false",
+        "timeLimit": 10
+    },
+    {
+        "id": "q251",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program to find the second largest element in `int a[] = {10, 20, 4, 45, 99};` and print it.",
+        "expectedOutput": "45",
+        "timeLimit": 150
+    },
+    {
+        "id": "q252",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C program to copy elements of `int src[] = {1, 2, 3};` to `int dest[3];` and print the last element of `dest`.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q253",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C program to count the number of even elements in `{1, 2, 3, 4, 5, 6}` and print the count.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q254",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a C program to multiply all elements of `{2, 3}` and print the result.",
+        "expectedOutput": "6",
+        "timeLimit": 60
+    },
+    {
+        "id": "q255",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program that takes `int a[2][2] = {{1, 2}, {3, 4}};` and prints the sum of all elements.",
+        "expectedOutput": "10",
+        "timeLimit": 120
     }
 ]

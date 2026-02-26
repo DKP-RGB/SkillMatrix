@@ -13,7 +13,14 @@ import { AttemptingLayout } from '../components/AttemptingLayout';
 
 const ExamPage = () => {
     const navigate = useNavigate();
-    const { recordQuestionResult, topicStats, startAssessment, finishAssessment, isSaving } = useAnalytics();
+    const {
+        recordQuestionResult,
+        topicStats,
+        startAssessment,
+        finishAssessment,
+        isSaving,
+        getHistoricalQuestionIds
+    } = useAnalytics();
     const { logout } = useAuth();
 
     // Setup Flow State
@@ -171,15 +178,21 @@ const ExamPage = () => {
     // Handle Setup Completion
     const handleSetupComplete = async (config) => {
         setExamConfig(config);
-
-        // Start persistent assessment in Supabase
-        await startAssessment(config.language, config.type);
-
         setSetupComplete(true);
+        startAssessment(config.language, config.type);
 
-        // Get first question based on config
-        const firstQ = getInitialQuestion(questionsData, config);
-        startNextQuestion(firstQ);
+        // Fetch historical IDs to avoid global repetition
+        const historicalIds = await getHistoricalQuestionIds();
+
+        // Filter out historical IDs for initial question if possible
+        const availableQuestions = questionsData.filter(q => !historicalIds.includes(q.id));
+        const pool = availableQuestions.length > 0 ? availableQuestions : questionsData;
+
+        const firstQ = getInitialQuestion(pool, config);
+
+        setAttemptedIds([...historicalIds, firstQ.id]);
+        setCurrentQuestion(firstQ);
+        setTimeRemaining(firstQ.timeLimit);
     };
 
     // Initialize Anti-Cheat & Proctoring after setup with a small delay to avoid false positives
@@ -282,7 +295,8 @@ const ExamPage = () => {
             isCorrect,
             timeTaken
         };
-        setFullResults(prev => [...prev, resultItem]);
+        const updatedFullResults = [...fullResults, resultItem];
+        setFullResults(updatedFullResults);
 
         // Record to analytics (Supabase)
         recordQuestionResult(
@@ -304,21 +318,20 @@ const ExamPage = () => {
             currentQuestion.difficulty,
             topicStats,
             examConfig.language,
-            examConfig.type
+            examConfig.type,
+            examConfig.topic
         );
 
-        // End exam after 5 questions
-        if (attemptedIds.length >= 5 || !nextQ) {
+        // End exam after 10 questions in this session
+        if (updatedFullResults.length >= 10 || !nextQ) {
             setExamFinished(true);
-
-            // Finalize assessment in Supabase
             finishAssessment();
 
             // Navigate to Review Page with data
             setTimeout(() => {
                 navigate('/review', {
                     state: {
-                        results: [...fullResults, resultItem],
+                        results: updatedFullResults,
                         sessionMeta: examConfig
                     }
                 });
@@ -355,13 +368,13 @@ const ExamPage = () => {
                         <p className="text-red-400 mt-2 font-medium">Attention Warning Deductions: {cheatWarnings}</p>
                     )}
                 </div>
-                <div className="flex justify-center">
-                    <button
-                        className="bg-[#1f6feb] hover:bg-[#3182ce] text-white font-semibold py-4 px-10 rounded-xl transition-all shadow-[0_4px_14px_rgba(49,130,206,0.4)] hover:-translate-y-1"
-                        onClick={() => navigate('/dashboard')}
-                    >
-                        Return to Dashboard
-                    </button>
+                <div className="flex justify-center flex-col items-center gap-4">
+                    <p className="text-gray-400 animate-pulse text-sm">Preparing your personalized review page...</p>
+                    <div className="flex gap-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-.3s]"></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-.5s]"></div>
+                    </div>
                 </div>
             </div>
         );
@@ -464,7 +477,8 @@ const ExamPage = () => {
             )}
             <AttemptingLayout
                 question={currentQuestion}
-                number={attemptedIds.length}
+                number={fullResults.length + 1}
+                questionTotal={10}
                 timeRemaining={timeRemaining}
                 codeAnswer={codeAnswer}
                 setCodeAnswer={setCodeAnswer}
@@ -472,11 +486,10 @@ const ExamPage = () => {
                 setMcqAnswer={setMcqAnswer}
                 consoleOutput={consoleOutput}
                 runCode={runCode}
-                submitAnswer={() => submitAnswer()}
+                submitAnswer={submitAnswer}
             />
         </div>
     );
 };
-
 
 export default ExamPage;
