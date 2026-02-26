@@ -1,18 +1,21 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../utils/supabaseClient';
+import { useAuth } from '../utils/AuthContext';
 
 const AnalyticsContext = createContext(null);
 
 export const AnalyticsProvider = ({ children }) => {
-    // State for tracking the overall exam performance
+    const { user } = useAuth();
+
+    // local session state
     const [examData, setExamData] = useState({
         totalQuestionsAttempted: 0,
         correctAnswers: 0,
-        totalTimeSpent: 0, // In seconds
-        focusLossCount: 0, // Cheating signal
-        dailyStreak: 1, // Mocked static stat
+        totalTimeSpent: 0,
+        focusLossCount: 0,
+        dailyStreak: 1,
     });
 
-    // State for tracking performance per topic and difficulty
     const [topicStats, setTopicStats] = useState({});
     const [difficultyStats, setDifficultyStats] = useState({
         easy: { attempted: 0, correct: 0 },
@@ -20,8 +23,38 @@ export const AnalyticsProvider = ({ children }) => {
         hard: { attempted: 0, correct: 0 },
     });
 
-    // Method to update states after every question
-    const recordQuestionResult = (topic, difficulty, isCorrect, timeTaken, lostFocus) => {
+    const [currentAssessmentId, setCurrentAssessmentId] = useState(null);
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Initialize/Create Assessment in Supabase
+    const startAssessment = async (language, type) => {
+        if (!user) return null;
+
+        try {
+            const { data, error } = await supabase
+                .from('assessments')
+                .insert([{
+                    user_id: user.id,
+                    language,
+                    type,
+                    status: 'in_progress'
+                }])
+                .select()
+                .single();
+
+            if (error) throw error;
+            setCurrentAssessmentId(data.id);
+            resetAnalytics();
+            return data.id;
+        } catch (err) {
+            console.error("Error starting assessment:", err);
+            return null;
+        }
+    };
+
+    // Record question result to both local state and Supabase
+    const recordQuestionResult = async (topic, difficulty, isCorrect, timeTaken, lostFocus, questionId) => {
+        // Update Local State for immediate adaptive engine use
         setExamData(prev => ({
             ...prev,
             totalQuestionsAttempted: prev.totalQuestionsAttempted + 1,
@@ -51,6 +84,47 @@ export const AnalyticsProvider = ({ children }) => {
                 }
             };
         });
+
+        // Persist to Supabase if session active
+        if (currentAssessmentId && user) {
+            try {
+                await supabase.from('question_attempts').insert([{
+                    assessment_id: currentAssessmentId,
+                    user_id: user.id,
+                    question_id: questionId || 'unknown',
+                    topic,
+                    difficulty,
+                    is_correct: isCorrect,
+                    time_taken: timeTaken
+                }]);
+            } catch (err) {
+                console.error("Error saving question attempt:", err);
+            }
+        }
+    };
+
+    const finishAssessment = async () => {
+        if (!currentAssessmentId || !user) return;
+
+        try {
+            setIsSaving(true);
+            const { error } = await supabase
+                .from('assessments')
+                .update({
+                    score: examData.correctAnswers,
+                    total_questions: examData.totalQuestionsAttempted,
+                    status: 'completed',
+                    completed_at: new Date().toISOString()
+                })
+                .eq('id', currentAssessmentId);
+
+            if (error) throw error;
+            setCurrentAssessmentId(null);
+        } catch (err) {
+            console.error("Error finishing assessment:", err);
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const getAnalyticsSummary = () => {
@@ -86,6 +160,53 @@ export const AnalyticsProvider = ({ children }) => {
         };
     };
 
+    // Fetch All-Time History for Dashboard
+    const fetchAllTimeStats = async () => {
+        if (!user) return null;
+
+        try {
+            const { data: attempts, error } = await supabase
+                .from('question_attempts')
+                .select('*')
+                .eq('user_id', user.id);
+
+            if (error) throw error;
+
+            // Aggregate data
+            const summary = {
+                totalQuestionsAttempted: attempts.length,
+                correctAnswers: attempts.filter(a => a.is_correct).length,
+                totalTimeSpent: attempts.reduce((acc, a) => acc + a.time_taken, 0),
+                topicStats: {},
+                difficultyStats: {
+                    easy: { attempted: 0, correct: 0 },
+                    medium: { attempted: 0, correct: 0 },
+                    hard: { attempted: 0, correct: 0 }
+                }
+            };
+
+            attempts.forEach(a => {
+                // Topic aggregation
+                if (!summary.topicStats[a.topic]) {
+                    summary.topicStats[a.topic] = { attempted: 0, correct: 0 };
+                }
+                summary.topicStats[a.topic].attempted++;
+                if (a.is_correct) summary.topicStats[a.topic].correct++;
+
+                // Difficulty aggregation
+                if (summary.difficultyStats[a.difficulty]) {
+                    summary.difficultyStats[a.difficulty].attempted++;
+                    if (a.is_correct) summary.difficultyStats[a.difficulty].correct++;
+                }
+            });
+
+            return summary;
+        } catch (err) {
+            console.error("Error fetching all-time stats:", err);
+            return null;
+        }
+    };
+
     const resetAnalytics = () => {
         setExamData({
             totalQuestionsAttempted: 0,
@@ -107,7 +228,11 @@ export const AnalyticsProvider = ({ children }) => {
             recordQuestionResult,
             getAnalyticsSummary,
             resetAnalytics,
-            topicStats
+            startAssessment,
+            finishAssessment,
+            fetchAllTimeStats,
+            topicStats,
+            isSaving
         }}>
             {children}
         </AnalyticsContext.Provider>

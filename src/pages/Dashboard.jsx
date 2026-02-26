@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import { useAnalytics } from '../analytics/useAnalytics';
 import { useNavigate } from 'react-router-dom';
@@ -6,15 +6,79 @@ import ChatBot from '../components/ChatBot';
 
 const Dashboard = () => {
     const { user } = useAuth();
-    const { getAnalyticsSummary } = useAnalytics();
+    const { fetchAllTimeStats } = useAnalytics();
     const navigate = useNavigate();
+
+    const [stats, setStats] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadStats = async () => {
+            if (user) {
+                const data = await fetchAllTimeStats();
+                setStats(data);
+                setLoading(false);
+            }
+        };
+        loadStats();
+    }, [user, fetchAllTimeStats]);
+
+    const analytics = useMemo(() => {
+        if (!stats) return {
+            accuracy: 0,
+            avgTimePerQuestion: 0,
+            totalQuestionsAttempted: 0,
+            dailyStreak: 1,
+            difficultyStats: { easy: { attempted: 0, correct: 0 }, medium: { attempted: 0, correct: 0 }, hard: { attempted: 0, correct: 0 } },
+            topicStats: {}
+        };
+
+        const accuracy = stats.totalQuestionsAttempted > 0
+            ? Math.round((stats.correctAnswers / stats.totalQuestionsAttempted) * 100)
+            : 0;
+
+        const avgTimePerQuestion = stats.totalQuestionsAttempted > 0
+            ? Math.round(stats.totalTimeSpent / stats.totalQuestionsAttempted)
+            : 0;
+
+        let bestTopic = null;
+        let weakTopic = null;
+        let highestTopicAcc = -1;
+        let lowestTopicAcc = 101;
+
+        Object.entries(stats.topicStats || {}).forEach(([topic, s]) => {
+            if (s.attempted > 0) {
+                const acc = s.correct / s.attempted;
+                if (acc > highestTopicAcc) { highestTopicAcc = acc; bestTopic = topic; }
+                if (acc < lowestTopicAcc) { lowestTopicAcc = acc; weakTopic = topic; }
+            }
+        });
+
+        return {
+            ...stats,
+            accuracy,
+            avgTimePerQuestion,
+            bestTopic,
+            weakTopic,
+            dailyStreak: 1 // still mock
+        };
+    }, [stats]);
 
     if (!user) {
         navigate('/');
         return null;
     }
 
-    const analytics = getAnalyticsSummary();
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-[#0d1117]">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-[#1f6feb] border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-gray-400 font-medium">Crunching your skill metrics...</p>
+                </div>
+            </div>
+        );
+    }
 
     // Helper for generating simple CSS bar charts
     const renderDifficultyGraph = () => {
@@ -28,9 +92,9 @@ const Dashboard = () => {
         return (
             <div className="flex flex-col gap-4 mt-4 w-full">
                 {['easy', 'medium', 'hard'].map(diff => {
-                    const stats = analytics.difficultyStats[diff];
-                    const width = `${(stats.attempted / max) * 100}%`;
-                    const acc = stats.attempted > 0 ? Math.round((stats.correct / stats.attempted) * 100) : 0;
+                    const diffData = analytics.difficultyStats[diff];
+                    const width = `${(diffData.attempted / max) * 100}%`;
+                    const acc = diffData.attempted > 0 ? Math.round((diffData.correct / diffData.attempted) * 100) : 0;
                     return (
                         <div key={diff} className="flex items-center">
                             <span className="w-20 text-sm capitalize text-secondary">{diff}</span>
@@ -40,12 +104,12 @@ const Dashboard = () => {
                                         diff === 'medium' ? 'bg-[#e3b341]' :
                                             'bg-[#da3633]'
                                         }`}
-                                    style={{ width: stats.attempted > 0 ? width : '0%' }}
+                                    style={{ width: diffData.attempted > 0 ? width : '0%' }}
                                 >
-                                    {stats.attempted > 0 && `${acc}% Acc`}
+                                    {diffData.attempted > 0 && `${acc}% Acc`}
                                 </div>
                             </div>
-                            <span className="w-12 text-right text-sm">{stats.attempted} Qs</span>
+                            <span className="w-12 text-right text-sm">{diffData.attempted} Qs</span>
                         </div>
                     );
                 })}
@@ -74,7 +138,6 @@ const Dashboard = () => {
     };
 
     const renderRecommendations = () => {
-        // Find topics with < 60% accuracy to recommend practice
         const recommendations = [];
 
         Object.entries(analytics.topicStats || {}).forEach(([topic, stats]) => {
@@ -145,7 +208,6 @@ const Dashboard = () => {
                     <div className="text-5xl font-bold font-mono text-[#e3b341] drop-shadow-md flex items-center justify-center gap-2">
                         {analytics.dailyStreak} <span className="text-3xl animate-pulse">🔥</span>
                     </div>
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#e3b341] to-transparent opacity-50"></div>
                 </div>
             </div>
 
@@ -180,12 +242,6 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
-
-            {analytics.focusLossCount > 0 && (
-                <div className="mb-10 p-5 border border-red-500/50 bg-red-500/10 rounded-xl text-red-400 font-medium text-center animate-pulse shadow-[0_0_20px_rgba(218,54,51,0.1)]">
-                    ⚠️ Attention: Your account has flagged {analytics.focusLossCount} attention warnings (tab switching/focus loss). Maintaining focus improves your analytics accuracy.
-                </div>
-            )}
 
             {/* AI ChatBot Assistant */}
             <ChatBot apiKey={import.meta.env.VITE_OPENROUTER_KEY} />

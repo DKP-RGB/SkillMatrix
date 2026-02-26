@@ -13,12 +13,13 @@ import { AttemptingLayout } from '../components/AttemptingLayout';
 
 const ExamPage = () => {
     const navigate = useNavigate();
-    const { recordQuestionResult, topicStats } = useAnalytics();
+    const { recordQuestionResult, topicStats, startAssessment, finishAssessment, isSaving } = useAnalytics();
     const { logout } = useAuth();
 
     // Setup Flow State
     const [setupComplete, setSetupComplete] = useState(false);
     const [examConfig, setExamConfig] = useState(null);
+    const [fullResults, setFullResults] = useState([]);
 
     // Core Exam State
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -29,29 +30,68 @@ const ExamPage = () => {
     // Anti-Cheat State
     const [cheatWarnings, setCheatWarnings] = useState(0);
     const [lostFocusThisQuestion, setLostFocusThisQuestion] = useState(false);
+    const [lastViolationSource, setLastViolationSource] = useState('');
 
     // AI Proctoring State
     const [isTerminated, setIsTerminated] = useState(false);
     const [proctorReason, setProctorReason] = useState('');
     const [isAILoading, setIsAILoading] = useState(true);
+    const [detectionTimer, setDetectionTimer] = useState(0); // For 10s threshold
+    const [showWarning, setShowWarning] = useState(false); // For 5s disqualification window
+    const [warningCountdown, setWarningCountdown] = useState(5);
 
     const canvasRef = useRef(null);
 
-    const handleViolation = (violation) => {
-        if (violation.type === 'HARD_VIOLATION') {
-            setProctorReason(violation.reason);
+    const handleViolation = (msg) => {
+        if (msg.type === 'STATUS') {
+            if (msg.status === 'MOBILE_DETECTED') {
+                if (!showWarning && !isTerminated) {
+                    setDetectionTimer(prev => {
+                        const next = prev + 1;
+                        if (next >= 10) {
+                            setShowWarning(true);
+                            setLastViolationSource('AI Camera (Mobile Device)');
+                        }
+                        return next;
+                    });
+                }
+            } else if (msg.status === 'CLEAR') {
+                if (!showWarning && !isTerminated) {
+                    setDetectionTimer(0);
+                }
+            }
+
+            // Handle soft violations still
+            if (msg.status === 'NO_FACE' || msg.status === 'MULTIPLE_PEOPLE') {
+                // Throttle soft warnings to not overwhelm
+                const now = Date.now();
+                if (!window.lastSoftWarning || now - window.lastSoftWarning > 3000) {
+                    setCheatWarnings(prev => prev + 1);
+                    setLastViolationSource('AI Camera (Frame Integrity)');
+                    setLostFocusThisQuestion(true);
+                    window.lastSoftWarning = now;
+                }
+            }
+        }
+    };
+
+    // Warning Countdown Logic
+    useEffect(() => {
+        if (showWarning && warningCountdown > 0) {
+            const timer = setTimeout(() => setWarningCountdown(prev => prev - 1), 1000);
+            return () => clearTimeout(timer);
+        } else if (showWarning && warningCountdown === 0) {
             setIsTerminated(true);
             setExamFinished(true);
-            // Hard violations (Mobile Phone) trigger immediate logout after short delay
+            setProctorReason('Mobile Phone Detected');
+
+            // Final Logout after 5s of the "Disqualified" screen (as per previous flow)
             setTimeout(() => {
                 logout();
                 navigate('/');
             }, 5000);
-        } else {
-            setCheatWarnings(prev => prev + 1);
-            setLostFocusThisQuestion(true);
         }
-    };
+    }, [showWarning, warningCountdown, logout, navigate]);
 
     const { videoRef, isModelLoading, predictions, startRecording, startDetection, stopDetection } = useProctor(handleViolation);
 
@@ -88,7 +128,10 @@ const ExamPage = () => {
     // Auto-Logout on 3 Cheat Warnings
     useEffect(() => {
         if (cheatWarnings >= 3 && !examFinished) {
-            alert('Assessment stopped: Maximum tab-switching limits exceeded. You are being logged out for violating anti-cheat rules.');
+            const msg = "Assessment stopped: Maximum integrity violations exceeded. " +
+                "Continuous tab-switching or proctoring violations (multiple people/no face) " +
+                "have been detected. You are being logged out for violating assessment rules.";
+            alert(msg);
             setExamFinished(true);
             logout();
             navigate('/');
@@ -126,8 +169,12 @@ const ExamPage = () => {
     }, []);
 
     // Handle Setup Completion
-    const handleSetupComplete = (config) => {
+    const handleSetupComplete = async (config) => {
         setExamConfig(config);
+
+        // Start persistent assessment in Supabase
+        await startAssessment(config.language, config.type);
+
         setSetupComplete(true);
 
         // Get first question based on config
@@ -159,6 +206,7 @@ const ExamPage = () => {
 
             antiCheatCleanup = initAntiCheat((type) => {
                 setCheatWarnings(prev => prev + 1);
+                setLastViolationSource('Tab Switching / Focus Loss');
                 setLostFocusThisQuestion(true);
             });
         };
@@ -225,14 +273,25 @@ const ExamPage = () => {
         }
 
         const timeTaken = currentQuestion.timeLimit - timeRemaining;
+        const userAnswer = currentQuestion.type === 'mcq' ? mcqAnswer : codeAnswer;
 
-        // Record to analytics
+        // Capture for Review
+        const resultItem = {
+            ...currentQuestion,
+            userAnswer,
+            isCorrect,
+            timeTaken
+        };
+        setFullResults(prev => [...prev, resultItem]);
+
+        // Record to analytics (Supabase)
         recordQuestionResult(
             currentQuestion.topic,
             currentQuestion.difficulty,
             isCorrect,
             timeTaken,
-            lostFocusThisQuestion
+            lostFocusThisQuestion,
+            currentQuestion.id
         );
 
         // Get next adaptive question based on config Language
@@ -244,14 +303,26 @@ const ExamPage = () => {
             currentQuestion.timeLimit,
             currentQuestion.difficulty,
             topicStats,
-            examConfig.language
+            examConfig.language,
+            examConfig.type
         );
 
         // End exam after 5 questions
         if (attemptedIds.length >= 5 || !nextQ) {
             setExamFinished(true);
-            // Navigate to dashboard automatically for immediate analytics view
-            setTimeout(() => navigate('/dashboard'), 1500);
+
+            // Finalize assessment in Supabase
+            finishAssessment();
+
+            // Navigate to Review Page with data
+            setTimeout(() => {
+                navigate('/review', {
+                    state: {
+                        results: [...fullResults, resultItem],
+                        sessionMeta: examConfig
+                    }
+                });
+            }, 3000);
         } else {
             startNextQuestion(nextQ);
         }
@@ -276,8 +347,11 @@ const ExamPage = () => {
             <div className="w-full max-w-2xl mx-auto mt-20 p-10 bg-[#161b22] border border-gray-800 rounded-3xl shadow-2xl text-center animate-fade-in">
                 <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-[#3fb950] mb-6">Assessment Complete!</h2>
                 <div className="bg-[#0d1117] p-6 rounded-xl border border-gray-800 mb-8 inline-block">
-                    <p className="text-gray-300 text-lg">Your analytics have been recorded.</p>
-                    {cheatWarnings > 0 && (
+                    <p className="text-gray-300 text-lg">
+                        {isSaving ? "Finalizing results & securing data..." : "Your analytics have been recorded."}
+                    </p>
+                    {isSaving && <div className="mt-2 w-full h-1 bg-gray-800 rounded overflow-hidden"><div className="h-full bg-[#58a6ff] animate-progress-indefinite"></div></div>}
+                    {(cheatWarnings > 0 && !isSaving) && (
                         <p className="text-red-400 mt-2 font-medium">Attention Warning Deductions: {cheatWarnings}</p>
                     )}
                 </div>
@@ -326,28 +400,59 @@ const ExamPage = () => {
                     height={240}
                     className="absolute inset-0 w-full h-full pointer-events-none scale-x-[-1]"
                 />
-                <div className="absolute top-2 left-2 bg-[rgba(0,0,0,0.6)] px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1">
-                    <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                    AI PROCTORING LIVE
+                <div className="absolute top-2 left-2 bg-[rgba(0,0,0,0.6)] px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1 z-10">
+                    <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${detectionTimer > 0 ? 'bg-yellow-500' : 'bg-green-500'}`} />
+                    {detectionTimer > 0 ? 'RISK DETECTED' : 'AI PROCTORING LIVE'}
                 </div>
+
+                {/* Detection Progress Bar */}
+                {detectionTimer > 0 && (
+                    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gray-900 overflow-hidden">
+                        <div
+                            className="h-full bg-yellow-500 transition-all duration-1000"
+                            style={{ width: `${(detectionTimer / 10) * 100}%` }}
+                        />
+                    </div>
+                )}
             </div>
 
-            {/* Termination Overlay */}
+            {/* Warning Overlay (5s Window) */}
+            {(showWarning && !isTerminated) && (
+                <div className="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+                    <div className="w-24 h-24 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500 mb-8 animate-pulse">
+                        <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
+                        </svg>
+                    </div>
+                    <h2 className="text-5xl font-bold text-white mb-4">Cheating Detected!</h2>
+                    <p className="text-2xl text-yellow-500 font-bold mb-6 uppercase tracking-widest leading-tight">
+                        You are cheating and you're being logged out
+                    </p>
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="text-6xl font-black text-white bg-red-600 w-24 h-24 flex items-center justify-center rounded-full shadow-2xl border-4 border-white animate-bounce">
+                            {warningCountdown}
+                        </div>
+                        <p className="text-gray-400 text-lg">Disqualification in progress...</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Final Termination Overlay */}
             {isTerminated && (
-                <div className="fixed inset-0 z-[1000] bg-[#0d1117] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
-                    <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mb-8 animate-bounce">
+                <div className="fixed inset-0 z-[1100] bg-[#0d1117] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+                    <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mb-8">
                         <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
                         </svg>
                     </div>
                     <h2 className="text-5xl font-bold text-white mb-4">Disqualified</h2>
-                    <p className="text-xl text-red-400 font-medium mb-2 uppercase tracking-widest">You are disqualified due to cheating</p>
+                    <p className="text-xl text-red-400 font-medium mb-2 uppercase tracking-widest">Assessment Invalidated Due to Cheating</p>
                     <p className="text-gray-400 max-w-lg mb-10">
-                        Our AI Proctoring system has detected a high-level integrity violation.
-                        As per strict anti-cheating policy, you have been disqualified from this assessment.
+                        Our AI Proctoring system has confirmed a persistent integrity violation.
+                        You have been disqualified from this session.
                     </p>
-                    <div className="text-secondary animate-pulse">
-                        Logging out in 5 seconds...
+                    <div className="text-secondary animate-pulse text-lg">
+                        Finalizing logout...
                     </div>
                 </div>
             )}

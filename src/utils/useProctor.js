@@ -65,25 +65,15 @@ export const useProctor = (onCheatingDetected) => {
             }
         });
 
-        if (mobileDetected) {
-            onCheatingDetected({
-                type: 'HARD_VIOLATION',
-                reason: 'Mobile Phone Detected'
-            });
-            stopDetection(); // Stop to prevent further alerts
-            return;
-        }
-
+        // Report status via callback for soft notifications/warnings
         if (personCount === 0) {
-            onCheatingDetected({
-                type: 'SOFT_VIOLATION',
-                reason: 'No Face Detected'
-            });
+            onCheatingDetected({ type: 'STATUS', status: 'NO_FACE' });
         } else if (personCount > 1) {
-            onCheatingDetected({
-                type: 'SOFT_VIOLATION',
-                reason: 'Multiple People Detected'
-            });
+            onCheatingDetected({ type: 'STATUS', status: 'MULTIPLE_PEOPLE' });
+        } else if (mobileDetected) {
+            onCheatingDetected({ type: 'STATUS', status: 'MOBILE_DETECTED' });
+        } else {
+            onCheatingDetected({ type: 'STATUS', status: 'CLEAR' });
         }
     };
 

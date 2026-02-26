@@ -55,20 +55,17 @@ export const getNextQuestion = (
     lastTimeLimit,
     currentDifficulty,
     topicStats,
-    targetLanguage // Added constraint from stepper
+    targetLanguage,
+    targetType
 ) => {
     let nextDifficultyLevel = DIFFICULTY_LEVELS[currentDifficulty];
 
-    // Logic: Adjust Difficulty based on correctness and speed
+    // Logic: Adjust Difficulty based on correctness
     if (lastIsCorrect) {
-        // If answered correctly and within 50% of time limit, it's considered quick
-        const isQuick = lastTimeTaken <= (lastTimeLimit * 0.5);
-        if (isQuick && nextDifficultyLevel < 3) {
-            nextDifficultyLevel += 1; // Increase difficulty
+        if (nextDifficultyLevel < 3) {
+            nextDifficultyLevel += 1;
         }
     } else {
-        // If incorrect, decrease difficulty to help them learn
-        // OR if they took too long (slow), also decrease
         if (nextDifficultyLevel > 1) {
             nextDifficultyLevel -= 1;
         }
@@ -76,16 +73,18 @@ export const getNextQuestion = (
 
     const nextDifficultyStr = LEVEL_TO_STRING[nextDifficultyLevel];
 
-    // Filter out already attempted questions and enforce language match
+    // STRICTLY filter by Language AND Type
     const availableQuestions = allQuestions.filter(q =>
-        !attemptedIds.includes(q.id) && q.language === targetLanguage
+        !attemptedIds.includes(q.id) &&
+        q.language === targetLanguage &&
+        q.type === targetType
     );
 
     if (availableQuestions.length === 0) {
-        return null; // Exam finished (no more questions)
+        return null;
     }
 
-    // Find the weakest topic to challenge them constructively, or just pick available
+    // Find the weakest topic
     let weakestTopic = null;
     let lowestAcc = 101;
     Object.entries(topicStats || {}).forEach(([topic, stats]) => {
@@ -98,7 +97,7 @@ export const getNextQuestion = (
         }
     });
 
-    // 1. Try to find a question in the weak topic at the target difficulty
+    // 1. Weak topic + Exact difficulty
     if (weakestTopic) {
         const weakTopicQuestions = availableQuestions.filter(
             q => q.topic === weakestTopic && q.difficulty === nextDifficultyStr
@@ -108,7 +107,7 @@ export const getNextQuestion = (
         }
     }
 
-    // 2. Try to find ANY question at the target difficulty
+    // 2. Exact difficulty
     const exactDifficultyQuestions = availableQuestions.filter(
         q => q.difficulty === nextDifficultyStr
     );
@@ -116,6 +115,15 @@ export const getNextQuestion = (
         return exactDifficultyQuestions[Math.floor(Math.random() * exactDifficultyQuestions.length)];
     }
 
-    // 3. Fallback: Just return any available question
+    // 3. Fallback: Search for any question with the closest available difficulty
+    const sortedDifficulties = ['hard', 'medium', 'easy'];
+    for (const diff of sortedDifficulties) {
+        const fallbackQuestions = availableQuestions.filter(q => q.difficulty === diff);
+        if (fallbackQuestions.length > 0) {
+            return fallbackQuestions[Math.floor(Math.random() * fallbackQuestions.length)];
+        }
+    }
+
+    // Ultimate safeguard (should not be logicially reached if availableQuestions.length > 0)
     return availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
 };

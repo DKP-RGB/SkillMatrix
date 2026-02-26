@@ -21,7 +21,7 @@
         "topic": "Conditionals",
         "difficulty": "easy",
         "type": "code",
-        "question": "Write a C++ program that prints 'Hello World' to the standard output. Include necessary headers and the main function.",
+        "question": "Write a C++ program that prints \u0027Hello World\u0027 to the standard output. Include necessary headers and the main function.",
         "expectedOutput": "Hello World",
         "timeLimit": 60
     },
@@ -47,7 +47,7 @@
         "topic": "Loops",
         "difficulty": "medium",
         "type": "code",
-        "question": "Write a C++ program that prints the numbers exactly as: '1 2 3 4 5' separated by spaces. Use a loop.",
+        "question": "Write a C++ program that prints the numbers exactly as: \u00271 2 3 4 5\u0027 separated by spaces. Use a loop.",
         "expectedOutput": "1 2 3 4 5",
         "timeLimit": 90
     },
@@ -111,9 +111,9 @@
         "type": "mcq",
         "question": "Which operator is used to get the value at the address stored in a pointer?",
         "options": [
-            "&",
+            "\u0026",
             "*",
-            "->",
+            "-\u003e",
             "."
         ],
         "correctAnswer": "*",
@@ -245,7 +245,7 @@
         "topic": "Conditionals",
         "difficulty": "medium",
         "type": "code",
-        "question": "Write a C program that checks if 10 is even or odd, and prints 'Even' or 'Odd'.",
+        "question": "Write a C program that checks if 10 is even or odd, and prints \u0027Even\u0027 or \u0027Odd\u0027.",
         "expectedOutput": "Even",
         "timeLimit": 90
     },
@@ -255,7 +255,7 @@
         "topic": "Pointers",
         "difficulty": "hard",
         "type": "mcq",
-        "question": "What is a characteristic of a 'dangling pointer'?",
+        "question": "What is a characteristic of a \u0027dangling pointer\u0027?",
         "options": [
             "It points to a newly allocated memory block",
             "It points to a memory location that has been freed",
@@ -271,7 +271,7 @@
         "topic": "Arrays",
         "difficulty": "medium",
         "type": "code",
-        "question": "Write a Python script that prints the sum of a list named 'arr' containing [1, 2, 3, 4, 5].",
+        "question": "Write a Python script that prints the sum of a list named \u0027arr\u0027 containing [1, 2, 3, 4, 5].",
         "expectedOutput": "15",
         "timeLimit": 60
     },
@@ -281,7 +281,7 @@
         "topic": "Arrays",
         "difficulty": "medium",
         "type": "code",
-        "question": "Write a Java program that prints 'Hello World' to the console.",
+        "question": "Write a Java program that prints \u0027Hello World\u0027 to the console.",
         "expectedOutput": "Hello World",
         "timeLimit": 60
     },
@@ -293,12 +293,12 @@
         "type": "mcq",
         "question": "How do you define an arrow function in JavaScript?",
         "options": [
-            "const func = () => {}",
+            "const func = () =\u003e {}",
             "function func() {}",
             "def func():",
-            "arrow func = () => {}"
+            "arrow func = () =\u003e {}"
         ],
-        "correctAnswer": "const func = () => {}",
+        "correctAnswer": "const func = () =\u003e {}",
         "timeLimit": 30
     },
     {
@@ -307,7 +307,7 @@
         "topic": "Functions",
         "difficulty": "medium",
         "type": "code",
-        "question": "Write a Go program containing a main function that prints 'Golang' to the stdout.",
+        "question": "Write a Go program containing a main function that prints \u0027Golang\u0027 to the stdout.",
         "expectedOutput": "Golang",
         "timeLimit": 60
     },
@@ -317,7 +317,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'myArray' in C++?",
+        "question": "How do you access the first element of an array named \u0027myArray\u0027 in C++?",
         "options": [
             "myArray[1]",
             "myArray[0]",
@@ -353,7 +353,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'arr'?",
+        "question": "How do you access the first element of an array named \u0027arr\u0027?",
         "options": [
             "arr[1]",
             "arr[0]",
@@ -415,7 +415,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'arr'?",
+        "question": "How do you access the first element of an array named \u0027arr\u0027?",
         "options": [
             "arr[1]",
             "arr[0]",
@@ -477,7 +477,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'arr'?",
+        "question": "How do you access the first element of an array named \u0027arr\u0027?",
         "options": [
             "arr[1]",
             "arr[0]",
@@ -539,7 +539,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'arr'?",
+        "question": "How do you access the first element of an array named \u0027arr\u0027?",
         "options": [
             "arr[1]",
             "arr[0]",
@@ -601,7 +601,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'arr'?",
+        "question": "How do you access the first element of an array named \u0027arr\u0027?",
         "options": [
             "arr[1]",
             "arr[0]",
@@ -663,7 +663,7 @@
         "topic": "Arrays",
         "difficulty": "easy",
         "type": "mcq",
-        "question": "How do you access the first element of an array named 'arr'?",
+        "question": "How do you access the first element of an array named \u0027arr\u0027?",
         "options": [
             "arr[1]",
             "arr[0]",
@@ -718,5 +718,529 @@
         "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
         "expectedOutput": "3",
         "timeLimit": 90
+    },
+    {
+        "id": "q_js_mcq_1",
+        "language": "JavaScript",
+        "topic": "Basics",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the output of `console.log(typeof NaN)`?",
+        "options": [
+            "number",
+            "string",
+            "undefined",
+            "object"
+        ],
+        "correctAnswer": "number",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_js_mcq_2",
+        "language": "JavaScript",
+        "topic": "Scope",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which keyword is used to declare a block-scoped variable that can be reassigned?",
+        "options": [
+            "var",
+            "let",
+            "const",
+            "static"
+        ],
+        "correctAnswer": "let",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_js_mcq_3",
+        "language": "JavaScript",
+        "topic": "Async",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the primary difference between a Promise and an Observable?",
+        "options": [
+            "Promises handle single events, Observables handle multiple",
+            "Promises are lazy, Observables are eager",
+            "Promises are always synchronous",
+            "There is no difference"
+        ],
+        "correctAnswer": "Promises handle single events, Observables handle multiple",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_js_mcq_4",
+        "language": "JavaScript",
+        "topic": "Objects",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How do you deep clone an object in modern JavaScript?",
+        "options": [
+            "Object.assign()",
+            "structuredClone()",
+            "JSON.parse(JSON.stringify())",
+            "Spread operator (...)"
+        ],
+        "correctAnswer": "structuredClone()",
+        "timeLimit": 45
+    },
+    {
+        "id": "q_js_mcq_5",
+        "language": "JavaScript",
+        "topic": "Prototypes",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which property of an object points to its prototype?",
+        "options": [
+            "__proto__",
+            "prototype",
+            "getPrototypeOf",
+            "constructor"
+        ],
+        "correctAnswer": "__proto__",
+        "timeLimit": 45
+    },
+    {
+        "id": "q_js_code_1",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Create an array called \u0027fruits\u0027 with \u0027apple\u0027 and \u0027banana\u0027. Use `console.log` to print the string \u0027banana\u0027 by accessing it.",
+        "expectedOutput": "banana",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_js_code_2",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code that takes the string \u0027hello\u0027 and prints it in ALL CAPS.",
+        "expectedOutput": "HELLO",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_js_code_3",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a function that calculates the sum of all numbers in [10, 20, 30] and prints the result.",
+        "expectedOutput": "60",
+        "timeLimit": 120
+    },
+    {
+        "id": "q_py_mcq_1",
+        "language": "Python",
+        "topic": "Basics",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you start a comment in Python?",
+        "options": [
+            "//",
+            "#",
+            "/*",
+            "\u003c!--"
+        ],
+        "correctAnswer": "#",
+        "timeLimit": 20
+    },
+    {
+        "id": "q_py_mcq_2",
+        "language": "Python",
+        "topic": "Data Types",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which data type is immutable in Python?",
+        "options": [
+            "list",
+            "dict",
+            "set",
+            "tuple"
+        ],
+        "correctAnswer": "tuple",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_py_mcq_3",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the output of `[x for x in range(3)]`?",
+        "options": [
+            "[0, 1, 2]",
+            "[1, 2, 3]",
+            "(0, 1, 2)",
+            "{0, 1, 2}"
+        ],
+        "correctAnswer": "[0, 1, 2]",
+        "timeLimit": 45
+    },
+    {
+        "id": "q_py_code_1",
+        "language": "Python",
+        "topic": "Basics",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Print the result of 5 * 10.",
+        "expectedOutput": "50",
+        "timeLimit": 45
+    },
+    {
+        "id": "q_py_code_2",
+        "language": "Python",
+        "topic": "Lists",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Given the list `items = [\u0027a\u0027, \u0027b\u0027, \u0027c\u0027]`, print the last item.",
+        "expectedOutput": "c",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_py_code_3",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print numbers from 1 to 3 separated by spaces using a loop.",
+        "expectedOutput": "1 2 3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q_java_mcq_1",
+        "language": "Java",
+        "topic": "Basics",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which keyword is used to create an instance of a class?",
+        "options": [
+            "new",
+            "create",
+            "make",
+            "instantiate"
+        ],
+        "correctAnswer": "new",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_java_mcq_2",
+        "language": "Java",
+        "topic": "OOP",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which access modifier allows access within the same package but not from sub-classes in different packages?",
+        "options": [
+            "public",
+            "private",
+            "protected",
+            "default"
+        ],
+        "correctAnswer": "default",
+        "timeLimit": 45
+    },
+    {
+        "id": "q_java_code_1",
+        "language": "Java",
+        "topic": "Output",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Print \u0027Hello\u0027 followed by \u0027Java\u0027 on the same line with a space.",
+        "expectedOutput": "Hello Java",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_java_code_2",
+        "language": "Java",
+        "topic": "Math",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Calculate the area of a square with side 4 and print only the number.",
+        "expectedOutput": "16",
+        "timeLimit": 90
+    },
+    {
+        "id": "q_js_arr_m1",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which method is used to remove the last element from an array?",
+        "options": [
+            "shift()",
+            "pop()",
+            "push()",
+            "splice()"
+        ],
+        "correctAnswer": "pop()",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_js_arr_h1",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Given `const arr = [1, 2, 3]`, use `.map()` to double each number and print the resulting array as a string using `JSON.stringify()`.",
+        "expectedOutput": "[2,4,6]",
+        "timeLimit": 90
+    },
+    {
+        "id": "q_py_arr_e1",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the result of `len([1, 2, 3, 4])`?",
+        "options": [
+            "3",
+            "4",
+            "5",
+            "Error"
+        ],
+        "correctAnswer": "4",
+        "timeLimit": 20
+    },
+    {
+        "id": "q_py_arr_m1",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Create a list `nums = [10, 20, 30]`. Use `.append(40)` and then print the list.",
+        "expectedOutput": "[10, 20, 30, 40]",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_cpp_arr_m1",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "In C++, which property is NOT true for arrays?",
+        "options": [
+            "Fixed size at compile time (for static arrays)",
+            "Stored in contiguous memory",
+            "Index starts from 1",
+            "Random access is O(1)"
+        ],
+        "correctAnswer": "Index starts from 1",
+        "timeLimit": 45
+    },
+    {
+        "id": "q_cpp_arr_h1",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ program that finds the maximum element in `int arr[] = {10, 5, 20, 8};` and prints it.",
+        "expectedOutput": "20",
+        "timeLimit": 120
+    },
+    {
+        "id": "q_go_arr_e1",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you declare a slice in Go?",
+        "options": [
+            "var s []int",
+            "var s [5]int",
+            "s := array(int)",
+            "slice s int"
+        ],
+        "correctAnswer": "var s []int",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_go_arr_m1",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Go program that creates a slice `s := []int{1, 2, 3}`. Append `4` to it and print the slice.",
+        "expectedOutput": "[1 2 3 4]",
+        "timeLimit": 90
+    },
+    {
+        "id": "q_c_arr_h1",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Reverse an array `int a[] = {1, 2, 3}` in place and print the elements separated by spaces.",
+        "expectedOutput": "3 2 1",
+        "timeLimit": 150
+    },
+    {
+        "id": "q_js_loop_e1",
+        "language": "JavaScript",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which loop is best for iterating over object keys?",
+        "options": [
+            "for...of",
+            "for...in",
+            "while",
+            "do...while"
+        ],
+        "correctAnswer": "for...in",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_py_loop_m1",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Use a `for` loop and `range(5)` to print numbers 0 to 4 separated by spaces.",
+        "expectedOutput": "0 1 2 3 4",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_java_arr_m1",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which attribute gives the length of an array in Java?",
+        "options": [
+            "length()",
+            "size()",
+            "length",
+            "getSize()"
+        ],
+        "correctAnswer": "length",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_java_arr_h1",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a Java program to find the average of {10, 20, 30} and print only the result (20).",
+        "expectedOutput": "20",
+        "timeLimit": 120
+    },
+    {
+        "id": "q_cpp_loop_h1",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C++ program that uses nested loops to print a 2x2 grid of '*' characters as '****'.",
+        "expectedOutput": "****",
+        "timeLimit": 120
+    },
+    {
+        "id": "q_c_cond_h1",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the result of the ternary expression `x = (5 > 10) ? 1 : 2;`?",
+        "options": [
+            "1",
+            "2",
+            "5",
+            "10"
+        ],
+        "correctAnswer": "2",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_js_logic_m1",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What does `!!'false'` evaluate to?",
+        "options": [
+            "true",
+            "false",
+            "undefined",
+            "NaN"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_py_logic_h1",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a Python one-liner to check if 'radar' is a palindrome and print True.",
+        "expectedOutput": "True",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_js_arr_h2",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Use `Array.from()` to create an array of 5 zeros and print it as a string.",
+        "expectedOutput": "[0,0,0,0,0]",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_py_arr_h2",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Use a list comprehension to filter even numbers from `[1, 2, 3, 4, 5, 6]` and print the list.",
+        "expectedOutput": "[2, 4, 6]",
+        "timeLimit": 60
+    },
+    {
+        "id": "q_cpp_arr_m2",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Create an array `int a[] = {1, 2, 3};` and output the product of all elements.",
+        "expectedOutput": "6",
+        "timeLimit": 90
+    },
+    {
+        "id": "q_java_arr_e2",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which of these is a valid way to declare an array in Java?",
+        "options": [
+            "int arr[];",
+            "int arr = new int(10);",
+            "array int arr;",
+            "int arr = {1, 2};"
+        ],
+        "correctAnswer": "int arr[];",
+        "timeLimit": 30
+    },
+    {
+        "id": "q_c_arr_m2",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Calculate the sum of `int a[] = {5, 10, 15};` and print the result.",
+        "expectedOutput": "30",
+        "timeLimit": 90
+    },
+    {
+        "id": "q_go_arr_h2",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Create a 2D slice `[][]int` with two inner slices `[]int{1, 2}` and `[]int{3, 4}`. Print only the value `4`.",
+        "expectedOutput": "4",
+        "timeLimit": 120
     }
 ]

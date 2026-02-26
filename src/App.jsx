@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
 import ExamPage from './pages/ExamPage';
+import ReviewPage from './pages/ReviewPage';
 
 import './App.css';
 
@@ -55,6 +56,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <ExamPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/review"
+                  element={
+                    <ProtectedRoute>
+                      <ReviewPage />
                     </ProtectedRoute>
                   }
                 />
