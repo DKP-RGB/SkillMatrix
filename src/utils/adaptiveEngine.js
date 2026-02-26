@@ -88,7 +88,7 @@ export const getNextQuestion = (
     // Find the weakest topic to challenge them constructively, or just pick available
     let weakestTopic = null;
     let lowestAcc = 101;
-    Object.entries(topicStats).forEach(([topic, stats]) => {
+    Object.entries(topicStats || {}).forEach(([topic, stats]) => {
         if (stats.attempted > 0) {
             const acc = stats.correct / stats.attempted;
             if (acc < lowestAcc) {

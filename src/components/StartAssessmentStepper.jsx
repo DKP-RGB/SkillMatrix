@@ -48,13 +48,13 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                     { num: 4, label: 'Type', icon: TerminalSquare }
                 ].map((s) => (
                     <div key={s.num} className="flex flex-col items-center bg-[#0d1117] px-4">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300 ${step >= s.num
-                            ? 'border-white text-white shadow-[0_0_10px_rgba(255,255,255,0.2)]'
-                            : 'border-gray-700 text-gray-500'
+                        <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-700 ${step >= s.num
+                            ? 'border-[#00a3ff] text-white shadow-[0_0_25px_rgba(0,163,255,0.6)] bg-[rgba(0,163,255,0.15)] scale-110'
+                            : 'border-gray-800 text-gray-700'
                             }`}>
                             <s.icon size={20} />
                         </div>
-                        <span className={`text-sm mt-3 font-semibold tracking-wider ${step >= s.num ? 'text-white' : 'text-gray-500'}`}>
+                        <span className={`text-sm mt-3 font-bold tracking-widest uppercase ${step >= s.num ? 'text-white' : 'text-gray-600'}`}>
                             {s.label}
                         </span>
                     </div>
@@ -71,20 +71,20 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                 <button
                                     key={lang}
                                     onClick={() => updateSelection('language', lang)}
-                                    className={`py-8 rounded-xl transition-all duration-300 flex flex-col items-center justify-center gap-4 group relative overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl ${selection.language === lang
-                                        ? 'bg-[#161b22] shadow-[0_0_20px_rgba(88,166,255,0.08)] ring-1 ring-[#58a6ff] text-white'
-                                        : 'bg-[#1e1e1e] hover:bg-[#161b22] ring-1 ring-gray-800 hover:ring-gray-600 text-white'
+                                    className={`py-8 rounded-2xl transition-all duration-500 flex flex-col items-center justify-center gap-4 group relative overflow-hidden transform hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,163,255,0.2)] ${selection.language === lang
+                                        ? 'bg-[rgba(22,27,34,0.9)] backdrop-blur-xl shadow-[0_0_40px_rgba(0,163,255,0.3)] ring-[3px] ring-[#00a3ff] text-white scale-[1.02]'
+                                        : 'bg-[#161b22] hover:bg-[#1c2128] ring-1 ring-gray-800 hover:ring-gray-600 text-gray-500 hover:text-white'
                                         }`}
-                                    style={{ color: '#ffffff' }}
+                                    style={{ color: selection.language === lang ? '#ffffff' : undefined }}
                                 >
                                     <img
                                         src={LANG_ICONS[lang]}
                                         alt={`${lang} logo`}
                                         className={`w-16 h-16 object-contain transition-transform duration-300 ${selection.language === lang ? 'scale-110' : 'group-hover:scale-110 grayscale-[0.2]'}`}
                                     />
-                                    <span className="text-2xl font-bold font-heading tracking-wide transition-colors">{lang}</span>
+                                    <span className="text-2xl font-black font-heading tracking-wider transition-all duration-300 transform group-hover:scale-105">{lang}</span>
                                     {selection.language === lang && (
-                                        <div className="absolute bottom-0 left-0 w-full h-[4px] bg-[#58a6ff] animate-fade-in" />
+                                        <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[#00a3ff] to-transparent animate-pulse" />
                                     )}
                                 </button>
                             ))}
@@ -100,11 +100,11 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                 <button
                                     key={topic}
                                     onClick={() => updateSelection('topic', topic)}
-                                    className={`p-6 rounded-xl border transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-sm font-semibold tracking-wide ${selection.topic === topic
-                                        ? 'border-[#58a6ff] bg-[#161b22] text-white shadow-[0_0_15px_rgba(88,166,255,0.1)]'
-                                        : 'border-gray-800 bg-[#1e1e1e] text-white hover:border-gray-500 hover:bg-[#161b22]'
+                                    className={`p-6 rounded-xl border-[3px] transition-all duration-500 transform hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(0,163,255,0.2)] text-base font-black tracking-widest uppercase ${selection.topic === topic
+                                        ? 'border-[#00a3ff] bg-[rgba(0,163,255,0.1)] text-white shadow-[0_0_25px_rgba(0,163,255,0.25)] scale-105'
+                                        : 'border-gray-800 bg-[#161b22] text-gray-600 hover:border-gray-500 hover:text-gray-200'
                                         }`}
-                                    style={{ color: '#ffffff' }}
+                                    style={{ color: selection.topic === topic ? '#ffffff' : undefined }}
                                 >
                                     {topic}
                                 </button>
@@ -154,11 +154,11 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                 <button
                                     key={type}
                                     onClick={() => updateSelection('type', type)}
-                                    className={`p-10 rounded-xl border transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl flex flex-col items-center justify-center gap-4 ${selection.type === type
-                                        ? 'border-[#58a6ff] bg-[#161b22] shadow-[0_0_15px_rgba(88,166,255,0.1)] text-white'
-                                        : 'border-gray-800 bg-[#1e1e1e] hover:border-gray-500 hover:bg-[#161b22] text-white'
+                                    className={`p-10 rounded-2xl border-[3px] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center gap-6 ${selection.type === type
+                                        ? 'border-[#00a3ff] bg-[rgba(0,163,255,0.1)] shadow-[0_0_35px_rgba(0,163,255,0.2)] text-white scale-[1.03]'
+                                        : 'border-gray-800 bg-[#161b22] hover:border-gray-600 hover:bg-[#1c2128] text-gray-600 hover:text-white'
                                         }`}
-                                    style={{ color: '#ffffff' }}
+                                    style={{ color: selection.type === type ? '#ffffff' : undefined }}
                                 >
                                     <span className="text-2xl font-bold tracking-wide">
                                         {type === 'mcq' ? 'Multiple Choice' : 'Code Writing'}

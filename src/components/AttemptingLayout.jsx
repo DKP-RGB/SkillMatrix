@@ -59,9 +59,12 @@ export const AttemptingLayout = ({
                     <span className="font-mono text-sm font-semibold">{timeRemaining}s</span>
                 </div>
 
-                <div className="text-gray-400 hover:text-gray-600 px-3 py-1 rounded transition-colors text-sm font-medium">
-                    Exit Assessment
-                </div>
+                <button
+                    onClick={() => { if (window.confirm('Are you sure you want to end and submit the assessment now?')) submitAnswer(true); }}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 px-4 py-1.5 rounded-lg transition-colors text-sm font-bold border border-red-200 shadow-sm flex items-center gap-2"
+                >
+                    End & Submit
+                </button>
             </div>
 
             {/* Split Screen Container */}
@@ -105,9 +108,12 @@ export const AttemptingLayout = ({
                             <button
                                 onClick={submitAnswer}
                                 disabled={question?.type === 'mcq' && !mcqAnswer}
-                                className="flex items-center gap-2 text-sm px-4 py-1.5 rounded bg-[#238636] text-white hover:bg-[#2ea043] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium tracking-wide"
+                                className={`flex items-center gap-2 text-sm px-5 py-2 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-wide shadow-lg ${number >= 5
+                                    ? 'bg-[#d29922] text-white hover:bg-[#b8861b] ring-2 ring-yellow-400 ring-offset-2 ring-offset-[#0d1117] animate-pulse'
+                                    : 'bg-[#238636] text-white hover:bg-[#2ea043]'
+                                    }`}
                             >
-                                <Send size={14} /> {number >= 5 ? 'Submit Assessment' : 'Next Question'}
+                                <Send size={16} /> {number >= 5 ? 'Submit Assessment' : 'Next Question'}
                             </button>
                         </div>
                     </div>
@@ -119,6 +125,7 @@ export const AttemptingLayout = ({
                                 {question?.options.map((opt, idx) => (
                                     <label
                                         key={idx}
+                                        onClick={() => setMcqAnswer(opt)}
                                         className={`flex items-center p-5 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${mcqAnswer === opt
                                             ? 'border-[#58a6ff] bg-[rgba(88,166,255,0.1)]'
                                             : 'border-gray-700 hover:border-gray-500 bg-[#1e1e1e]'
