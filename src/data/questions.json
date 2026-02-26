@@ -310,5 +310,413 @@
         "question": "Write a Go program containing a main function that prints 'Golang' to the stdout.",
         "expectedOutput": "Golang",
         "timeLimit": 60
+    },
+    {
+        "id": "q25",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'myArray' in C++?",
+        "options": [
+            "myArray[1]",
+            "myArray[0]",
+            "myArray.first()",
+            "myArray.get()"
+        ],
+        "correctAnswer": "myArray[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q26",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a JavaScript code snippet that prints the length of the array `const arr = [10, 20, 30, 40];` using `console.log()`.",
+        "expectedOutput": "4",
+        "timeLimit": 45
+    },
+    {
+        "id": "q27",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a Go program that creates an array of 2 integers {50, 60} and prints the second element.",
+        "expectedOutput": "60",
+        "timeLimit": 90
+    },
+    {
+        "id": "q32",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'arr'?",
+        "options": [
+            "arr[1]",
+            "arr[0]",
+            "arr.first()",
+            "arr.get(0)"
+        ],
+        "correctAnswer": "arr[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q33",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is typically the index of the last element in an array of size N?",
+        "options": [
+            "N",
+            "N-1",
+            "N+1",
+            "1"
+        ],
+        "correctAnswer": "N-1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q34",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to print the second element of an array initialized with {10, 20, 30}.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q35",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to output the sum of the first two elements of an array containing {5, 5}.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q36",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q37",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'arr'?",
+        "options": [
+            "arr[1]",
+            "arr[0]",
+            "arr.first()",
+            "arr.get(0)"
+        ],
+        "correctAnswer": "arr[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q38",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is typically the index of the last element in an array of size N?",
+        "options": [
+            "N",
+            "N-1",
+            "N+1",
+            "1"
+        ],
+        "correctAnswer": "N-1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q39",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to print the second element of an array initialized with {10, 20, 30}.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q40",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to output the sum of the first two elements of an array containing {5, 5}.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q41",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q42",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'arr'?",
+        "options": [
+            "arr[1]",
+            "arr[0]",
+            "arr.first()",
+            "arr.get(0)"
+        ],
+        "correctAnswer": "arr[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q43",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is typically the index of the last element in an array of size N?",
+        "options": [
+            "N",
+            "N-1",
+            "N+1",
+            "1"
+        ],
+        "correctAnswer": "N-1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q44",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to print the second element of an array initialized with {10, 20, 30}.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q45",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to output the sum of the first two elements of an array containing {5, 5}.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q46",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q47",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'arr'?",
+        "options": [
+            "arr[1]",
+            "arr[0]",
+            "arr.first()",
+            "arr.get(0)"
+        ],
+        "correctAnswer": "arr[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q48",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is typically the index of the last element in an array of size N?",
+        "options": [
+            "N",
+            "N-1",
+            "N+1",
+            "1"
+        ],
+        "correctAnswer": "N-1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q49",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to print the second element of an array initialized with {10, 20, 30}.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q50",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to output the sum of the first two elements of an array containing {5, 5}.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q51",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q52",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'arr'?",
+        "options": [
+            "arr[1]",
+            "arr[0]",
+            "arr.first()",
+            "arr.get(0)"
+        ],
+        "correctAnswer": "arr[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q53",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is typically the index of the last element in an array of size N?",
+        "options": [
+            "N",
+            "N-1",
+            "N+1",
+            "1"
+        ],
+        "correctAnswer": "N-1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q54",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to print the second element of an array initialized with {10, 20, 30}.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q55",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to output the sum of the first two elements of an array containing {5, 5}.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q56",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
+        "expectedOutput": "3",
+        "timeLimit": 90
+    },
+    {
+        "id": "q57",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you access the first element of an array named 'arr'?",
+        "options": [
+            "arr[1]",
+            "arr[0]",
+            "arr.first()",
+            "arr.get(0)"
+        ],
+        "correctAnswer": "arr[0]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q58",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is typically the index of the last element in an array of size N?",
+        "options": [
+            "N",
+            "N-1",
+            "N+1",
+            "1"
+        ],
+        "correctAnswer": "N-1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q59",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to print the second element of an array initialized with {10, 20, 30}.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q60",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write code to output the sum of the first two elements of an array containing {5, 5}.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q61",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a program that initializes an array of size 3 with values {1, 2, 3} and prints the last element.",
+        "expectedOutput": "3",
+        "timeLimit": 90
     }
 ]

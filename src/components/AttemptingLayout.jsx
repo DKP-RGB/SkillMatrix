@@ -105,9 +105,9 @@ export const AttemptingLayout = ({
                             <button
                                 onClick={submitAnswer}
                                 disabled={question?.type === 'mcq' && !mcqAnswer}
-                                className="flex items-center gap-2 text-sm px-4 py-1.5 rounded bg-[#238636] text-white hover:bg-[#2ea043] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex items-center gap-2 text-sm px-4 py-1.5 rounded bg-[#238636] text-white hover:bg-[#2ea043] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium tracking-wide"
                             >
-                                <Send size={14} /> Submit
+                                <Send size={14} /> {number >= 5 ? 'Submit Assessment' : 'Next Question'}
                             </button>
                         </div>
                     </div>

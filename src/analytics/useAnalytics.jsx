@@ -106,7 +106,8 @@ export const AnalyticsProvider = ({ children }) => {
         <AnalyticsContext.Provider value={{
             recordQuestionResult,
             getAnalyticsSummary,
-            resetAnalytics
+            resetAnalytics,
+            topicStats
         }}>
             {children}
         </AnalyticsContext.Provider>

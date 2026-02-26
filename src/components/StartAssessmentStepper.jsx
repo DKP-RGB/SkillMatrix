@@ -6,6 +6,15 @@ const TOPICS = [
     'Loops', 'Conditionals', 'Time Complexity', 'Basic Algorithms'
 ];
 
+const LANG_ICONS = {
+    'C': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg',
+    'C++': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg',
+    'Python': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg',
+    'Java': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+    'JavaScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+    'Go': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg'
+};
+
 export const StartAssessmentStepper = ({ onComplete }) => {
     const [step, setStep] = useState(1);
     const [selection, setSelection] = useState({
@@ -62,15 +71,20 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                 <button
                                     key={lang}
                                     onClick={() => updateSelection('language', lang)}
-                                    className={`py-12 rounded-xl transition-all duration-300 flex flex-col items-center justify-center group relative overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl ${selection.language === lang
+                                    className={`py-8 rounded-xl transition-all duration-300 flex flex-col items-center justify-center gap-4 group relative overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl ${selection.language === lang
                                         ? 'bg-[#161b22] shadow-[0_0_20px_rgba(88,166,255,0.08)] ring-1 ring-[#58a6ff] text-white'
                                         : 'bg-[#1e1e1e] hover:bg-[#161b22] ring-1 ring-gray-800 hover:ring-gray-600 text-white'
                                         }`}
                                     style={{ color: '#ffffff' }}
                                 >
-                                    <span className="text-4xl font-bold font-heading tracking-wide transition-colors">{lang}</span>
+                                    <img
+                                        src={LANG_ICONS[lang]}
+                                        alt={`${lang} logo`}
+                                        className={`w-16 h-16 object-contain transition-transform duration-300 ${selection.language === lang ? 'scale-110' : 'group-hover:scale-110 grayscale-[0.2]'}`}
+                                    />
+                                    <span className="text-2xl font-bold font-heading tracking-wide transition-colors">{lang}</span>
                                     {selection.language === lang && (
-                                        <div className="absolute bottom-0 left-0 w-full h-[3px] bg-[#58a6ff] animate-fade-in" />
+                                        <div className="absolute bottom-0 left-0 w-full h-[4px] bg-[#58a6ff] animate-fade-in" />
                                     )}
                                 </button>
                             ))}

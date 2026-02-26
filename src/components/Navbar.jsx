@@ -1,10 +1,16 @@
 import React from 'react';
 import { useAuth } from '../utils/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Do not render Navbar during active assessment for focus
+    if (location.pathname.startsWith('/exam')) {
+        return null;
+    }
 
     const handleLogout = () => {
         logout();

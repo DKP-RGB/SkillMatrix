@@ -43,6 +43,7 @@ const ExamPage = () => {
     const [mcqAnswer, setMcqAnswer] = useState('');
     const [codeAnswer, setCodeAnswer] = useState('');
     const [consoleOutput, setConsoleOutput] = useState('');
+    const [debugError, setDebugError] = useState('');
 
     // Handle CSS body class for full width layout
     useEffect(() => {
@@ -54,8 +55,30 @@ const ExamPage = () => {
         return () => document.body.classList.remove('exam-layout-active');
     }, [setupComplete, examFinished]);
 
+    // Handle Fullscreen Exit on Finish/Unmount
+    useEffect(() => {
+        if (examFinished && document.fullscreenElement) {
+            document.exitFullscreen().catch(err => console.log(err));
+        }
+    }, [examFinished]);
+
+    useEffect(() => {
+        return () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(err => console.log(err));
+            }
+        };
+    }, []);
+
     // Handle Setup Completion
     const handleSetupComplete = (config) => {
+        // Trigger Fullscreen
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.log("Error attempting to enable fullscreen:", err);
+            });
+        }
+
         setExamConfig(config);
         setSetupComplete(true);
 
@@ -113,46 +136,51 @@ const ExamPage = () => {
     };
 
     const submitAnswer = (userForcedSubmit = true, timedOut = false) => {
-        let isCorrect = false;
+        try {
+            let isCorrect = false;
 
-        if (currentQuestion.type === 'mcq') {
-            isCorrect = mcqAnswer === currentQuestion.correctAnswer;
-        } else {
-            isCorrect = codeAnswer.includes(currentQuestion.expectedOutput);
-        }
+            if (currentQuestion.type === 'mcq') {
+                isCorrect = mcqAnswer === currentQuestion.correctAnswer;
+            } else {
+                isCorrect = codeAnswer.includes(currentQuestion.expectedOutput);
+            }
 
-        if (timedOut) {
-            isCorrect = false;
-        }
+            if (timedOut) {
+                isCorrect = false;
+            }
 
-        const timeTaken = currentQuestion.timeLimit - timeRemaining;
+            const timeTaken = currentQuestion.timeLimit - timeRemaining;
 
-        // Record to analytics
-        recordQuestionResult(
-            currentQuestion.topic,
-            currentQuestion.difficulty,
-            isCorrect,
-            timeTaken,
-            lostFocusThisQuestion
-        );
+            // Record to analytics
+            recordQuestionResult(
+                currentQuestion.topic,
+                currentQuestion.difficulty,
+                isCorrect,
+                timeTaken,
+                lostFocusThisQuestion
+            );
 
-        // Get next adaptive question based on config Language
-        const nextQ = getNextQuestion(
-            questionsData,
-            attemptedIds,
-            isCorrect,
-            timeTaken,
-            currentQuestion.timeLimit,
-            currentQuestion.difficulty,
-            topicStats,
-            examConfig.language
-        );
+            // Get next adaptive question based on config Language
+            const nextQ = getNextQuestion(
+                questionsData,
+                attemptedIds,
+                isCorrect,
+                timeTaken,
+                currentQuestion.timeLimit,
+                currentQuestion.difficulty,
+                topicStats,
+                examConfig.language
+            );
 
-        // End exam after 5 questions
-        if (attemptedIds.length >= 5 || !nextQ) {
-            setExamFinished(true);
-        } else {
-            startNextQuestion(nextQ);
+            // End exam after 5 questions
+            if (attemptedIds.length >= 5 || !nextQ) {
+                setExamFinished(true);
+            } else {
+                startNextQuestion(nextQ);
+            }
+        } catch (error) {
+            setDebugError(error.toString() + " \n " + error.stack);
+            console.error("submitAnswer ERROR:", error);
         }
     };
 
@@ -198,6 +226,13 @@ const ExamPage = () => {
     // Render the Professional Split Interface (Attempting Phase)
     return (
         <div className="w-full relative">
+            {debugError && (
+                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[100] p-6 bg-red-950 border border-red-500 rounded text-red-200 text-sm shadow-2xl font-mono whitespace-pre-wrap w-3/4 max-w-2xl max-h-[80vh] overflow-auto">
+                    CRITICAL BUG CAPTURED:<br /><br />
+                    {debugError}
+                    <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded" onClick={() => setDebugError('')}>Dismiss</button>
+                </div>
+            )}
             {cheatWarnings > 0 && (
                 <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 p-3 bg-[rgba(218,54,51,0.95)] border border-red-500 rounded text-white text-sm shadow-xl font-medium animate-pulse">
                     ⚠️ Trust Factor Warning: You have switched tabs or lost focus {cheatWarnings} time(s).
