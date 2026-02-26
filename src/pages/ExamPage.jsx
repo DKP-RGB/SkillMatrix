@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAnalytics } from '../analytics/useAnalytics';
 import { useAuth } from '../utils/AuthContext';
 import { initAntiCheat } from '../utils/antiCheat';
+import { useProctor } from '../utils/useProctor';
 import { getNextQuestion, getInitialQuestion } from '../utils/adaptiveEngine';
 import questionsData from '../data/questions.json';
 
@@ -25,9 +26,32 @@ const ExamPage = () => {
     const [examFinished, setExamFinished] = useState(false);
     const [timeRemaining, setTimeRemaining] = useState(0);
 
-    // Anti-Cheat State
-    const [cheatWarnings, setCheatWarnings] = useState(0);
-    const [lostFocusThisQuestion, setLostFocusThisQuestion] = useState(false);
+    // AI Proctoring State
+    const [isTerminated, setIsTerminated] = useState(false);
+    const [proctorReason, setProctorReason] = useState('');
+    const [isAILoading, setIsAILoading] = useState(true);
+
+    const handleViolation = (violation) => {
+        if (violation.type === 'HARD_VIOLATION') {
+            setProctorReason(violation.reason);
+            setIsTerminated(true);
+            setExamFinished(true);
+            // Hard violations (Mobile Phone) trigger immediate logout after short delay
+            setTimeout(() => {
+                logout();
+                navigate('/');
+            }, 5000);
+        } else {
+            setCheatWarnings(prev => prev + 1);
+            setLostFocusThisQuestion(true);
+        }
+    };
+
+    const { videoRef, isModelLoading, startRecording, startDetection, stopDetection } = useProctor(handleViolation);
+
+    useEffect(() => {
+        setIsAILoading(isModelLoading);
+    }, [isModelLoading]);
 
     // Auto-Logout on 3 Cheat Warnings
     useEffect(() => {
@@ -85,13 +109,20 @@ const ExamPage = () => {
         const firstQ = getInitialQuestion(questionsData, config);
         startNextQuestion(firstQ);
 
+        // Start AI Proctoring
+        startRecording().then(() => {
+            startDetection();
+        });
+
         const cleanupCheat = initAntiCheat((type) => {
             setCheatWarnings(prev => prev + 1);
             setLostFocusThisQuestion(true);
-            alert('WARNING: Cheating activity detected (' + type + '). This incident has been logged.');
         });
 
-        return cleanupCheat;
+        return () => {
+            cleanupCheat();
+            stopDetection();
+        };
     };
 
     // Timer logic
@@ -222,7 +253,42 @@ const ExamPage = () => {
     // Render the Professional Split Interface (Attempting Phase)
     return (
         <div className="w-full relative">
-            {cheatWarnings > 0 && (
+            {/* AI Proctoring Camera Preview */}
+            <div className="fixed top-24 right-8 z-[100] w-48 h-36 bg-black rounded-2xl border-2 border-[#00a3ff] shadow-[0_0_20px_rgba(0,163,255,0.3)] overflow-hidden group">
+                <video
+                    ref={videoRef}
+                    autoPlay
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover scale-x-[-1]"
+                />
+                <div className="absolute top-2 left-2 bg-[rgba(0,0,0,0.6)] px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1">
+                    <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                    AI PROCTORING LIVE
+                </div>
+            </div>
+
+            {/* Termination Overlay */}
+            {isTerminated && (
+                <div className="fixed inset-0 z-[1000] bg-[#0d1117] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+                    <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mb-8 animate-bounce">
+                        <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
+                        </svg>
+                    </div>
+                    <h2 className="text-5xl font-bold text-white mb-4">Assessment Terminated</h2>
+                    <p className="text-xl text-red-400 font-medium mb-2 uppercase tracking-widest">{proctorReason}</p>
+                    <p className="text-gray-400 max-w-lg mb-10">
+                        Our AI Proctoring system has detected a high-level integrity violation (Mobile Device / Forbidden Object).
+                        As per strict anti-cheating policy, this session is invalid and you are being logged out.
+                    </p>
+                    <div className="text-secondary animate-pulse">
+                        Logging out in 5 seconds...
+                    </div>
+                </div>
+            )}
+
+            {(cheatWarnings > 0 && !isTerminated) && (
                 <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 p-3 bg-[rgba(218,54,51,0.95)] border border-red-500 rounded text-white text-sm shadow-xl font-medium animate-pulse">
                     ⚠️ Trust Factor Warning: You have switched tabs or lost focus {cheatWarnings} time(s).
                 </div>
@@ -242,5 +308,6 @@ const ExamPage = () => {
         </div>
     );
 };
+
 
 export default ExamPage;
