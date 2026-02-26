@@ -264,5 +264,51 @@
         ],
         "correctAnswer": "It points to a memory location that has been freed",
         "timeLimit": 45
+    },
+    {
+        "id": "q21",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Python script that prints the sum of a list named 'arr' containing [1, 2, 3, 4, 5].",
+        "expectedOutput": "15",
+        "timeLimit": 60
+    },
+    {
+        "id": "q22",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Java program that prints 'Hello World' to the console.",
+        "expectedOutput": "Hello World",
+        "timeLimit": 60
+    },
+    {
+        "id": "q23",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you define an arrow function in JavaScript?",
+        "options": [
+            "const func = () => {}",
+            "function func() {}",
+            "def func():",
+            "arrow func = () => {}"
+        ],
+        "correctAnswer": "const func = () => {}",
+        "timeLimit": 30
+    },
+    {
+        "id": "q24",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Go program containing a main function that prints 'Golang' to the stdout.",
+        "expectedOutput": "Golang",
+        "timeLimit": 60
     }
 ]

@@ -1,15 +1,17 @@
 // utils/antiCheat.js
 
 export const initAntiCheat = (onCheatDetected) => {
-    // 1. Detect Tab Switching / Focus Loss
+    let lastCheatTime = 0;
+
+    // 1. Detect Tab Switching
     const handleVisibilityChange = () => {
         if (document.hidden) {
-            onCheatDetected('tab_switch');
+            const now = Date.now();
+            if (now - lastCheatTime > 2000) { // 2 second cooldown debounce
+                lastCheatTime = now;
+                onCheatDetected('tab_switch');
+            }
         }
-    };
-
-    const handleBlur = () => {
-        onCheatDetected('window_blur');
     };
 
     // 2. Disable Right Click, Copy, Paste
@@ -19,8 +21,6 @@ export const initAntiCheat = (onCheatDetected) => {
 
     // Attach event listeners
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('blur', handleBlur);
-
     document.addEventListener('contextmenu', preventDefaultAction); // Right click
     document.addEventListener('copy', preventDefaultAction); // Copy
     document.addEventListener('paste', preventDefaultAction); // Paste
@@ -29,7 +29,6 @@ export const initAntiCheat = (onCheatDetected) => {
     // Return a cleanup function
     return () => {
         document.removeEventListener('visibilitychange', handleVisibilityChange);
-        window.removeEventListener('blur', handleBlur);
         document.removeEventListener('contextmenu', preventDefaultAction);
         document.removeEventListener('copy', preventDefaultAction);
         document.removeEventListener('paste', preventDefaultAction);

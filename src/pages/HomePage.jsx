@@ -25,7 +25,7 @@ const HomePage = () => {
                         </p>
                         <button
                             onClick={() => navigate('/login')}
-                            className="btn-primary text-xl px-12 py-4 shadow-[0_0_20px_rgba(88,166,255,0.4)] animate-pulse-glow"
+                            className="bg-[#1f6feb] hover:bg-[#3182ce] text-white font-semibold py-4 px-12 rounded-xl transition-all shadow-[0_4px_14px_rgba(49,130,206,0.5)] hover:shadow-[0_6px_25px_rgba(49,130,206,0.7)] transform hover:-translate-y-1 text-xl animate-pulse"
                         >
                             Get Started Now
                         </button>
@@ -48,47 +48,45 @@ const HomePage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                    <div className="glass-panel p-8 hover:-translate-y-2 transition-transform duration-300">
-                        <div className="w-12 h-12 bg-accent-primary bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-accent-primary">
+                    <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:border-gray-600">
+                        <div className="w-12 h-12 bg-[#58a6ff]/10 rounded-xl flex items-center justify-center mb-6 text-[#58a6ff]">
                             <Code2 size={24} />
                         </div>
-                        <h3 className="text-xl font-bold mb-3">Live Code Editor</h3>
-                        <p className="text-secondary text-sm">
+                        <h3 className="text-xl font-bold mb-3 text-white">Live Code Editor</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
                             Integrated C/C++ compiler simulation. Write, run, and test code directly in the browser.
                         </p>
                     </div>
 
-                    <div className="glass-panel p-8 hover:-translate-y-2 transition-transform duration-300">
-                        <div className="w-12 h-12 bg-[#238636] bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-[#238636]">
+                    <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:border-[#238636]">
+                        <div className="w-12 h-12 bg-[#238636]/10 rounded-xl flex items-center justify-center mb-6 text-[#238636]">
                             <BrainCircuit size={24} />
                         </div>
-                        <h3 className="text-xl font-bold mb-3">Adaptive Engine</h3>
-                        <p className="text-secondary text-sm">
+                        <h3 className="text-xl font-bold mb-3 text-white">Adaptive Engine</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
                             Questions adjust dynamically based on user speed, accuracy, and topic weaknesses.
                         </p>
                     </div>
 
-                    <div className="glass-panel p-8 hover:-translate-y-2 transition-transform duration-300">
-                        <div className="w-12 h-12 bg-[#da3633] bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-[#da3633]">
+                    <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:border-[#da3633]">
+                        <div className="w-12 h-12 bg-[#da3633]/10 rounded-xl flex items-center justify-center mb-6 text-[#da3633]">
                             <ShieldAlert size={24} />
                         </div>
-                        <h3 className="text-xl font-bold mb-3">Anti-Cheating</h3>
-                        <p className="text-secondary text-sm">
+                        <h3 className="text-xl font-bold mb-3 text-white">Anti-Cheating</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
                             Trust factors track tab focuses, disables copying, pasting, and contextual actions.
                         </p>
                     </div>
 
-                    <div className="glass-panel p-8 hover:-translate-y-2 transition-transform duration-300">
-                        <div className="w-12 h-12 bg-[#e3b341] bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-[#e3b341]">
+                    <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:border-[#e3b341]">
+                        <div className="w-12 h-12 bg-[#e3b341]/10 rounded-xl flex items-center justify-center mb-6 text-[#e3b341]">
                             <BarChart3 size={24} />
                         </div>
-                        <h3 className="text-xl font-bold mb-3">Rich Analytics</h3>
-                        <p className="text-secondary text-sm">
+                        <h3 className="text-xl font-bold mb-3 text-white">Rich Analytics</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
                             Real-time graphs projecting topic understanding, time metrics, and accuracy benchmarks.
                         </p>
                     </div>
-
                 </div>
             </div>
 

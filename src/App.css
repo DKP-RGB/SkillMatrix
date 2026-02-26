@@ -222,3 +222,9 @@
 .animate-pulse-glow {
     animation: pulse-glow 2s infinite;
 }
+
+/* Exam Split Screen Full Layout */
+.exam-layout-active .main-content {
+    padding: 0;
+    max-width: 100%;
+}

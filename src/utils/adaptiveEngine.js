@@ -13,6 +13,32 @@ const LEVEL_TO_STRING = {
 };
 
 /**
+ * Gets the very first question based on the user's explicit selection in the Setup Stepper.
+ */
+export const getInitialQuestion = (allQuestions, setupSelection) => {
+    const { language, topic, difficulty, type } = setupSelection;
+
+    // Exact match
+    const exactMatches = allQuestions.filter(q =>
+        q.language === language &&
+        q.topic === topic &&
+        q.difficulty === difficulty &&
+        q.type === type
+    );
+    if (exactMatches.length > 0) return exactMatches[Math.floor(Math.random() * exactMatches.length)];
+
+    // Fallback: Just match language and topic
+    const looseMatches = allQuestions.filter(q =>
+        q.language === language && q.topic === topic
+    );
+    if (looseMatches.length > 0) return looseMatches[Math.floor(Math.random() * looseMatches.length)];
+
+    // Ultimate fallback: Just match language
+    const langMatches = allQuestions.filter(q => q.language === language);
+    return langMatches.length > 0 ? langMatches[Math.floor(Math.random() * langMatches.length)] : allQuestions[0];
+};
+
+/**
  * Determines the next question based on user performance.
  * 
  * Rules:
@@ -28,7 +54,8 @@ export const getNextQuestion = (
     lastTimeTaken,
     lastTimeLimit,
     currentDifficulty,
-    topicStats
+    topicStats,
+    targetLanguage // Added constraint from stepper
 ) => {
     let nextDifficultyLevel = DIFFICULTY_LEVELS[currentDifficulty];
 
@@ -49,8 +76,10 @@ export const getNextQuestion = (
 
     const nextDifficultyStr = LEVEL_TO_STRING[nextDifficultyLevel];
 
-    // Filter out already attempted questions
-    const availableQuestions = allQuestions.filter(q => !attemptedIds.includes(q.id));
+    // Filter out already attempted questions and enforce language match
+    const availableQuestions = allQuestions.filter(q =>
+        !attemptedIds.includes(q.id) && q.language === targetLanguage
+    );
 
     if (availableQuestions.length === 0) {
         return null; // Exam finished (no more questions)

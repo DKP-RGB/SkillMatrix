@@ -12,25 +12,25 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="navbar glass-panel">
-            <div className="navbar-container">
-                <div className="navbar-logo" onClick={() => navigate(user ? '/dashboard' : '/')}>
-                    <span className="text-gradient">SkillMatrix</span>
+        <nav className="sticky top-0 z-50 w-full backdrop-blur-xl bg-[#0d1117]/80 border-b border-gray-800">
+            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <div className="cursor-pointer flex items-center gap-2" onClick={() => navigate(user ? '/dashboard' : '/')}>
+                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-indigo-400">SkillMatrix</span>
                 </div>
 
-                <div className="navbar-links">
+                <div className="flex items-center gap-6">
                     {user ? (
                         <>
-                            <span className="user-greeting">Hello, {user.name}</span>
-                            <button className="btn-secondary" onClick={() => navigate('/dashboard')}>
+                            <span className="text-gray-300 font-medium hidden sm:block text-sm">Hello, {user.name}</span>
+                            <button className="text-gray-300 hover:text-white transition-colors text-sm font-medium" onClick={() => navigate('/dashboard')}>
                                 Dashboard
                             </button>
-                            <button className="btn-primary" onClick={handleLogout}>
+                            <button className="bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 px-4 py-2 rounded-lg transition-all text-sm font-medium" onClick={handleLogout}>
                                 Logout
                             </button>
                         </>
                     ) : (
-                        <button className="btn-primary" onClick={() => navigate('/login')}>
+                        <button className="bg-[#1f6feb] hover:bg-[#3182ce] text-white px-5 py-2 rounded-lg font-medium transition-all text-sm shadow-[0_0_15px_rgba(49,130,206,0.3)]" onClick={() => navigate('/login')}>
                             Login / Signup
                         </button>
                     )}

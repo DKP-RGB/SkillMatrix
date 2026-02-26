@@ -8,7 +8,4 @@ export default {
         extend: {},
     },
     plugins: [],
-    corePlugins: {
-        preflight: false, // Prevents Tailwind from resetting our existing Vanilla CSS design
-    }
 }

@@ -36,8 +36,8 @@ const Dashboard = () => {
                             <div className="flex-1 h-6 bg-[rgba(255,255,255,0.05)] rounded overflow-hidden">
                                 <div
                                     className={`h-full flex items-center px-2 text-xs font-bold text-white transition-all duration-1000 ${diff === 'easy' ? 'bg-[#238636]' :
-                                            diff === 'medium' ? 'bg-[#e3b341]' :
-                                                'bg-[#da3633]'
+                                        diff === 'medium' ? 'bg-[#e3b341]' :
+                                            'bg-[#da3633]'
                                         }`}
                                     style={{ width: stats.attempted > 0 ? width : '0%' }}
                                 >
@@ -72,65 +72,116 @@ const Dashboard = () => {
         );
     };
 
+    const renderRecommendations = () => {
+        // Find topics with < 60% accuracy to recommend practice
+        const recommendations = [];
+
+        Object.entries(analytics.topicStats || {}).forEach(([topic, stats]) => {
+            if (stats.attempted > 0) {
+                const acc = stats.correct / stats.attempted;
+                if (acc < 0.6) {
+                    recommendations.push(
+                        <div key={topic} className="flex p-4 bg-[#161b22] border border-glass-border rounded-lg items-center justify-between hover:border-[#58a6ff] transition-colors cursor-pointer">
+                            <div>
+                                <h4 className="font-bold text-white mb-1">{topic}</h4>
+                                <p className="text-secondary text-xs">Practice Recommended • {Math.round(acc * 100)}% Accuracy</p>
+                            </div>
+                            <button className="text-[#58a6ff] bg-[rgba(88,166,255,0.1)] px-3 py-1 text-sm rounded hover:bg-[rgba(88,166,255,0.2)] transition-colors">
+                                Review
+                            </button>
+                        </div>
+                    );
+                }
+            }
+        });
+
+        if (recommendations.length === 0 && analytics.totalQuestionsAttempted > 0) {
+            return (
+                <div className="flex h-32 items-center justify-center text-secondary border border-dashed border-[#238636] bg-[rgba(35,134,54,0.05)] rounded mt-4">
+                    Excellent work! No immediate practice recommended.
+                </div>
+            );
+        }
+
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {recommendations}
+            </div>
+        );
+    };
+
     return (
-        <div className="dashboard-container animate-fade-in p-6 max-w-7xl mx-auto">
-            <div className="dashboard-header mb-8 flex justify-between items-end">
+        <div className="animate-fade-in p-6 max-w-7xl mx-auto min-h-screen">
+            <div className="mb-10 flex flex-col md:flex-row justify-between md:items-end gap-6 border-b border-gray-800 pb-6">
                 <div>
-                    <h1 className="text-3xl text-gradient">Welcome back, {user.name}</h1>
-                    <p className="text-secondary mt-2">Ready for your next skill assessment?</p>
+                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-indigo-400">Welcome back, {user.name}</h1>
+                    <p className="text-gray-400 mt-2 text-lg">Ready for your next skill assessment?</p>
                 </div>
                 <button
-                    className="btn-primary"
+                    className="bg-[#1f6feb] hover:bg-[#3182ce] text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-[0_4px_14px_rgba(49,130,206,0.3)] hover:shadow-[0_6px_20px_rgba(49,130,206,0.5)] transform hover:-translate-y-1"
                     onClick={() => navigate('/exam')}
                 >
                     Start New Assessment
                 </button>
             </div>
 
-            <div className="dashboard-metrics grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div className="metric-card glass-panel p-6 text-center shadow-lg relative overflow-hidden">
-                    <div className="text-secondary text-sm mb-2">Overall Accuracy</div>
-                    <div className="text-4xl font-bold font-mono text-accent-primary">{analytics.accuracy}%</div>
-                    <div className="absolute top-0 right-0 w-16 h-16 bg-accent-primary opacity-10 rounded-bl-full"></div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg relative overflow-hidden flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors">
+                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Overall Accuracy</div>
+                    <div className="text-5xl font-bold font-mono text-[#58a6ff] drop-shadow-md">{analytics.accuracy}%</div>
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#58a6ff] opacity-[0.03] rounded-bl-full"></div>
                 </div>
-                <div className="metric-card glass-panel p-6 text-center shadow-lg">
-                    <div className="text-secondary text-sm mb-2">Avg. Time / Q</div>
-                    <div className="text-4xl font-bold font-mono text-accent-primary">{analytics.avgTimePerQuestion}s</div>
+                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors">
+                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Avg. Time / Q</div>
+                    <div className="text-5xl font-bold font-mono text-[#58a6ff] drop-shadow-md">{analytics.avgTimePerQuestion}s</div>
                 </div>
-                <div className="metric-card glass-panel p-6 text-center shadow-lg">
-                    <div className="text-secondary text-sm mb-2">Total Attempted</div>
-                    <div className="text-4xl font-bold font-mono text-accent-primary">{analytics.totalQuestionsAttempted}</div>
+                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors">
+                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Total Attempted</div>
+                    <div className="text-5xl font-bold font-mono text-[#58a6ff] drop-shadow-md">{analytics.totalQuestionsAttempted}</div>
                 </div>
-                <div className="metric-card glass-panel p-6 text-center shadow-lg">
-                    <div className="text-secondary text-sm mb-2">Daily Streak</div>
-                    <div className="text-4xl font-bold font-mono text-warning">{analytics.dailyStreak} <span className="text-2xl">🔥</span></div>
+                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors relative overflow-hidden">
+                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Daily Streak</div>
+                    <div className="text-5xl font-bold font-mono text-[#e3b341] drop-shadow-md flex items-center justify-center gap-2">
+                        {analytics.dailyStreak} <span className="text-3xl animate-pulse">🔥</span>
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#e3b341] to-transparent opacity-50"></div>
                 </div>
             </div>
 
-            <div className="dashboard-charts grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-                <div className="chart-card glass-panel p-8">
-                    <h3 className="text-xl mb-2 font-semibold border-b border-glass-border pb-4">Difficulty Distribution</h3>
-                    <p className="text-secondary text-sm mb-6">Questions attempted per difficulty level and accuracy.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 mb-10">
+                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 shadow-md">
+                    <h3 className="text-2xl mb-2 font-bold border-b border-gray-800 pb-4 text-white">Difficulty Distribution</h3>
+                    <p className="text-gray-400 text-sm mb-6">Questions attempted per difficulty level and accuracy.</p>
                     {analytics.totalQuestionsAttempted > 0 ? renderDifficultyGraph() : (
-                        <div className="flex h-40 items-center justify-center text-secondary border border-dashed border-glass-border rounded mt-4">
+                        <div className="flex flex-col h-40 items-center justify-center text-gray-500 border-2 border-dashed border-gray-800 rounded-xl mt-4 bg-[#0d1117] font-medium">
                             Take an assessment to generate this graph
                         </div>
                     )}
                 </div>
 
-                <div className="chart-card glass-panel p-8">
-                    <h3 className="text-xl mb-2 font-semibold border-b border-glass-border pb-4">Skill Insights</h3>
-                    <p className="text-secondary text-sm mb-6">Topic-based performance analysis.</p>
+                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 shadow-md">
+                    <h3 className="text-2xl mb-2 font-bold border-b border-gray-800 pb-4 text-white">Skill Insights</h3>
+                    <p className="text-gray-400 text-sm mb-6">Topic-based performance analysis.</p>
                     {analytics.totalQuestionsAttempted > 0 ? renderTopicBadges() : (
-                        <div className="flex h-40 items-center justify-center text-secondary border border-dashed border-glass-border rounded mt-4">
+                        <div className="flex flex-col h-40 items-center justify-center text-gray-500 border-2 border-dashed border-gray-800 rounded-xl mt-4 bg-[#0d1117] font-medium">
                             Take an assessment to generate insights
                         </div>
                     )}
                 </div>
             </div>
 
+            <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 shadow-md mb-8">
+                <h3 className="text-2xl mb-2 font-bold border-b border-gray-800 pb-4 text-[#58a6ff]">Recommended For You</h3>
+                <p className="text-gray-400 text-sm mb-6">Personalized study plan based on your adaptive performance.</p>
+                {analytics.totalQuestionsAttempted > 0 ? renderRecommendations() : (
+                    <div className="flex flex-col h-32 items-center justify-center text-gray-500 border-2 border-dashed border-gray-800 rounded-xl mt-4 bg-[#0d1117] font-medium">
+                        Take an assessment to get personalized recommendations
+                    </div>
+                )}
+            </div>
+
             {analytics.focusLossCount > 0 && (
-                <div className="mt-8 p-4 border border-[rgba(218,54,51,0.5)] bg-[rgba(218,54,51,0.1)] rounded text-danger text-center animate-fade-in">
+                <div className="mb-10 p-5 border border-red-500/50 bg-red-500/10 rounded-xl text-red-400 font-medium text-center animate-pulse shadow-[0_0_20px_rgba(218,54,51,0.1)]">
                     ⚠️ Attention: Your account has flagged {analytics.focusLossCount} attention warnings (tab switching/focus loss). Maintaining focus improves your analytics accuracy.
                 </div>
             )}
