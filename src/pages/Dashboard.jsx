@@ -115,7 +115,7 @@ const Dashboard = () => {
         <div className="animate-fade-in p-6 max-w-7xl mx-auto min-h-screen">
             <div className="mb-10 flex flex-col md:flex-row justify-between md:items-end gap-6 border-b border-gray-800 pb-6">
                 <div>
-                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-indigo-400">Welcome back, {user.name}</h1>
+                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-indigo-400">Welcome back, {user.user_metadata?.full_name || user.email?.split('@')[0]}</h1>
                     <p className="text-gray-400 mt-2 text-lg">Ready for your next skill assessment?</p>
                 </div>
                 <button

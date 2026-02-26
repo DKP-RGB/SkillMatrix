@@ -27,7 +27,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-6">
                     {user ? (
                         <>
-                            <span className="text-gray-300 font-medium hidden sm:block text-sm">Hello, {user.name}</span>
+                            <span className="text-gray-300 font-medium hidden sm:block text-sm">Hello, {user.user_metadata?.full_name || user.email?.split('@')[0]}</span>
                             <button className="text-gray-300 hover:text-white transition-colors text-sm font-medium" onClick={() => navigate('/dashboard')}>
                                 Dashboard
                             </button>

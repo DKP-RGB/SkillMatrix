@@ -15,7 +15,16 @@ import './App.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-[#0d1117]">
+        <div className="w-12 h-12 border-4 border-[#58a6ff] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   if (!user) {
     return <Navigate to="/" replace />;
   }

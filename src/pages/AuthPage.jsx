@@ -8,7 +8,7 @@ const AuthPage = () => {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [error, setError] = useState('');
-    const { login, signup } = useAuth();
+    const { login, signup, loginWithGoogle } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -16,16 +16,22 @@ const AuthPage = () => {
         setError('');
         try {
             if (isLogin) {
-                const success = await login(email, password);
-                if (success) navigate('/dashboard');
-                else setError('Invalid credentials');
+                await login(email, password);
+                navigate('/dashboard');
             } else {
-                const success = await signup(email, password, name);
-                if (success) navigate('/dashboard');
-                else setError('Signup failed');
+                await signup(email, password, name);
+                setError('Please check your email for the confirmation link!');
             }
         } catch (err) {
-            setError('An error occurred');
+            setError(err.message || 'An error occurred');
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            await loginWithGoogle();
+        } catch (err) {
+            setError(err.message || 'Google login failed');
         }
     };
 
@@ -36,7 +42,7 @@ const AuthPage = () => {
                     {isLogin ? 'Welcome Back' : 'Create Account'}
                 </h2>
 
-                {error && <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-3 rounded-lg mb-6 text-sm text-center">{error}</div>}
+                {error && <div className={`p-3 rounded-lg mb-6 text-sm text-center ${error.includes('check your email') ? 'bg-green-500/10 border border-green-500/50 text-green-400' : 'bg-red-500/10 border border-red-500/50 text-red-400'}`}>{error}</div>}
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     {!isLogin && (
@@ -58,6 +64,23 @@ const AuthPage = () => {
                         {isLogin ? 'Login to Dashboard' : 'Sign Up Now'}
                     </button>
                 </form>
+
+                <div className="relative my-8">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-800"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-[#161b22] text-gray-500 uppercase">Or continue with</span>
+                    </div>
+                </div>
+
+                <button
+                    onClick={handleGoogleLogin}
+                    className="w-full bg-[#24292f] hover:bg-[#2c3137] text-white font-medium py-3 rounded-lg border border-gray-700 flex items-center justify-center gap-3 transition-all hover:border-gray-500 mb-4"
+                >
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+                    Login with Google
+                </button>
 
                 <div className="text-center mt-6">
                     <p className="text-gray-400 text-sm">
