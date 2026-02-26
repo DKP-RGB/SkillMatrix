@@ -28,7 +28,7 @@ export const fetchChatResponse = async (messages, apiKey) => {
                 "messages": [
                     {
                         "role": "system",
-                        "content": "You are a helpful coding assistant for the SkillMatrix platform. Assist users with C, C++, Python, Java, JavaScript, and Go questions. Keep answers concise, helpful, and professional."
+                        "content": "You are a professional coding assistant for SkillMatrix. Your answers MUST be highly structured and easy to read. Use: \n- **Bold headers** for key concepts.\n- Bullet points or numbered lists for steps or features.\n- Clear line breaks between sections.\n- Concise explanations for C/C++, Python, Java, JavaScript, and Go."
                     },
                     ...messages
                 ],

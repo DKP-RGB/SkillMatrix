@@ -95,11 +95,16 @@ const ChatBot = ({ apiKey }) => {
                                 >
                                     {messages.map((msg, i) => (
                                         <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                            <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.role === 'user'
+                                            <div className={`max-w-[85%] p-3 rounded-2xl text-sm whitespace-pre-wrap ${msg.role === 'user'
                                                 ? 'bg-[#00a3ff] text-white rounded-tr-none shadow-[0_4px_12px_rgba(0,163,255,0.2)]'
                                                 : 'bg-[#161b22] text-gray-200 border border-gray-800 rounded-tl-none shadow-lg'
                                                 }`}>
-                                                {msg.content}
+                                                {msg.content.split(/(\*\*.*?\*\*)/).map((part, index) => {
+                                                    if (part.startsWith('**') && part.endsWith('**')) {
+                                                        return <strong key={index} className="text-[#58a6ff]">{part.slice(2, -2)}</strong>;
+                                                    }
+                                                    return part;
+                                                })}
                                             </div>
                                         </div>
                                     ))}
