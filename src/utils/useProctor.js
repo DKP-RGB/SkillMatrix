@@ -47,15 +47,18 @@ export const useProctor = (onCheatingDetected) => {
         }
     };
 
+    const [predictions, setPredictions] = useState([]);
+
     const runDetection = async () => {
         if (!model || !videoRef.current) return;
 
-        const predictions = await model.detect(videoRef.current);
+        const detections = await model.detect(videoRef.current);
+        setPredictions(detections);
 
         let personCount = 0;
         let mobileDetected = false;
 
-        predictions.forEach(prediction => {
+        detections.forEach(prediction => {
             if (prediction.class === 'person') personCount++;
             if (prediction.class === 'cell phone' || prediction.class === 'mobile phone') {
                 if (prediction.score > 0.6) mobileDetected = true;
@@ -67,7 +70,8 @@ export const useProctor = (onCheatingDetected) => {
                 type: 'HARD_VIOLATION',
                 reason: 'Mobile Phone Detected'
             });
-            return; // Stop further checks if hard violation
+            stopDetection(); // Stop to prevent further alerts
+            return;
         }
 
         if (personCount === 0) {
@@ -85,7 +89,7 @@ export const useProctor = (onCheatingDetected) => {
 
     const startDetection = () => {
         if (intervalRef.current) clearInterval(intervalRef.current);
-        intervalRef.current = setInterval(runDetection, 3000); // Check every 3 seconds
+        intervalRef.current = setInterval(runDetection, 1000); // Check every 1 second for smoother UI
     };
 
     const stopDetection = () => {
@@ -95,6 +99,7 @@ export const useProctor = (onCheatingDetected) => {
     return {
         videoRef,
         isModelLoading,
+        predictions,
         startRecording,
         startDetection,
         stopDetection

@@ -64,25 +64,25 @@ export const StartAssessmentStepper = ({ onComplete }) => {
             {/* Step Content */}
             <div className="min-h-[350px] flex flex-col justify-center items-center w-full">
                 {step === 1 && (
-                    <div className="animate-slide-up w-full text-center">
+                    <div className="animate-slide-up w-full text-center relative z-50">
                         <h3 className="text-2xl mb-12 font-bold text-white tracking-wide">Select Programming Language</h3>
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
                             {['C', 'C++', 'Python', 'Java', 'JavaScript', 'Go'].map(lang => (
                                 <button
                                     key={lang}
+                                    type="button"
                                     onClick={() => updateSelection('language', lang)}
                                     className={`py-8 rounded-2xl transition-all duration-500 flex flex-col items-center justify-center gap-4 group relative overflow-hidden transform hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,163,255,0.2)] ${selection.language === lang
                                         ? 'bg-[rgba(22,27,34,0.9)] backdrop-blur-xl shadow-[0_0_40px_rgba(0,163,255,0.3)] ring-[3px] ring-[#00a3ff] text-white scale-[1.02]'
                                         : 'bg-[#161b22] hover:bg-[#1c2128] ring-1 ring-gray-800 hover:ring-gray-600 text-gray-500 hover:text-white'
                                         }`}
-                                    style={{ color: selection.language === lang ? '#ffffff' : undefined }}
                                 >
                                     <img
                                         src={LANG_ICONS[lang]}
                                         alt={`${lang} logo`}
                                         className={`w-16 h-16 object-contain transition-transform duration-300 ${selection.language === lang ? 'scale-110' : 'group-hover:scale-110 grayscale-[0.2]'}`}
                                     />
-                                    <span className="text-2xl font-black font-heading tracking-wider transition-all duration-300 transform group-hover:scale-105">{lang}</span>
+                                    <span className={`text-2xl font-black font-heading tracking-wider transition-all duration-300 transform group-hover:scale-105 ${selection.language === lang ? 'text-white' : ''}`}>{lang}</span>
                                     {selection.language === lang && (
                                         <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[#00a3ff] to-transparent animate-pulse" />
                                     )}

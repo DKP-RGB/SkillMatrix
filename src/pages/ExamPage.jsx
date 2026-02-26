@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAnalytics } from '../analytics/useAnalytics';
 import { useAuth } from '../utils/AuthContext';
@@ -35,6 +35,8 @@ const ExamPage = () => {
     const [proctorReason, setProctorReason] = useState('');
     const [isAILoading, setIsAILoading] = useState(true);
 
+    const canvasRef = useRef(null);
+
     const handleViolation = (violation) => {
         if (violation.type === 'HARD_VIOLATION') {
             setProctorReason(violation.reason);
@@ -51,7 +53,33 @@ const ExamPage = () => {
         }
     };
 
-    const { videoRef, isModelLoading, startRecording, startDetection, stopDetection } = useProctor(handleViolation);
+    const { videoRef, isModelLoading, predictions, startRecording, startDetection, stopDetection } = useProctor(handleViolation);
+
+    // Draw Tracking Boxes
+    useEffect(() => {
+        if (!canvasRef.current || !videoRef.current) return;
+        const ctx = canvasRef.current.getContext('2d');
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+        predictions.forEach(prediction => {
+            const [x, y, width, height] = prediction.bbox;
+            const isForbidden = prediction.class === 'cell phone' || prediction.class === 'mobile phone';
+
+            // Draw Box
+            ctx.strokeStyle = isForbidden ? '#ff4d4d' : '#00a3ff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+
+            // Draw Label
+            ctx.fillStyle = isForbidden ? '#ff4d4d' : '#00a3ff';
+            ctx.font = '10px Arial';
+            ctx.fillText(
+                `${prediction.class.toUpperCase()} (${Math.round(prediction.score * 100)}%)`,
+                x,
+                y > 10 ? y - 5 : y + 10
+            );
+        });
+    }, [predictions]);
 
     useEffect(() => {
         setIsAILoading(isModelLoading);
@@ -99,6 +127,18 @@ const ExamPage = () => {
 
     // Handle Setup Completion
     const handleSetupComplete = (config) => {
+        setExamConfig(config);
+        setSetupComplete(true);
+
+        // Get first question based on config
+        const firstQ = getInitialQuestion(questionsData, config);
+        startNextQuestion(firstQ);
+    };
+
+    // Initialize Anti-Cheat & Proctoring after setup with a small delay to avoid false positives
+    useEffect(() => {
+        if (!setupComplete || examFinished) return;
+
         // Trigger Fullscreen
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen().catch(err => {
@@ -106,28 +146,30 @@ const ExamPage = () => {
             });
         }
 
-        setExamConfig(config);
-        setSetupComplete(true);
+        let proctorStarted = false;
+        let antiCheatCleanup = null;
 
-        // Get first question based on config
-        const firstQ = getInitialQuestion(questionsData, config);
-        startNextQuestion(firstQ);
+        const startSecurity = async () => {
+            // Delay to allow focus to settle
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Start AI Proctoring
-        startRecording().then(() => {
+            await startRecording();
             startDetection();
-        });
+            proctorStarted = true;
 
-        const cleanupCheat = initAntiCheat((type) => {
-            setCheatWarnings(prev => prev + 1);
-            setLostFocusThisQuestion(true);
-        });
+            antiCheatCleanup = initAntiCheat((type) => {
+                setCheatWarnings(prev => prev + 1);
+                setLostFocusThisQuestion(true);
+            });
+        };
+
+        startSecurity();
 
         return () => {
-            cleanupCheat();
-            stopDetection();
+            if (proctorStarted) stopDetection();
+            if (antiCheatCleanup) antiCheatCleanup();
         };
-    };
+    }, [setupComplete, examFinished]);
 
     // Timer logic
     useEffect(() => {
@@ -251,8 +293,20 @@ const ExamPage = () => {
         );
     }
 
-    // Render Loading State (Should be instant)
-    if (!currentQuestion) return <div className="text-center mt-12 animate-pulse">Initializing Engine...</div>;
+    // Render Loading State
+    if (!currentQuestion) {
+        return (
+            <div className="flex flex-col items-center justify-center h-[80vh] animate-fade-in">
+                <div className="w-12 h-12 border-4 border-[#58a6ff] border-t-transparent rounded-full animate-spin mb-4"></div>
+                <div className="text-center">
+                    <h3 className="text-xl font-bold text-white mb-2">Initializing Assessment Engine</h3>
+                    <p className="text-gray-400 text-sm">
+                        {isAILoading ? "Warming up AI Proctoring models..." : "Preparing questions..."}
+                    </p>
+                </div>
+            </div>
+        );
+    }
 
     // Render the Professional Split Interface (Attempting Phase)
     return (
@@ -265,6 +319,12 @@ const ExamPage = () => {
                     muted
                     playsInline
                     className="w-full h-full object-cover scale-x-[-1]"
+                />
+                <canvas
+                    ref={canvasRef}
+                    width={320}
+                    height={240}
+                    className="absolute inset-0 w-full h-full pointer-events-none scale-x-[-1]"
                 />
                 <div className="absolute top-2 left-2 bg-[rgba(0,0,0,0.6)] px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1">
                     <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />

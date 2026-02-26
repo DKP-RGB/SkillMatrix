@@ -6,11 +6,16 @@ export const initAntiCheat = (onCheatDetected) => {
     // 1. Detect Tab Switching
     const handleVisibilityChange = () => {
         if (document.hidden) {
-            const now = Date.now();
-            if (now - lastCheatTime > 2000) { // 2 second cooldown debounce
-                lastCheatTime = now;
-                onCheatDetected('tab_switch');
-            }
+            // Wait 300ms to see if it stays hidden (filters out brief focus flickers)
+            setTimeout(() => {
+                if (document.hidden) {
+                    const now = Date.now();
+                    if (now - lastCheatTime > 2000) {
+                        lastCheatTime = now;
+                        onCheatDetected('tab_switch');
+                    }
+                }
+            }, 300);
         }
     };
 
