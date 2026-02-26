@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAnalytics } from '../analytics/useAnalytics';
 import { useAuth } from '../utils/AuthContext';
 import { initAntiCheat } from '../utils/antiCheat';
 import { useProctor } from '../utils/useProctor';
 import { getNextQuestion, getInitialQuestion } from '../utils/adaptiveEngine';
+import { motion, AnimatePresence } from 'framer-motion';
 import questionsData from '../data/questions.json';
 
 // Components
@@ -23,10 +24,15 @@ const ExamPage = () => {
     } = useAnalytics();
     const { logout } = useAuth();
 
+    const location = useLocation();
+
     // Setup Flow State
     const [setupComplete, setSetupComplete] = useState(false);
     const [examConfig, setExamConfig] = useState(null);
     const [fullResults, setFullResults] = useState([]);
+    const [reattemptCountdown, setReattemptCountdown] = useState(
+        location.state?.reattemptConfig ? 3 : null
+    );
 
     // Core Exam State
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -92,11 +98,17 @@ const ExamPage = () => {
             setExamFinished(true);
             setProctorReason('Mobile Phone Detected');
 
-            // Final Logout after 5s of the "Disqualified" screen (as per previous flow)
+            // Record failure and go to Dashboard
+            finishAssessment('terminated');
             setTimeout(() => {
-                logout();
-                navigate('/');
-            }, 5000);
+                navigate('/dashboard', {
+                    state: {
+                        cheated: true,
+                        reason: 'Mobile Phone Detected',
+                        config: examConfig
+                    }
+                });
+            }, 3000);
         }
     }, [showWarning, warningCountdown, logout, navigate]);
 
@@ -132,18 +144,57 @@ const ExamPage = () => {
         setIsAILoading(isModelLoading);
     }, [isModelLoading]);
 
-    // Auto-Logout on 3 Cheat Warnings
+    // Terminate on 3 Cheat Warnings
     useEffect(() => {
         if (cheatWarnings >= 3 && !examFinished) {
-            const msg = "Assessment stopped: Maximum integrity violations exceeded. " +
-                "Continuous tab-switching or proctoring violations (multiple people/no face) " +
-                "have been detected. You are being logged out for violating assessment rules.";
-            alert(msg);
             setExamFinished(true);
-            logout();
-            navigate('/');
+            setIsTerminated(true);
+            setProctorReason('Multiple focus/integrity violations');
+            finishAssessment('terminated');
+            setTimeout(() => {
+                navigate('/dashboard', {
+                    state: {
+                        cheated: true,
+                        reason: 'Maximum integrity violations exceeded',
+                        config: examConfig
+                    }
+                });
+            }, 3000);
         }
-    }, [cheatWarnings, examFinished, logout, navigate]);
+    }, [cheatWarnings, examFinished, finishAssessment, navigate, examConfig]);
+
+    useEffect(() => {
+        const runCountdown = async () => {
+            if (reattemptCountdown !== null && reattemptCountdown > 0) {
+                const timer = setTimeout(() => setReattemptCountdown(prev => prev - 1), 1000);
+                return () => clearTimeout(timer);
+            } else if (reattemptCountdown === 0) {
+                const config = location.state.reattemptConfig;
+                // Important: Ensure we have the latest historical IDs
+                const historicalIds = await getHistoricalQuestionIds();
+
+                const availableQuestions = questionsData.filter(q => !historicalIds.includes(q.id));
+                const pool = availableQuestions.length > 0 ? availableQuestions : questionsData;
+                const firstQ = getInitialQuestion(pool, config);
+
+                startAssessment(config.language, config.type);
+                setExamConfig(config);
+                setAttemptedIds([...historicalIds, firstQ.id]);
+                setCurrentQuestion(firstQ);
+                setTimeRemaining(firstQ.timeLimit);
+                setSetupComplete(true);
+                setReattemptCountdown(null);
+            }
+        };
+        runCountdown();
+    }, [reattemptCountdown, location.state, startAssessment, getHistoricalQuestionIds]);
+
+    // Handle initial state if reattemptConfig is present
+    useEffect(() => {
+        if (location.state?.reattemptConfig && !setupComplete && reattemptCountdown === null && !examFinished && !isTerminated) {
+            setReattemptCountdown(3);
+        }
+    }, [location.state, setupComplete, reattemptCountdown, examFinished, isTerminated]);
 
     // User Input State
     const [mcqAnswer, setMcqAnswer] = useState('');
@@ -341,8 +392,8 @@ const ExamPage = () => {
         }
     };
 
-    // Render Setup Flow
-    if (!setupComplete) {
+    // Render Setup Flow (Only if no reattempt countdown is active)
+    if (!setupComplete && reattemptCountdown === null) {
         return (
             <div className="pt-10">
                 <div className="text-center mb-10">
@@ -380,8 +431,8 @@ const ExamPage = () => {
         );
     }
 
-    // Render Loading State
-    if (!currentQuestion) {
+    // Render Loading State (But not if countdown is active)
+    if (!currentQuestion && reattemptCountdown === null) {
         return (
             <div className="flex flex-col items-center justify-center h-[80vh] animate-fade-in">
                 <div className="w-12 h-12 border-4 border-[#58a6ff] border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -470,24 +521,57 @@ const ExamPage = () => {
                 </div>
             )}
 
+            {/* Reattempt Countdown Overlay */}
+            <AnimatePresence>
+                {reattemptCountdown !== null && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[2000] bg-[#0d1117] flex flex-col items-center justify-center backdrop-blur-3xl overflow-hidden"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="text-white text-9xl font-black mb-4 flex flex-col items-center"
+                        >
+                            <span className="text-2xl text-[#58a6ff] uppercase tracking-[1em] mb-8 animate-pulse text-center px-4">Reattempt Beginning In</span>
+                            <motion.span
+                                key={reattemptCountdown}
+                                initial={{ y: 50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -50, opacity: 0 }}
+                                className="drop-shadow-[0_0_30px_rgba(88,166,255,0.5)]"
+                            >
+                                {reattemptCountdown === 0 ? 'GO!' : reattemptCountdown}
+                            </motion.span>
+                        </motion.div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent pointer-events-none opacity-50" />
+                        <div className="w-96 h-96 bg-[#58a6ff] rounded-full blur-[150px] opacity-[0.05] absolute -bottom-48 -right-48 animate-pulse" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {(cheatWarnings > 0 && !isTerminated) && (
                 <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 p-3 bg-[rgba(218,54,51,0.95)] border border-red-500 rounded text-white text-sm shadow-xl font-medium animate-pulse">
                     ⚠️ Trust Factor Warning: You have switched tabs or lost focus {cheatWarnings} time(s).
                 </div>
             )}
-            <AttemptingLayout
-                question={currentQuestion}
-                number={fullResults.length + 1}
-                questionTotal={10}
-                timeRemaining={timeRemaining}
-                codeAnswer={codeAnswer}
-                setCodeAnswer={setCodeAnswer}
-                mcqAnswer={mcqAnswer}
-                setMcqAnswer={setMcqAnswer}
-                consoleOutput={consoleOutput}
-                runCode={runCode}
-                submitAnswer={submitAnswer}
-            />
+            {currentQuestion && (
+                <AttemptingLayout
+                    question={currentQuestion}
+                    number={fullResults.length + 1}
+                    questionTotal={10}
+                    timeRemaining={timeRemaining}
+                    codeAnswer={codeAnswer}
+                    setCodeAnswer={setCodeAnswer}
+                    mcqAnswer={mcqAnswer}
+                    setMcqAnswer={setMcqAnswer}
+                    consoleOutput={consoleOutput}
+                    runCode={runCode}
+                    submitAnswer={submitAnswer}
+                />
+            )}
         </div>
     );
 };

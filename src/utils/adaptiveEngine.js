@@ -85,7 +85,7 @@ export const getNextQuestion = (
         q.topic === targetTopic
     );
 
-    // b. Relax Topic first if specific combo is exhausted
+    // 2. RESILIENCE FALLBACK: If specific Topic is exhausted, relax Topic filter BUT keep Type strict
     if (availableQuestions.length === 0) {
         availableQuestions = allQuestions.filter(q =>
             !attemptedIds.includes(q.id) &&
@@ -94,18 +94,10 @@ export const getNextQuestion = (
         );
     }
 
-    // c. Relax Type too if still exhausted
     if (availableQuestions.length === 0) {
-        availableQuestions = allQuestions.filter(q =>
-            !attemptedIds.includes(q.id) &&
-            q.language === targetLanguage
-        );
+        // Fallback: If absolutely nothing left in this language of the specific TYPE, just stop
+        return null;
     }
-
-    if (availableQuestions.length === 0) {
-        return null; // Exhausted entire language bank
-    }
-
     // 3. Selection Strategy
     // Find weakest topic in current pool based on history
     let weakestTopic = null;

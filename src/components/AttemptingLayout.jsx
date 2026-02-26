@@ -4,6 +4,7 @@ import { Play, Send } from 'lucide-react';
 export const AttemptingLayout = ({
     question,
     number,
+    questionTotal,
     timeRemaining,
     codeAnswer,
     setCodeAnswer,
@@ -35,9 +36,11 @@ export const AttemptingLayout = ({
             {/* Header Bar */}
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
                 <div className="flex items-center gap-4">
-                    <span className="font-bold text-xl ml-2 tracking-wide font-heading">
-                        Q{number}
-                    </span>
+                    <div className="flex flex-col">
+                        <span className="font-bold text-xl ml-2 tracking-wide font-heading">
+                            Q{number} <span className="text-gray-400 text-sm font-normal">/ {questionTotal}</span>
+                        </span>
+                    </div>
                     <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${getDifficultyColor(question?.difficulty)}`}>
                         {question?.difficulty}
                     </span>
@@ -108,12 +111,12 @@ export const AttemptingLayout = ({
                             <button
                                 onClick={submitAnswer}
                                 disabled={question?.type === 'mcq' && !mcqAnswer}
-                                className={`flex items-center gap-2 text-sm px-5 py-2 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-wide shadow-lg ${number >= 5
+                                className={`flex items-center gap-2 text-sm px-5 py-2 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-wide shadow-lg ${number === questionTotal
                                     ? 'bg-[#d29922] text-white hover:bg-[#b8861b] ring-2 ring-yellow-400 ring-offset-2 ring-offset-[#0d1117] animate-pulse'
                                     : 'bg-[#238636] text-white hover:bg-[#2ea043]'
                                     }`}
                             >
-                                <Send size={16} /> {number >= 5 ? 'Submit Assessment' : 'Next Question'}
+                                <Send size={16} /> {number === questionTotal ? 'Submit Assessment' : 'Next Question'}
                             </button>
                         </div>
                     </div>

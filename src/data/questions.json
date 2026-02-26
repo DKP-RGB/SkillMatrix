@@ -2580,5 +2580,3543 @@
         "question": "Write a C program that takes `int a[2][2] = {{1, 2}, {3, 4}};` and prints the sum of all elements.",
         "expectedOutput": "10",
         "timeLimit": 120
+    },
+    {
+        "id": "q256",
+        "language": "C",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the null terminator character for a string in C?",
+        "options": [
+            "\\n",
+            "\\t",
+            "\\0",
+            "\\s"
+        ],
+        "correctAnswer": "\\0",
+        "timeLimit": 20
+    },
+    {
+        "id": "q257",
+        "language": "C",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which function is used to concatenate two strings in C?",
+        "options": [
+            "strcat()",
+            "strcpy()",
+            "strlen()",
+            "strcmp()"
+        ],
+        "correctAnswer": "strcat()",
+        "timeLimit": 30
+    },
+    {
+        "id": "q258",
+        "language": "C",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program that prints the length of string 'Antigravity' using `strlen`.",
+        "expectedOutput": "11",
+        "timeLimit": 60
+    },
+    {
+        "id": "q259",
+        "language": "C++",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you declare a string variable in C++ using the standard library?",
+        "options": [
+            "string s;",
+            "char s[];",
+            "std::string s;",
+            "both A and C"
+        ],
+        "correctAnswer": "both A and C",
+        "timeLimit": 20
+    },
+    {
+        "id": "q260",
+        "language": "C++",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a C++ program to concatenate 'Hello ' and 'World' and print the result.",
+        "expectedOutput": "Hello World",
+        "timeLimit": 45
+    },
+    {
+        "id": "q261",
+        "language": "Python",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you capitalize the first letter of a string in Python?",
+        "options": [
+            "s.upper()",
+            "s.capitalize()",
+            "s.first()",
+            "s.title()"
+        ],
+        "correctAnswer": "s.capitalize()",
+        "timeLimit": 20
+    },
+    {
+        "id": "q262",
+        "language": "Python",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print 'abc' repeated 3 times as 'abcabcabc' in Python.",
+        "expectedOutput": "abcabcabc",
+        "timeLimit": 30
+    },
+    {
+        "id": "q263",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Are strings immutable in Java?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if static",
+            "Only if final"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q264",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Java snippet to print `\"Hi\".length()` result.",
+        "expectedOutput": "2",
+        "timeLimit": 30
+    },
+    {
+        "id": "q265",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which property is used to get the length of a string in JS?",
+        "options": [
+            "size",
+            "length",
+            "count",
+            "len"
+        ],
+        "correctAnswer": "length",
+        "timeLimit": 15
+    },
+    {
+        "id": "q266",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Use template literals to print 'Price: $10' using `val = 10`.",
+        "expectedOutput": "Price: $10",
+        "timeLimit": 45
+    },
+    {
+        "id": "q267",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you find the number of bytes in a string 's' in Go?",
+        "options": [
+            "len(s)",
+            "s.length",
+            "s.size()",
+            "count(s)"
+        ],
+        "correctAnswer": "len(s)",
+        "timeLimit": 20
+    },
+    {
+        "id": "q268",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "In Go, print the result of `\"a\" + \"b\"`.",
+        "expectedOutput": "ab",
+        "timeLimit": 30
+    },
+    {
+        "id": "q269",
+        "language": "C",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the result of `5 >> 1` in C?",
+        "options": [
+            "2",
+            "10",
+            "4",
+            "2.5"
+        ],
+        "correctAnswer": "2",
+        "timeLimit": 30
+    },
+    {
+        "id": "q270",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `0x10 | 0x01` in C++?",
+        "options": [
+            "0x11",
+            "17",
+            "Both A and B",
+            "0x01"
+        ],
+        "correctAnswer": "Both A and B",
+        "timeLimit": 45
+    },
+    {
+        "id": "q271",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `round(2.5)` in Python 3?",
+        "options": [
+            "2",
+            "3",
+            "2.0",
+            "3.0"
+        ],
+        "correctAnswer": "2",
+        "timeLimit": 45
+    },
+    {
+        "id": "q272",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `1.0 / 0.0` in Java for doubles?",
+        "options": [
+            "Infinity",
+            "ArithmeticException",
+            "NaN",
+            "0"
+        ],
+        "correctAnswer": "Infinity",
+        "timeLimit": 30
+    },
+    {
+        "id": "q273",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `typeof NaN`?",
+        "options": [
+            "number",
+            "NaN",
+            "undefined",
+            "object"
+        ],
+        "correctAnswer": "number",
+        "timeLimit": 30
+    },
+    {
+        "id": "q274",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What happens if you divide by zero in Go constant expression?",
+        "options": [
+            "Compile error",
+            "Runtime panic",
+            "Infinity",
+            "0"
+        ],
+        "correctAnswer": "Compile error",
+        "timeLimit": 45
+    },
+    {
+        "id": "q275",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `*&x` equal to?",
+        "options": [
+            "x",
+            "&x",
+            "*x",
+            "Error"
+        ],
+        "correctAnswer": "x",
+        "timeLimit": 20
+    },
+    {
+        "id": "q276",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What does `delete ptr;` do?",
+        "options": [
+            "Deallocates memory",
+            "Sets ptr to null",
+            "Deletes the variable",
+            "Nothing"
+        ],
+        "correctAnswer": "Deallocates memory",
+        "timeLimit": 30
+    },
+    {
+        "id": "q277",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Can you resize an initialized array in C?",
+        "options": [
+            "No",
+            "Yes, with realloc",
+            "Only if it is global",
+            "Only if it is dynamic"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 30
+    },
+    {
+        "id": "q278",
+        "language": "C++",
+        "topic": "Classes",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which access specifier makes members accessible only within the class?",
+        "options": [
+            "private",
+            "public",
+            "protected",
+            "hidden"
+        ],
+        "correctAnswer": "private",
+        "timeLimit": 15
+    },
+    {
+        "id": "q279",
+        "language": "C++",
+        "topic": "Classes",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Create a class `Cat` with a public method `meow()` that prints 'Meow'. Call it.",
+        "expectedOutput": "Meow",
+        "timeLimit": 90
+    },
+    {
+        "id": "q280",
+        "language": "Python",
+        "topic": "Classes",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you refer to the current instance of a class in Python?",
+        "options": [
+            "this",
+            "self",
+            "instance",
+            "curr"
+        ],
+        "correctAnswer": "self",
+        "timeLimit": 15
+    },
+    {
+        "id": "q281",
+        "language": "Python",
+        "topic": "Classes",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Define a class `D` with `x=1` and print `D().x`.",
+        "expectedOutput": "1",
+        "timeLimit": 45
+    },
+    {
+        "id": "q282",
+        "language": "Java",
+        "topic": "Objects",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which keyword is used to create an object in Java?",
+        "options": [
+            "make",
+            "new",
+            "create",
+            "instantiate"
+        ],
+        "correctAnswer": "new",
+        "timeLimit": 15
+    },
+    {
+        "id": "q283",
+        "language": "Java",
+        "topic": "Objects",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the default value of an object reference in Java?",
+        "options": [
+            "null",
+            "0",
+            "false",
+            "undefined"
+        ],
+        "correctAnswer": "null",
+        "timeLimit": 20
+    },
+    {
+        "id": "q284",
+        "language": "JavaScript",
+        "topic": "Objects",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you add a property 'color' to an object 'car'?",
+        "options": [
+            "car.color = 'red'",
+            "car['color'] = 'red'",
+            "Both A and B",
+            "car.add('color', 'red')"
+        ],
+        "correctAnswer": "Both A and B",
+        "timeLimit": 20
+    },
+    {
+        "id": "q285",
+        "language": "JavaScript",
+        "topic": "Objects",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Create an object `{a: 1}` and print `obj.a`.",
+        "expectedOutput": "1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q286",
+        "language": "Go",
+        "topic": "Structs",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Are Go structs passed by value or reference by default?",
+        "options": [
+            "Value",
+            "Reference",
+            "Pointer",
+            "Depends"
+        ],
+        "correctAnswer": "Value",
+        "timeLimit": 30
+    },
+    {
+        "id": "q287",
+        "language": "Go",
+        "topic": "Structs",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Define a struct `S` with field `X int`. Create and print `S{X:10}.X`.",
+        "expectedOutput": "10",
+        "timeLimit": 60
+    },
+    {
+        "id": "q288",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which loop is most efficient in C?",
+        "options": [
+            "for",
+            "while",
+            "do-while",
+            "Depends on compiler and context"
+        ],
+        "correctAnswer": "Depends on compiler and context",
+        "timeLimit": 45
+    },
+    {
+        "id": "q289",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Use a `while` loop to print 'HI' once.",
+        "expectedOutput": "HI",
+        "timeLimit": 60
+    },
+    {
+        "id": "q290",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can you use `else` with a `while` loop in Python?",
+        "options": [
+            "Yes",
+            "No",
+            "Only for `for` loops",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 30
+    },
+    {
+        "id": "q291",
+        "language": "Java",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What happens if a loop has no terminating condition?",
+        "options": [
+            "Infinite loop",
+            "Compile error",
+            "Runtime error",
+            "It runs 100 times"
+        ],
+        "correctAnswer": "Infinite loop",
+        "timeLimit": 20
+    },
+    {
+        "id": "q292",
+        "language": "JavaScript",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which method is used for looping through an array in JS?",
+        "options": [
+            "forEach()",
+            "map()",
+            "filter()",
+            "All of the above"
+        ],
+        "correctAnswer": "All of the above",
+        "timeLimit": 30
+    },
+    {
+        "id": "q293",
+        "language": "Go",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How do you write a 'while' loop in Go?",
+        "options": [
+            "Using the `for` keyword",
+            "Using the `while` keyword",
+            "Go doesn't have it",
+            "None"
+        ],
+        "correctAnswer": "Using the `for` keyword",
+        "timeLimit": 20
+    },
+    {
+        "id": "q294",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Is `if (x = 0)` always false in C?",
+        "options": [
+            "Yes",
+            "No, it evaluates the assignment",
+            "Compile error",
+            "Runtime error"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q295",
+        "language": "C++",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the switch statement used for?",
+        "options": [
+            "Multi-way branching",
+            "Looping",
+            "Calculating",
+            "Printing"
+        ],
+        "correctAnswer": "Multi-way branching",
+        "timeLimit": 20
+    },
+    {
+        "id": "q296",
+        "language": "Python",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How do you check for multiple conditions at once in Python?",
+        "options": [
+            "using `and` or `or`",
+            "using `&&` or `||`",
+            "with commas",
+            "with pipes"
+        ],
+        "correctAnswer": "using `and` or `or`",
+        "timeLimit": 20
+    },
+    {
+        "id": "q297",
+        "language": "Java",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write a Java `if` statement that prints 'Y' if `1 < 2`.",
+        "expectedOutput": "Y",
+        "timeLimit": 45
+    },
+    {
+        "id": "q298",
+        "language": "JavaScript",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the syntax for a ternary operator?",
+        "options": [
+            "condition ? exprIfTrue : exprIfFalse",
+            "condition : exprIfTrue ? exprIfFalse",
+            "condition ! exprIfTrue : exprIfFalse",
+            "None"
+        ],
+        "correctAnswer": "condition ? exprIfTrue : exprIfFalse",
+        "timeLimit": 20
+    },
+    {
+        "id": "q299",
+        "language": "Go",
+        "topic": "Conditionals",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Are parentheses required around the condition in Go's `if`?",
+        "options": [
+            "No",
+            "Yes",
+            "Only if it is complex",
+            "None"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 15
+    },
+    {
+        "id": "q300",
+        "language": "C",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a linked list?",
+        "options": [
+            "A linear data structure with nodes",
+            "A fixed-size array",
+            "A hash table",
+            "None"
+        ],
+        "correctAnswer": "A linear data structure with nodes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q301",
+        "language": "C++",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a stack?",
+        "options": [
+            "LIFO (Last In First Out)",
+            "FIFO (First In First Out)",
+            "Random Access",
+            "None"
+        ],
+        "correctAnswer": "LIFO (Last In First Out)",
+        "timeLimit": 45
+    },
+    {
+        "id": "q302",
+        "language": "Python",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a dictionary in Python?",
+        "options": [
+            "A set of key-value pairs",
+            "A list of strings",
+            "An ordered array",
+            "None"
+        ],
+        "correctAnswer": "A set of key-value pairs",
+        "timeLimit": 30
+    },
+    {
+        "id": "q303",
+        "language": "Java",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a HashMap in Java?",
+        "options": [
+            "A key-value pair implementation",
+            "A sorted list",
+            "A dynamic array",
+            "None"
+        ],
+        "correctAnswer": "A key-value pair implementation",
+        "timeLimit": 30
+    },
+    {
+        "id": "q304",
+        "language": "JavaScript",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a Map in JS?",
+        "options": [
+            "A collection of keyed data items",
+            "A type of loop",
+            "A styling library",
+            "None"
+        ],
+        "correctAnswer": "A collection of keyed data items",
+        "timeLimit": 30
+    },
+    {
+        "id": "q305",
+        "language": "Go",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a map in Go?",
+        "options": [
+            "An unordered collection of key-value pairs",
+            "A sorted list",
+            "A fixed array",
+            "None"
+        ],
+        "correctAnswer": "An unordered collection of key-value pairs",
+        "timeLimit": 30
+    },
+    {
+        "id": "q306",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a recursive C function `f(n)` that returns 1 if `n=1`. Print `f(1)`.",
+        "expectedOutput": "1",
+        "timeLimit": 90
+    },
+    {
+        "id": "q307",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a recursive function?",
+        "options": [
+            "A function that calls itself",
+            "A function that has many loops",
+            "A complex function",
+            "None"
+        ],
+        "correctAnswer": "A function that calls itself",
+        "timeLimit": 30
+    },
+    {
+        "id": "q308",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is recursion limit in Python?",
+        "options": [
+            "A limit on depth of recursion",
+            "A limit on speed",
+            "A limit on variables",
+            "None"
+        ],
+        "correctAnswer": "A limit on depth of recursion",
+        "timeLimit": 45
+    },
+    {
+        "id": "q309",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can a constructor be recursive in Java?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is private",
+            "Only if it is static"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 45
+    },
+    {
+        "id": "q310",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is an IIFE in JS?",
+        "options": [
+            "Immediately Invoked Function Expression",
+            "Internal Integrated Function Environment",
+            "Interface Implementation Function Entry",
+            "None"
+        ],
+        "correctAnswer": "Immediately Invoked Function Expression",
+        "timeLimit": 60
+    },
+    {
+        "id": "q311",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the keyword `defer` used for in Go?",
+        "options": [
+            "To delay the execution of a function until the surrounding function returns",
+            "To stop a function",
+            "To skip a function",
+            "None"
+        ],
+        "correctAnswer": "To delay the execution of a function until the surrounding function returns",
+        "timeLimit": 60
+    },
+    {
+        "id": "q312",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Print the value 10 using a pointer `p` to `x=10`.",
+        "expectedOutput": "10",
+        "timeLimit": 45
+    },
+    {
+        "id": "q313",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Declare `int *ptr = nullptr;` and check if it is null, print 'Null' if true.",
+        "expectedOutput": "Null",
+        "timeLimit": 45
+    },
+    {
+        "id": "q314",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `[x for x in range(3)]` result?",
+        "options": [
+            "[0, 1, 2]",
+            "[1, 2, 3]",
+            "[0, 1, 2, 3]",
+            "None"
+        ],
+        "correctAnswer": "[0, 1, 2]",
+        "timeLimit": 30
+    },
+    {
+        "id": "q315",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the result of `\"a\" + 1` in Java?",
+        "options": [
+            "\"a1\"",
+            "Error",
+            "98",
+            "None"
+        ],
+        "correctAnswer": "\"a1\"",
+        "timeLimit": 20
+    },
+    {
+        "id": "q316",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `[] == ![]` in JS?",
+        "options": [
+            "true",
+            "false",
+            "undefined",
+            "Error"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 60
+    },
+    {
+        "id": "q317",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `iota` in Go?",
+        "options": [
+            "A constant generator",
+            "A type of loop",
+            "A pointer",
+            "None"
+        ],
+        "correctAnswer": "A constant generator",
+        "timeLimit": 45
+    },
+    {
+        "id": "q318",
+        "language": "C",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you declare a string in C?",
+        "options": [
+            "char str[10];",
+            "string str;",
+            "char *str;",
+            "Both A and C"
+        ],
+        "correctAnswer": "Both A and C",
+        "timeLimit": 20
+    },
+    {
+        "id": "q319",
+        "language": "C++",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which operator is used to concatenate strings in C++?",
+        "options": [
+            "+",
+            ".",
+            "&",
+            "*"
+        ],
+        "correctAnswer": "+",
+        "timeLimit": 15
+    },
+    {
+        "id": "q320",
+        "language": "Python",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is `\"Hi\" * 2`?",
+        "options": [
+            "\"HiHi\"",
+            "Error",
+            "\"Hi2\"",
+            "None"
+        ],
+        "correctAnswer": "\"HiHi\"",
+        "timeLimit": 10
+    },
+    {
+        "id": "q321",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which method is used to get a single character from a string?",
+        "options": [
+            "charAt()",
+            "get()",
+            "index()",
+            "seek()"
+        ],
+        "correctAnswer": "charAt()",
+        "timeLimit": 15
+    },
+    {
+        "id": "q322",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you split a string into an array?",
+        "options": [
+            "split()",
+            "break()",
+            "slice()",
+            "None"
+        ],
+        "correctAnswer": "split()",
+        "timeLimit": 15
+    },
+    {
+        "id": "q323",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you iterate over characters in a Go string?",
+        "options": [
+            "using `range`",
+            "using a `for` loop",
+            "both",
+            "none"
+        ],
+        "correctAnswer": "both",
+        "timeLimit": 30
+    },
+    {
+        "id": "q324",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a C program to find the minimum in {10, 20, 5} and print it.",
+        "expectedOutput": "5",
+        "timeLimit": 60
+    },
+    {
+        "id": "q325",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Fill a 3-element vector with 1s and print its first element.",
+        "expectedOutput": "1",
+        "timeLimit": 60
+    },
+    {
+        "id": "q326",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Find the sum of `[1, 2, 3]` using `sum()` and print it.",
+        "expectedOutput": "6",
+        "timeLimit": 30
+    },
+    {
+        "id": "q327",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print the length of `new int[10]` in Java.",
+        "expectedOutput": "10",
+        "timeLimit": 45
+    },
+    {
+        "id": "q328",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Reverse `[1, 2, 3]` and print the first element (as string).",
+        "expectedOutput": "3",
+        "timeLimit": 45
+    },
+    {
+        "id": "q329",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Create a 5x5 array in Go and print the zero-value of its first element.",
+        "expectedOutput": "0",
+        "timeLimit": 60
+    },
+    {
+        "id": "q330",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the return type of a function that returns an address?",
+        "options": [
+            "A pointer",
+            "int",
+            "void",
+            "None"
+        ],
+        "correctAnswer": "A pointer",
+        "timeLimit": 30
+    },
+    {
+        "id": "q331",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Can you have default arguments in C++ functions?",
+        "options": [
+            "Yes",
+            "No",
+            "Only for ints",
+            "Only for strings"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q332",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is a `global` keyword in Python functions?",
+        "options": [
+            "To access variables outside the function",
+            "To make function global",
+            "To use everywhere",
+            "None"
+        ],
+        "correctAnswer": "To access variables outside the function",
+        "timeLimit": 30
+    },
+    {
+        "id": "q333",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Can you have static methods in Java?",
+        "options": [
+            "Yes",
+            "No",
+            "Only in main class",
+            "Only in interfaces"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q334",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the difference between `let` and `var` scope?",
+        "options": [
+            "let is block-scoped, var is function-scoped",
+            "var is block-scoped",
+            "No difference",
+            "None"
+        ],
+        "correctAnswer": "let is block-scoped, var is function-scoped",
+        "timeLimit": 45
+    },
+    {
+        "id": "q335",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Are Go function arguments passed by value or reference?",
+        "options": [
+            "Value by default",
+            "Reference by default",
+            "Depends on type",
+            "None"
+        ],
+        "correctAnswer": "Value by default",
+        "timeLimit": 45
+    },
+    {
+        "id": "q336",
+        "language": "C",
+        "topic": "Data Structures",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which data structure uses the LIFO principle?",
+        "options": [
+            "Stack",
+            "Queue",
+            "List",
+            "Tree"
+        ],
+        "correctAnswer": "Stack",
+        "timeLimit": 15
+    },
+    {
+        "id": "q337",
+        "language": "C++",
+        "topic": "Data Structures",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which STL container represents a dynamic array?",
+        "options": [
+            "vector",
+            "list",
+            "stack",
+            "queue"
+        ],
+        "correctAnswer": "vector",
+        "timeLimit": 15
+    },
+    {
+        "id": "q338",
+        "language": "Python",
+        "topic": "Data Structures",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which of these is immutable in Python?",
+        "options": [
+            "Tuple",
+            "List",
+            "Dict",
+            "Set"
+        ],
+        "correctAnswer": "Tuple",
+        "timeLimit": 15
+    },
+    {
+        "id": "q339",
+        "language": "Java",
+        "topic": "Data Structures",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which interface represents an ordered collection?",
+        "options": [
+            "List",
+            "Set",
+            "Map",
+            "Queue"
+        ],
+        "correctAnswer": "List",
+        "timeLimit": 15
+    },
+    {
+        "id": "q340",
+        "language": "JavaScript",
+        "topic": "Data Structures",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which object allows you to store unique values of any type?",
+        "options": [
+            "Set",
+            "Map",
+            "Array",
+            "Object"
+        ],
+        "correctAnswer": "Set",
+        "timeLimit": 15
+    },
+    {
+        "id": "q341",
+        "language": "Go",
+        "topic": "Data Structures",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which composite type has a fixed length in Go?",
+        "options": [
+            "Array",
+            "Slice",
+            "Map",
+            "Channel"
+        ],
+        "correctAnswer": "Array",
+        "timeLimit": 15
+    },
+    {
+        "id": "q342",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the purpose of the `default` label in a switch statement?",
+        "options": [
+            "To handle unmatched cases",
+            "To start the switch",
+            "To end the switch",
+            "None"
+        ],
+        "correctAnswer": "To handle unmatched cases",
+        "timeLimit": 30
+    },
+    {
+        "id": "q343",
+        "language": "C++",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can you use Floating point numbers in a switch in C++?",
+        "options": [
+            "No",
+            "Yes",
+            "Only if cast to int",
+            "Only in C++20"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 30
+    },
+    {
+        "id": "q344",
+        "language": "Python",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a Python `if` that prints 'A' if 1 and 2 are greater than 0.",
+        "expectedOutput": "A",
+        "timeLimit": 45
+    },
+    {
+        "id": "q345",
+        "language": "Java",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can boolean values be implicitly cast to int in Java?",
+        "options": [
+            "No",
+            "Yes",
+            "Only in assessments",
+            "Only in older versions"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 20
+    },
+    {
+        "id": "q346",
+        "language": "JavaScript",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which of these is NOT falsy in JS?",
+        "options": [
+            "'0'",
+            "0",
+            "null",
+            "undefined"
+        ],
+        "correctAnswer": "'0'",
+        "timeLimit": 30
+    },
+    {
+        "id": "q347",
+        "language": "Go",
+        "topic": "Conditionals",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the type of result of `1 < 2` in Go?",
+        "options": [
+            "bool",
+            "int",
+            "interface{}",
+            "None"
+        ],
+        "correctAnswer": "bool",
+        "timeLimit": 15
+    },
+    {
+        "id": "q348",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a C loop that prints 'Z' once.",
+        "expectedOutput": "Z",
+        "timeLimit": 30
+    },
+    {
+        "id": "q349",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is the first part of a `for` loop declaration?",
+        "options": [
+            "Initialization",
+            "Condition",
+            "Increment",
+            "Body"
+        ],
+        "correctAnswer": "Initialization",
+        "timeLimit": 15
+    },
+    {
+        "id": "q350",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you break out of a loop?",
+        "options": [
+            "break",
+            "stop",
+            "exit",
+            "end"
+        ],
+        "correctAnswer": "break",
+        "timeLimit": 10
+    },
+    {
+        "id": "q351",
+        "language": "Java",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a Java loop that prints '9' exactly once.",
+        "expectedOutput": "9",
+        "timeLimit": 30
+    },
+    {
+        "id": "q352",
+        "language": "JavaScript",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a JS loop that console logs 'JS' once.",
+        "expectedOutput": "JS",
+        "timeLimit": 30
+    },
+    {
+        "id": "q353",
+        "language": "Go",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write a Go loop that prints 'G' once.",
+        "expectedOutput": "G",
+        "timeLimit": 30
+    },
+    {
+        "id": "q354",
+        "language": "C",
+        "topic": "Memory",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which function is used to release memory allocated by malloc?",
+        "options": [
+            "delete",
+            "free()",
+            "release()",
+            "remove()"
+        ],
+        "correctAnswer": "free()",
+        "timeLimit": 20
+    },
+    {
+        "id": "q355",
+        "language": "C",
+        "topic": "Memory",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What happens if you use a free'd pointer?",
+        "options": [
+            "Undefined behavior",
+            "Memory leak",
+            "Compile error",
+            "Nothing"
+        ],
+        "correctAnswer": "Undefined behavior",
+        "timeLimit": 30
+    },
+    {
+        "id": "q356",
+        "language": "C++",
+        "topic": "Templates",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a template in C++?",
+        "options": [
+            "A blueprint for creating functions/classes",
+            "A type of loop",
+            "A design pattern",
+            "None"
+        ],
+        "correctAnswer": "A blueprint for creating functions/classes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q357",
+        "language": "C++",
+        "topic": "Templates",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a simple template function `T add(T a)` that returns `a`. Print `add(5)`.",
+        "expectedOutput": "5",
+        "timeLimit": 90
+    },
+    {
+        "id": "q358",
+        "language": "Python",
+        "topic": "Memory",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How does Python handle memory management?",
+        "options": [
+            "Garbage collection and reference counting",
+            "Manual malloc/free",
+            "Pointers",
+            "None"
+        ],
+        "correctAnswer": "Garbage collection and reference counting",
+        "timeLimit": 45
+    },
+    {
+        "id": "q359",
+        "language": "Java",
+        "topic": "Collections",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which collection allows duplicate elements?",
+        "options": [
+            "List",
+            "Set",
+            "Map",
+            "None"
+        ],
+        "correctAnswer": "List",
+        "timeLimit": 15
+    },
+    {
+        "id": "q360",
+        "language": "Java",
+        "topic": "Collections",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which collection does NOT allow duplicate elements?",
+        "options": [
+            "Set",
+            "List",
+            "Queue",
+            "None"
+        ],
+        "correctAnswer": "Set",
+        "timeLimit": 15
+    },
+    {
+        "id": "q361",
+        "language": "JavaScript",
+        "topic": "Async",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What does a Promise represent in JS?",
+        "options": [
+            "The eventual completion of an async operation",
+            "A synchronous loop",
+            "A callback",
+            "None"
+        ],
+        "correctAnswer": "The eventual completion of an async operation",
+        "timeLimit": 45
+    },
+    {
+        "id": "q362",
+        "language": "JavaScript",
+        "topic": "Async",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write an async function that returns 'Done' and print its resolved value.",
+        "expectedOutput": "Done",
+        "timeLimit": 90
+    },
+    {
+        "id": "q363",
+        "language": "Go",
+        "topic": "Concurrency",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a Goroutine?",
+        "options": [
+            "A lightweight thread managed by the Go runtime",
+            "A standard OS thread",
+            "A type of loop",
+            "None"
+        ],
+        "correctAnswer": "A lightweight thread managed by the Go runtime",
+        "timeLimit": 45
+    },
+    {
+        "id": "q364",
+        "language": "Go",
+        "topic": "Concurrency",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How do goroutines communicate?",
+        "options": [
+            "Channels",
+            "Shared variables",
+            "Events",
+            "Signals"
+        ],
+        "correctAnswer": "Channels",
+        "timeLimit": 30
+    },
+    {
+        "id": "q365",
+        "language": "C",
+        "topic": "Macros",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is `#define` used for?",
+        "options": [
+            "Defining constants or macros",
+            "Importing libs",
+            "Creating functions",
+            "None"
+        ],
+        "correctAnswer": "Defining constants or macros",
+        "timeLimit": 15
+    },
+    {
+        "id": "q366",
+        "language": "C",
+        "topic": "Macros",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Use a macro `MAX(a,b)` to print the max of 10 and 20.",
+        "expectedOutput": "20",
+        "timeLimit": 60
+    },
+    {
+        "id": "q367",
+        "language": "C++",
+        "topic": "Standard Lib",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which header is needed for `std::cout`?",
+        "options": [
+            "<iostream>",
+            "<stdio.h>",
+            "<string>",
+            "<vector>"
+        ],
+        "correctAnswer": "<iostream>",
+        "timeLimit": 15
+    },
+    {
+        "id": "q368",
+        "language": "Python",
+        "topic": "Standard Lib",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which module is used for math operations in Python?",
+        "options": [
+            "math",
+            "calc",
+            "numbers",
+            "science"
+        ],
+        "correctAnswer": "math",
+        "timeLimit": 10
+    },
+    {
+        "id": "q369",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the result of `\"a\".replace('a', 'b')`?",
+        "options": [
+            "\"b\"",
+            "\"a\"",
+            "Error",
+            "None"
+        ],
+        "correctAnswer": "\"b\"",
+        "timeLimit": 20
+    },
+    {
+        "id": "q370",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Result of `\"1\" + 2`?",
+        "options": [
+            "\"12\"",
+            "3",
+            "Error",
+            "NaN"
+        ],
+        "correctAnswer": "\"12\"",
+        "timeLimit": 15
+    },
+    {
+        "id": "q371",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can you change characters in a Go string directly?",
+        "options": [
+            "No",
+            "Yes",
+            "Only if it's dynamic",
+            "None"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 30
+    },
+    {
+        "id": "q372",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `void *` pointer?",
+        "options": [
+            "A generic pointer type",
+            "A null pointer",
+            "An invalid pointer",
+            "None"
+        ],
+        "correctAnswer": "A generic pointer type",
+        "timeLimit": 45
+    },
+    {
+        "id": "q373",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `this` pointer in C++?",
+        "options": [
+            "Pointer to current object",
+            "Pointer to class",
+            "Pointer to main",
+            "None"
+        ],
+        "correctAnswer": "Pointer to current object",
+        "timeLimit": 30
+    },
+    {
+        "id": "q374",
+        "language": "Python",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print first element of list `L = [7, 8]`.",
+        "expectedOutput": "7",
+        "timeLimit": 20
+    },
+    {
+        "id": "q375",
+        "language": "Java",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print size of `new ArrayList<>()`.",
+        "expectedOutput": "0",
+        "timeLimit": 45
+    },
+    {
+        "id": "q376",
+        "language": "JavaScript",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print value of property 'x' from `{x: 9}`.",
+        "expectedOutput": "9",
+        "timeLimit": 20
+    },
+    {
+        "id": "q377",
+        "language": "Go",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print length of slice `s := make([]int, 2)`.",
+        "expectedOutput": "2",
+        "timeLimit": 30
+    },
+    {
+        "id": "q378",
+        "language": "C",
+        "topic": "Logic",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of `1 && 0`?",
+        "options": [
+            "0",
+            "1",
+            "Error",
+            "None"
+        ],
+        "correctAnswer": "0",
+        "timeLimit": 15
+    },
+    {
+        "id": "q379",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of `true || false`?",
+        "options": [
+            "true",
+            "false",
+            "0",
+            "1"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 10
+    },
+    {
+        "id": "q380",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of `not True`?",
+        "options": [
+            "False",
+            "True",
+            "None",
+            "0"
+        ],
+        "correctAnswer": "False",
+        "timeLimit": 10
+    },
+    {
+        "id": "q381",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of `!false`?",
+        "options": [
+            "true",
+            "false",
+            "1",
+            "0"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 10
+    },
+    {
+        "id": "q382",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of `!!1`?",
+        "options": [
+            "true",
+            "false",
+            "1",
+            "0"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 15
+    },
+    {
+        "id": "q383",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of `true && true`?",
+        "options": [
+            "true",
+            "false",
+            "1",
+            "0"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 10
+    },
+    {
+        "id": "q384",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is `void` return type?",
+        "options": [
+            "Returns nothing",
+            "Returns void object",
+            "Error",
+            "None"
+        ],
+        "correctAnswer": "Returns nothing",
+        "timeLimit": 15
+    },
+    {
+        "id": "q385",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Can you overload functions in C++?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if static",
+            "Only if member"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 20
+    },
+    {
+        "id": "q386",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which keyword defines a function in Python?",
+        "options": [
+            "def",
+            "function",
+            "func",
+            "define"
+        ],
+        "correctAnswer": "def",
+        "timeLimit": 10
+    },
+    {
+        "id": "q387",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Every method in Java must be inside a...",
+        "options": [
+            "Class",
+            "Interface",
+            "Package",
+            "Loop"
+        ],
+        "correctAnswer": "Class",
+        "timeLimit": 15
+    },
+    {
+        "id": "q388",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you write an arrow function?",
+        "options": [
+            "() => {}",
+            "func => {}",
+            "function() => {}",
+            "None"
+        ],
+        "correctAnswer": "() => {}",
+        "timeLimit": 15
+    },
+    {
+        "id": "q389",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "How do you declare a function in Go?",
+        "options": [
+            "func Name()",
+            "function Name()",
+            "def Name()",
+            "None"
+        ],
+        "correctAnswer": "func Name()",
+        "timeLimit": 15
+    },
+    {
+        "id": "q390",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write an if-else that prints 'T' if 1==1, else 'F'.",
+        "expectedOutput": "T",
+        "timeLimit": 30
+    },
+    {
+        "id": "q391",
+        "language": "C++",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write C++ switch for `int x=1` that prints 'One' if x is 1.",
+        "expectedOutput": "One",
+        "timeLimit": 60
+    },
+    {
+        "id": "q392",
+        "language": "Python",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write if-elif for `x=2`. If x==2 print 'Two'.",
+        "expectedOutput": "Two",
+        "timeLimit": 45
+    },
+    {
+        "id": "q393",
+        "language": "Java",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which of these works in switch statement in Java?",
+        "options": [
+            "String",
+            "int",
+            "char",
+            "All of the above"
+        ],
+        "correctAnswer": "All of the above",
+        "timeLimit": 30
+    },
+    {
+        "id": "q394",
+        "language": "JavaScript",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is strict equality in JS?",
+        "options": [
+            "===",
+            "==",
+            "=",
+            "!=="
+        ],
+        "correctAnswer": "===",
+        "timeLimit": 15
+    },
+    {
+        "id": "q395",
+        "language": "Go",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write Go if for `a := 1 == 1`. If a print 'True'.",
+        "expectedOutput": "True",
+        "timeLimit": 45
+    },
+    {
+        "id": "q396",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write 'for' loop to print numbers from 1 to 2.",
+        "expectedOutput": "12",
+        "timeLimit": 60
+    },
+    {
+        "id": "q397",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write 'do while' to print 'X' once.",
+        "expectedOutput": "X",
+        "timeLimit": 60
+    },
+    {
+        "id": "q398",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write loop that prints elements of [1, 2].",
+        "expectedOutput": "12",
+        "timeLimit": 45
+    },
+    {
+        "id": "q399",
+        "language": "Java",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write enhanced for loop to print elements of `{1, 2}`.",
+        "expectedOutput": "12",
+        "timeLimit": 60
+    },
+    {
+        "id": "q400",
+        "language": "JavaScript",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Use `forEach` on `[1, 2]` to print elements.",
+        "expectedOutput": "12",
+        "timeLimit": 60
+    },
+    {
+        "id": "q401",
+        "language": "Go",
+        "topic": "Loops",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can you use `for range` on a channel in Go?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is open",
+            "Only if it is closed"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q402",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print value 5 using pointer to pointer to `x=5`.",
+        "expectedOutput": "5",
+        "timeLimit": 90
+    },
+    {
+        "id": "q403",
+        "language": "C++",
+        "topic": "Classes",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a constructor?",
+        "options": [
+            "A method called when object is created",
+            "A method to delete object",
+            "A method to copy object",
+            "None"
+        ],
+        "correctAnswer": "A method called when object is created",
+        "timeLimit": 30
+    },
+    {
+        "id": "q404",
+        "language": "Python",
+        "topic": "Classes",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Create class `P` with `__init__` that sets `self.val = 2`. Print it.",
+        "expectedOutput": "2",
+        "timeLimit": 90
+    },
+    {
+        "id": "q405",
+        "language": "Java",
+        "topic": "Objects",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is inheritance in Java?",
+        "options": [
+            "A mechanism to inherit properties from another class",
+            "A way to hide data",
+            "A way to copy code",
+            "None"
+        ],
+        "correctAnswer": "A mechanism to inherit properties from another class",
+        "timeLimit": 45
+    },
+    {
+        "id": "q406",
+        "language": "JavaScript",
+        "topic": "Objects",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is prototype in JS?",
+        "options": [
+            "Mechanism by which JS objects inherit features from one another",
+            "A type of class",
+            "A design mock",
+            "None"
+        ],
+        "correctAnswer": "Mechanism by which JS objects inherit features from one another",
+        "timeLimit": 60
+    },
+    {
+        "id": "q407",
+        "language": "Go",
+        "topic": "Structs",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can you define methods on a struct in Go?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is public",
+            "Only if it is private"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q408",
+        "language": "C",
+        "topic": "Macros",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `#ifdef`?",
+        "options": [
+            "Conditional compilation",
+            "Constant definition",
+            "Function definition",
+            "None"
+        ],
+        "correctAnswer": "Conditional compilation",
+        "timeLimit": 30
+    },
+    {
+        "id": "q409",
+        "language": "C++",
+        "topic": "Memory",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `RAII` in C++?",
+        "options": [
+            "Resource Acquisition Is Initialization",
+            "Random Access Input Interface",
+            "Robust Array Information Index",
+            "None"
+        ],
+        "correctAnswer": "Resource Acquisition Is Initialization",
+        "timeLimit": 60
+    },
+    {
+        "id": "q410",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `1 / 2` in Python 3?",
+        "options": [
+            "0.5",
+            "0",
+            "0.0",
+            "Error"
+        ],
+        "correctAnswer": "0.5",
+        "timeLimit": 30
+    },
+    {
+        "id": "q411",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `1 / 2` in Java for integers?",
+        "options": [
+            "0",
+            "0.5",
+            "Error",
+            "None"
+        ],
+        "correctAnswer": "0",
+        "timeLimit": 20
+    },
+    {
+        "id": "q412",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Result of `Nan === NaN`?",
+        "options": [
+            "false",
+            "true",
+            "Error",
+            "undefined"
+        ],
+        "correctAnswer": "false",
+        "timeLimit": 30
+    },
+    {
+        "id": "q413",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Is Go statically or dynamically typed?",
+        "options": [
+            "Statically",
+            "Dynamically",
+            "Both",
+            "None"
+        ],
+        "correctAnswer": "Statically",
+        "timeLimit": 20
+    },
+    {
+        "id": "q414",
+        "language": "C",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the return type of `strcmp`?",
+        "options": [
+            "int",
+            "bool",
+            "char *",
+            "pointer"
+        ],
+        "correctAnswer": "int",
+        "timeLimit": 30
+    },
+    {
+        "id": "q415",
+        "language": "C++",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How do you read a whole line of text in C++?",
+        "options": [
+            "getline()",
+            "cin >>",
+            "read()",
+            "None"
+        ],
+        "correctAnswer": "getline()",
+        "timeLimit": 30
+    },
+    {
+        "id": "q416",
+        "language": "Python",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Result of `'a' in 'abc'`?",
+        "options": [
+            "True",
+            "False",
+            "1",
+            "0"
+        ],
+        "correctAnswer": "True",
+        "timeLimit": 15
+    },
+    {
+        "id": "q417",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "How to compare two strings content in Java?",
+        "options": [
+            ".equals()",
+            "==",
+            "===",
+            ".compare()"
+        ],
+        "correctAnswer": ".equals()",
+        "timeLimit": 20
+    },
+    {
+        "id": "q418",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Result of `'abc'.substring(1, 2)`?",
+        "options": [
+            "'b'",
+            "'bc'",
+            "'a'",
+            "None"
+        ],
+        "correctAnswer": "'b'",
+        "timeLimit": 30
+    },
+    {
+        "id": "q419",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a `rune` in Go?",
+        "options": [
+            "An alias for int32 representing a Unicode code point",
+            "A type of string",
+            "A pointer",
+            "None"
+        ],
+        "correctAnswer": "An alias for int32 representing a Unicode code point",
+        "timeLimit": 45
+    },
+    {
+        "id": "q420",
+        "language": "C",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Index of first element in C array?",
+        "options": [
+            "0",
+            "1",
+            "-1",
+            "Any"
+        ],
+        "correctAnswer": "0",
+        "timeLimit": 10
+    },
+    {
+        "id": "q421",
+        "language": "C++",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Can you use negative index in C++ array?",
+        "options": [
+            "No",
+            "Yes",
+            "Only for vectors",
+            "None"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 15
+    },
+    {
+        "id": "q422",
+        "language": "Python",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Index of last element in Python list `L`?",
+        "options": [
+            "-1",
+            "len(L)",
+            "len(L)+1",
+            "0"
+        ],
+        "correctAnswer": "-1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q423",
+        "language": "Java",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Is `int[] a = new int[5]` valid Java?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if static",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q424",
+        "language": "JavaScript",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Is `[1, 'a']` valid JS array?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if cast",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q425",
+        "language": "Go",
+        "topic": "Arrays",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Does Go have zero-based indexing?",
+        "options": [
+            "Yes",
+            "No",
+            "Depends on type",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 10
+    },
+    {
+        "id": "q426",
+        "language": "C",
+        "topic": "Memory",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is the size of a pointer to int on a 64-bit system?",
+        "options": [
+            "4 bytes",
+            "8 bytes",
+            "2 bytes",
+            "1 byte"
+        ],
+        "correctAnswer": "8 bytes",
+        "timeLimit": 20
+    },
+    {
+        "id": "q427",
+        "language": "C++",
+        "topic": "Pointers",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `std::unique_ptr`?",
+        "options": [
+            "A smart pointer that owns and manages another object",
+            "A shared pointer",
+            "A raw pointer",
+            "None"
+        ],
+        "correctAnswer": "A smart pointer that owns and manages another object",
+        "timeLimit": 45
+    },
+    {
+        "id": "q428",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the time complexity of looking up a key in a Python dict?",
+        "options": [
+            "O(1) average",
+            "O(n)",
+            "O(log n)",
+            "O(n^2)"
+        ],
+        "correctAnswer": "O(1) average",
+        "timeLimit": 30
+    },
+    {
+        "id": "q429",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the time complexity of `ArrayList.get(index)`?",
+        "options": [
+            "O(1)",
+            "O(n)",
+            "O(log n)",
+            "O(1) average"
+        ],
+        "correctAnswer": "O(1)",
+        "timeLimit": 20
+    },
+    {
+        "id": "q430",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which of these is O(1) in JS arrays?",
+        "options": [
+            "push()",
+            "shift()",
+            "unshift()",
+            "splice()"
+        ],
+        "correctAnswer": "push()",
+        "timeLimit": 30
+    },
+    {
+        "id": "q431",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is the zero-value of a Slice in Go?",
+        "options": [
+            "nil",
+            "[]",
+            "0",
+            "undefined"
+        ],
+        "correctAnswer": "nil",
+        "timeLimit": 20
+    },
+    {
+        "id": "q432",
+        "language": "C",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write C program to print first char of \"Hello\".",
+        "expectedOutput": "H",
+        "timeLimit": 20
+    },
+    {
+        "id": "q433",
+        "language": "C++",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Write C++ to print `string(\"ABC\")[2]`.",
+        "expectedOutput": "C",
+        "timeLimit": 20
+    },
+    {
+        "id": "q434",
+        "language": "Python",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print \"- \".join(['a', 'b']).",
+        "expectedOutput": "a- b",
+        "timeLimit": 45
+    },
+    {
+        "id": "q435",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print \"abc\".toUpperCase() result.",
+        "expectedOutput": "ABC",
+        "timeLimit": 20
+    },
+    {
+        "id": "q436",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print 'a,b'.split(',')[1].",
+        "expectedOutput": "b",
+        "timeLimit": 30
+    },
+    {
+        "id": "q437",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Use `strings.Contains(\"test\", \"es\")` and print result (true/false).",
+        "expectedOutput": "true",
+        "timeLimit": 60
+    },
+    {
+        "id": "q438",
+        "language": "C",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Result of `~0` in C (decimal equivalent on 8-bit)?",
+        "options": [
+            "-1",
+            "255",
+            "Depends on platform",
+            "0"
+        ],
+        "correctAnswer": "Depends on platform",
+        "timeLimit": 45
+    },
+    {
+        "id": "q439",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which header for `std::sqrt`?",
+        "options": [
+            "<cmath>",
+            "<math.h>",
+            "<numbers>",
+            "Both A and B"
+        ],
+        "correctAnswer": "Both A and B",
+        "timeLimit": 30
+    },
+    {
+        "id": "q440",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Result of `bool([])`?",
+        "options": [
+            "False",
+            "True",
+            "None",
+            "Error"
+        ],
+        "correctAnswer": "False",
+        "timeLimit": 10
+    },
+    {
+        "id": "q441",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which of these is a reserved keyword in Java?",
+        "options": [
+            "const",
+            "goto",
+            "Both A and B",
+            "None"
+        ],
+        "correctAnswer": "Both A and B",
+        "timeLimit": 30
+    },
+    {
+        "id": "q442",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Result of `0.1 + 0.2 === 0.3`?",
+        "options": [
+            "false",
+            "true",
+            "undefined",
+            "NaN"
+        ],
+        "correctAnswer": "false",
+        "timeLimit": 30
+    },
+    {
+        "id": "q443",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Can you use `iota` inside a function?",
+        "options": [
+            "No",
+            "Yes",
+            "Only if static",
+            "None"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 20
+    },
+    {
+        "id": "q444",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a function pointer in C?",
+        "options": [
+            "A pointer that stores address of a function",
+            "A pointer that calls function",
+            "A pointer that returns function",
+            "None"
+        ],
+        "correctAnswer": "A pointer that stores address of a function",
+        "timeLimit": 45
+    },
+    {
+        "id": "q445",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is an inline function in C++?",
+        "options": [
+            "A function that suggested to be expanded by compiler",
+            "A short function",
+            "A private function",
+            "None"
+        ],
+        "correctAnswer": "A function that suggested to be expanded by compiler",
+        "timeLimit": 30
+    },
+    {
+        "id": "q446",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What are `*args` and `**kwargs`?",
+        "options": [
+            "Variable number of arguments",
+            "Fixed number of arguments",
+            "Pointers",
+            "None"
+        ],
+        "correctAnswer": "Variable number of arguments",
+        "timeLimit": 30
+    },
+    {
+        "id": "q447",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can a static method access non-static variables directly?",
+        "options": [
+            "No",
+            "Yes",
+            "Only if public",
+            "None"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 20
+    },
+    {
+        "id": "q448",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is a closure in JS?",
+        "options": [
+            "Function bundled with its lexical environment",
+            "A closed loop",
+            "A private class",
+            "None"
+        ],
+        "correctAnswer": "Function bundled with its lexical environment",
+        "timeLimit": 60
+    },
+    {
+        "id": "q449",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Can Go functions return multiple values?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is a struct",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q450",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Result of `ptr++` where ptr points to int?",
+        "options": [
+            "Moves pointer forward by sizeof(int)",
+            "Increments value at pointer",
+            "Compile error",
+            "None"
+        ],
+        "correctAnswer": "Moves pointer forward by sizeof(int)",
+        "timeLimit": 30
+    },
+    {
+        "id": "q451",
+        "language": "C++",
+        "topic": "Classes",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which keyword defines inheritance in C++?",
+        "options": [
+            ":",
+            "extends",
+            "inherits",
+            "using"
+        ],
+        "correctAnswer": ":",
+        "timeLimit": 20
+    },
+    {
+        "id": "q452",
+        "language": "Python",
+        "topic": "Classes",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How to define inheritance in Python?",
+        "options": [
+            "class B(A):",
+            "class B extends A:",
+            "class B(A) {}",
+            "None"
+        ],
+        "correctAnswer": "class B(A):",
+        "timeLimit": 15
+    },
+    {
+        "id": "q453",
+        "language": "Java",
+        "topic": "Objects",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Keyword for calling parent constructor in Java?",
+        "options": [
+            "super()",
+            "this()",
+            "parent()",
+            "base()"
+        ],
+        "correctAnswer": "super()",
+        "timeLimit": 15
+    },
+    {
+        "id": "q454",
+        "language": "JavaScript",
+        "topic": "Objects",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What does `Object.assign()` do?",
+        "options": [
+            "Copies properties from one or more source objects to a target object",
+            "Compares objects",
+            "Creates new object",
+            "None"
+        ],
+        "correctAnswer": "Copies properties from one or more source objects to a target object",
+        "timeLimit": 45
+    },
+    {
+        "id": "q455",
+        "language": "Go",
+        "topic": "Structs",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How to create a pointer to a struct instance in Go?",
+        "options": [
+            "&StructName{}",
+            "new(StructName)",
+            "Both A and B",
+            "None"
+        ],
+        "correctAnswer": "Both A and B",
+        "timeLimit": 30
+    },
+    {
+        "id": "q456",
+        "language": "C",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print 1 if 5 bitwise-AND 7 equals 5.",
+        "expectedOutput": "1",
+        "timeLimit": 30
+    },
+    {
+        "id": "q457",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print 'Y' if true && true.",
+        "expectedOutput": "Y",
+        "timeLimit": 15
+    },
+    {
+        "id": "q458",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print 5 // 2 result in Python.",
+        "expectedOutput": "2",
+        "timeLimit": 15
+    },
+    {
+        "id": "q459",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print result of 10 % 3.",
+        "expectedOutput": "1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q460",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "Print 2 ** 3 result.",
+        "expectedOutput": "8",
+        "timeLimit": 15
+    },
+    {
+        "id": "q461",
+        "language": "Go",
+        "topic": "Logic",
+        "difficulty": "medium",
+        "type": "code",
+        "question": "In Go, print 5 % 2.",
+        "expectedOutput": "1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q462",
+        "language": "C",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which statement exits the whole loop?",
+        "options": [
+            "break",
+            "continue",
+            "exit",
+            "return"
+        ],
+        "correctAnswer": "break",
+        "timeLimit": 15
+    },
+    {
+        "id": "q463",
+        "language": "C++",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Which statement skips current iteration?",
+        "options": [
+            "continue",
+            "break",
+            "next",
+            "pass"
+        ],
+        "correctAnswer": "continue",
+        "timeLimit": 15
+    },
+    {
+        "id": "q464",
+        "language": "Python",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Result of range(1)?",
+        "options": [
+            "[0]",
+            "0",
+            "1",
+            "[1]"
+        ],
+        "correctAnswer": "[0]",
+        "timeLimit": 15
+    },
+    {
+        "id": "q465",
+        "language": "Java",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Syntax for infinite while loop in Java?",
+        "options": [
+            "while(true) {}",
+            "while(1) {}",
+            "loop() {}",
+            "None"
+        ],
+        "correctAnswer": "while(true) {}",
+        "timeLimit": 15
+    },
+    {
+        "id": "q466",
+        "language": "JavaScript",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Can you use `for...in` on an object?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if it is array",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 20
+    },
+    {
+        "id": "q467",
+        "language": "Go",
+        "topic": "Loops",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Is `for i := 0; i < 1; i++ {}` valid Go?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if in main",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q468",
+        "language": "C",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Is `else` mandatory after `if`?",
+        "options": [
+            "No",
+            "Yes",
+            "Depends on topic",
+            "None"
+        ],
+        "correctAnswer": "No",
+        "timeLimit": 10
+    },
+    {
+        "id": "q469",
+        "language": "C++",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Can you check `if (int x = 5)` in C++?",
+        "options": [
+            "Yes",
+            "No",
+            "Only in C++17",
+            "Only in C++20"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q470",
+        "language": "Python",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Synatx for 'not equal' in Python?",
+        "options": [
+            "!=",
+            "<>",
+            "both",
+            "none"
+        ],
+        "correctAnswer": "!=",
+        "timeLimit": 15
+    },
+    {
+        "id": "q471",
+        "language": "Java",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Result of `(1 < 2) ? 1 : 2`?",
+        "options": [
+            "1",
+            "2",
+            "true",
+            "false"
+        ],
+        "correctAnswer": "1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q472",
+        "language": "JavaScript",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Result of `false || true`?",
+        "options": [
+            "true",
+            "false",
+            "undefined",
+            "NaN"
+        ],
+        "correctAnswer": "true",
+        "timeLimit": 15
+    },
+    {
+        "id": "q473",
+        "language": "Go",
+        "topic": "Conditionals",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Is `switch x := 1; x {}` valid in Go?",
+        "options": [
+            "Yes",
+            "No",
+            "Only for ints",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 45
+    },
+    {
+        "id": "q474",
+        "language": "C",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which structure uses FIFO principle?",
+        "options": [
+            "Queue",
+            "Stack",
+            "Tree",
+            "List"
+        ],
+        "correctAnswer": "Queue",
+        "timeLimit": 15
+    },
+    {
+        "id": "q475",
+        "language": "C++",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which STL container is a doubly linked list?",
+        "options": [
+            "list",
+            "vector",
+            "deque",
+            "forward_list"
+        ],
+        "correctAnswer": "list",
+        "timeLimit": 30
+    },
+    {
+        "id": "q476",
+        "language": "Python",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which of these is ordered in Python 3.7+?",
+        "options": [
+            "Dict",
+            "Set",
+            "Both",
+            "None"
+        ],
+        "correctAnswer": "Dict",
+        "timeLimit": 20
+    },
+    {
+        "id": "q477",
+        "language": "Java",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "Which of these is synchronized in Java?",
+        "options": [
+            "Vector",
+            "ArrayList",
+            "HashMap",
+            "None"
+        ],
+        "correctAnswer": "Vector",
+        "timeLimit": 30
+    },
+    {
+        "id": "q478",
+        "language": "JavaScript",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "What is a WeakMap in JS?",
+        "options": [
+            "A collection of key/value pairs in which keys are weakly referenced",
+            "A small map",
+            "A slow map",
+            "None"
+        ],
+        "correctAnswer": "A collection of key/value pairs in which keys are weakly referenced",
+        "timeLimit": 60
+    },
+    {
+        "id": "q479",
+        "language": "Go",
+        "topic": "Data Structures",
+        "difficulty": "medium",
+        "type": "mcq",
+        "question": "How to delete a key from a map in Go?",
+        "options": [
+            "delete(m, key)",
+            "remove(m, key)",
+            "m.remove(key)",
+            "None"
+        ],
+        "correctAnswer": "delete(m, key)",
+        "timeLimit": 20
+    },
+    {
+        "id": "q480",
+        "language": "C",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Define dynamic function main and print 'X'.",
+        "expectedOutput": "X",
+        "timeLimit": 30
+    },
+    {
+        "id": "q481",
+        "language": "C++",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write function `void g()` prints 'G'. Call it.",
+        "expectedOutput": "G",
+        "timeLimit": 45
+    },
+    {
+        "id": "q482",
+        "language": "Python",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Define `f()` prints 'F'. Call it.",
+        "expectedOutput": "F",
+        "timeLimit": 20
+    },
+    {
+        "id": "q483",
+        "language": "Java",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Define `static void s()` prints 'S'. Call it.",
+        "expectedOutput": "S",
+        "timeLimit": 45
+    },
+    {
+        "id": "q484",
+        "language": "JavaScript",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Write arrow function `f` prints 'A'. Call it.",
+        "expectedOutput": "A",
+        "timeLimit": 30
+    },
+    {
+        "id": "q485",
+        "language": "Go",
+        "topic": "Functions",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Define `func p()` prints 'P'. Call it.",
+        "expectedOutput": "P",
+        "timeLimit": 45
+    },
+    {
+        "id": "q486",
+        "language": "C",
+        "topic": "Memory",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Where are local variables stored?",
+        "options": [
+            "Stack",
+            "Heap",
+            "Registers",
+            "None"
+        ],
+        "correctAnswer": "Stack",
+        "timeLimit": 15
+    },
+    {
+        "id": "q487",
+        "language": "C++",
+        "topic": "Memory",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Where are static variables stored?",
+        "options": [
+            "Data segment",
+            "Stack",
+            "Heap",
+            "None"
+        ],
+        "correctAnswer": "Data segment",
+        "timeLimit": 20
+    },
+    {
+        "id": "q488",
+        "language": "Python",
+        "topic": "Memory",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Is Python memory managed automatically?",
+        "options": [
+            "Yes",
+            "No",
+            "Partially",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 10
+    },
+    {
+        "id": "q489",
+        "language": "Java",
+        "topic": "Memory",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Where is an object instance stored in Java?",
+        "options": [
+            "Heap",
+            "Stack",
+            "Registry",
+            "None"
+        ],
+        "correctAnswer": "Heap",
+        "timeLimit": 15
+    },
+    {
+        "id": "q490",
+        "language": "JavaScript",
+        "topic": "Memory",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Does JS have automatic garbage collection?",
+        "options": [
+            "Yes",
+            "No",
+            "Manual",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 10
+    },
+    {
+        "id": "q491",
+        "language": "Go",
+        "topic": "Memory",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "What is escape analysis in Go?",
+        "options": [
+            "A technique to determine if memory should be on stack or heap",
+            "A way to skip errors",
+            "A pointer check",
+            "None"
+        ],
+        "correctAnswer": "A technique to determine if memory should be on stack or heap",
+        "timeLimit": 45
+    },
+    {
+        "id": "q492",
+        "language": "C",
+        "topic": "Macros",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Does `#include` add code to your file?",
+        "options": [
+            "Yes",
+            "No",
+            "Only if binary",
+            "None"
+        ],
+        "correctAnswer": "Yes",
+        "timeLimit": 15
+    },
+    {
+        "id": "q493",
+        "language": "C++",
+        "topic": "Standard Lib",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "What is `std::move`?",
+        "options": [
+            "Cast to rvalue reference",
+            "Physical move of memory",
+            "Deletion",
+            "None"
+        ],
+        "correctAnswer": "Cast to rvalue reference",
+        "timeLimit": 60
+    },
+    {
+        "id": "q494",
+        "language": "Python",
+        "topic": "Standard Lib",
+        "difficulty": "hard",
+        "type": "mcq",
+        "question": "Which module allows interaction with OS?",
+        "options": [
+            "os",
+            "sys",
+            "env",
+            "kernel"
+        ],
+        "correctAnswer": "os",
+        "timeLimit": 15
+    },
+    {
+        "id": "q495",
+        "language": "Java",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Print 'a'.concat('b') result.",
+        "expectedOutput": "ab",
+        "timeLimit": 20
+    },
+    {
+        "id": "q496",
+        "language": "JavaScript",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "Print `'X'.repeat(3)`.",
+        "expectedOutput": "XXX",
+        "timeLimit": 15
+    },
+    {
+        "id": "q497",
+        "language": "Go",
+        "topic": "Strings",
+        "difficulty": "easy",
+        "type": "code",
+        "question": "In Go, print `len(\"A\")`.",
+        "expectedOutput": "1",
+        "timeLimit": 15
+    },
+    {
+        "id": "q498",
+        "language": "C",
+        "topic": "Pointers",
+        "difficulty": "easy",
+        "type": "mcq",
+        "question": "Size of an empty pointer (typical 64bit)?",
+        "options": [
+            "8",
+            "4",
+            "0",
+            "1"
+        ],
+        "correctAnswer": "8",
+        "timeLimit": 15
+    },
+    {
+        "id": "q499",
+        "language": "C++",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print 25 / 5 result in C++.",
+        "expectedOutput": "5",
+        "timeLimit": 15
+    },
+    {
+        "id": "q500",
+        "language": "Python",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Write a Python script to print 100 // 10.",
+        "expectedOutput": "10",
+        "timeLimit": 20
+    },
+    {
+        "id": "q501",
+        "language": "Java",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print result of `1 << 2`.",
+        "expectedOutput": "4",
+        "timeLimit": 30
+    },
+    {
+        "id": "q502",
+        "language": "JavaScript",
+        "topic": "Logic",
+        "difficulty": "hard",
+        "type": "code",
+        "question": "Print result of `10 % 3`.",
+        "expectedOutput": "1",
+        "timeLimit": 15
     }
 ]

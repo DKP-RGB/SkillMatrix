@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import { useAnalytics } from '../analytics/useAnalytics';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '../utils/supabaseClient';
 import ChatBot from '../components/ChatBot';
 
 const Dashboard = () => {
@@ -11,17 +12,55 @@ const Dashboard = () => {
 
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const [lastAssessment, setLastAssessment] = useState(null);
 
     useEffect(() => {
         const loadStats = async () => {
             if (user) {
                 const data = await fetchAllTimeStats();
                 setStats(data);
+
+                // Fetch most recent assessment status
+                const { data: latest } = await supabase
+                    .from('assessments')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false })
+                    .limit(1);
+
+                if (latest && latest.length > 0) {
+                    setLastAssessment(latest[0]);
+                }
+
                 setLoading(false);
             }
         };
         loadStats();
     }, [user, fetchAllTimeStats]);
+
+    const handleReattempt = (topic) => {
+        // Attempt to find the language and type used for this topic from analytics history
+        const config = { topic };
+
+        // Find if we have any stats for this topic and guess language/type
+        // Or better, just pass the topic and let ExamPage set defaults if language is missing
+        // However, user wants it to auto-open, so we need a full config.
+
+        // If the topic is the same as lastAssessment, use that config
+        if (lastAssessment && lastAssessment.topic === topic) {
+            config.language = lastAssessment.language;
+            config.type = lastAssessment.type;
+            config.difficulty = 'medium'; // reset difficulty for fresh attempt
+        } else {
+            // Default guess or fallback
+            config.language = 'JavaScript'; // fallback
+            config.type = 'mcq';
+            config.difficulty = 'medium';
+        }
+
+        navigate('/exam', { state: { reattemptConfig: config } });
+    };
 
     const analytics = useMemo(() => {
         if (!stats) return {
@@ -150,8 +189,11 @@ const Dashboard = () => {
                                 <h4 className="font-bold text-white mb-1">{topic}</h4>
                                 <p className="text-secondary text-xs">Practice Recommended • {Math.round(acc * 100)}% Accuracy</p>
                             </div>
-                            <button className="text-[#58a6ff] bg-[rgba(88,166,255,0.1)] px-3 py-1 text-sm rounded hover:bg-[rgba(88,166,255,0.2)] transition-colors">
-                                Review
+                            <button
+                                onClick={() => handleReattempt(topic)}
+                                className="text-[#58a6ff] bg-[rgba(88,166,255,0.1)] px-3 py-1 text-sm rounded hover:bg-[rgba(88,166,255,0.2)] transition-colors font-bold"
+                            >
+                                Reattempt Topic
                             </button>
                         </div>
                     );
@@ -176,6 +218,40 @@ const Dashboard = () => {
 
     return (
         <div className="animate-fade-in p-6 max-w-7xl mx-auto min-h-screen">
+            {location.state?.cheated && (
+                <div className="mb-6 p-4 bg-[rgba(218,54,51,0.1)] border border-[#da3633] rounded-xl flex items-center justify-between animate-shake">
+                    <div className="flex items-center gap-3">
+                        <span className="text-2xl">⚠️</span>
+                        <div>
+                            <h4 className="text-[#da3633] font-bold">Assessment Terminated</h4>
+                            <p className="text-gray-400 text-sm">{location.state.reason || 'Integrity violation detected.'}</p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => {
+                            const config = location.state?.config || lastAssessment;
+                            if (config) {
+                                navigate('/exam', {
+                                    state: {
+                                        reattemptConfig: {
+                                            language: config.language,
+                                            topic: config.topic,
+                                            type: config.type,
+                                            difficulty: 'medium'
+                                        }
+                                    }
+                                });
+                            } else {
+                                navigate('/exam');
+                            }
+                        }}
+                        className="bg-[#da3633] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#b02a27] transition-colors"
+                    >
+                        Appeal & Reattempt
+                    </button>
+                </div>
+            )}
+
             <div className="mb-10 flex flex-col md:flex-row justify-between md:items-end gap-6 border-b border-gray-800 pb-6">
                 <div>
                     <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-indigo-400">Welcome back, {user.user_metadata?.full_name || user.email?.split('@')[0]}</h1>

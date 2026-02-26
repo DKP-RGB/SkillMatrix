@@ -103,7 +103,7 @@ export const AnalyticsProvider = ({ children }) => {
         }
     };
 
-    const finishAssessment = async () => {
+    const finishAssessment = async (status = 'completed') => {
         if (!currentAssessmentId || !user) return;
 
         try {
@@ -113,7 +113,7 @@ export const AnalyticsProvider = ({ children }) => {
                 .update({
                     score: examData.correctAnswers,
                     total_questions: examData.totalQuestionsAttempted,
-                    status: 'completed',
+                    status: status,
                     completed_at: new Date().toISOString()
                 })
                 .eq('id', currentAssessmentId);
