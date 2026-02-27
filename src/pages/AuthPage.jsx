@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const AuthPage = () => {
-    const [isLogin, setIsLogin] = useState(true);
+    const { login, signup, loginWithGoogle } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Check if we should start in signup mode
+    const [isLogin, setIsLogin] = useState(!(location.state?.mode === 'signup'));
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [error, setError] = useState('');
-    const { login, signup, loginWithGoogle } = useAuth();
-    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (location.state?.mode) {
+            setIsLogin(location.state.mode === 'login');
+        }
+    }, [location.state]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

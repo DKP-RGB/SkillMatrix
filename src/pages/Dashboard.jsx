@@ -5,6 +5,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient';
 import ChatBot from '../components/ChatBot';
 import RadarChart from '../components/RadarChart';
+import { motion } from 'framer-motion';
+import {
+    Trophy,
+    Target,
+    Zap,
+    Clock,
+    ChevronRight,
+    LayoutDashboard,
+    Search,
+    BrainCircuit,
+    BarChart3
+} from 'lucide-react';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -23,7 +35,6 @@ const Dashboard = () => {
                 const data = await fetchAllTimeStats();
                 setStats(data);
 
-                // Fetch most recent assessment status
                 const { data: latest } = await supabase
                     .from('assessments')
                     .select('*')
@@ -35,7 +46,6 @@ const Dashboard = () => {
                     setLastAssessment(latest[0]);
                 }
 
-                // Fetch last 5 assessments for the "Recent Activity" table
                 const { data: recent } = await supabase
                     .from('assessments')
                     .select('*')
@@ -44,13 +54,11 @@ const Dashboard = () => {
                     .limit(5);
 
                 if (recent) setRecentAssessments(recent);
-
                 setLoading(false);
             }
         };
         loadStats();
 
-        // Real-time listener for question attempts to update chart in "real-time"
         const channel = supabase
             .channel('realtime_attempts')
             .on('postgres_changes', {
@@ -69,16 +77,13 @@ const Dashboard = () => {
     }, [user, fetchAllTimeStats]);
 
     const handleReattempt = (topic) => {
-        // Find the specific stats for this topic
         const topicData = analytics.topicStats[topic];
-
         const config = {
             topic,
             language: topicData?.lastLanguage || 'JavaScript',
             type: topicData?.lastType || 'mcq',
-            difficulty: 'medium' // Always reset to medium for a fresh adaptive start
+            difficulty: 'medium'
         };
-
         navigate('/exam', { state: { reattemptConfig: config } });
     };
 
@@ -119,7 +124,7 @@ const Dashboard = () => {
             avgTimePerQuestion,
             bestTopic,
             weakTopic,
-            dailyStreak: 1 // still mock
+            dailyStreak: 1
         };
     }, [stats]);
 
@@ -131,341 +136,243 @@ const Dashboard = () => {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-[#0d1117]">
-                <div className="flex flex-col items-center gap-4">
-                    <div className="w-12 h-12 border-4 border-[#1f6feb] border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-gray-400 font-medium">Crunching your skill metrics...</p>
+                <div className="relative flex flex-col items-center gap-6">
+                    <div className="w-16 h-16 border-4 border-[#58a6ff]/20 border-t-[#58a6ff] rounded-full animate-spin"></div>
+                    <div className="text-center">
+                        <p className="text-white font-black tracking-tighter text-xl uppercase">Calibrating Console</p>
+                        <p className="text-gray-500 font-mono text-xs mt-1 animate-pulse">SYNCHRONIZING_METRICS...</p>
+                    </div>
                 </div>
             </div>
         );
     }
 
-    // Helper for generating simple CSS bar charts
-    const renderDifficultyGraph = () => {
-        const max = Math.max(
-            analytics.difficultyStats.easy.attempted,
-            analytics.difficultyStats.medium.attempted,
-            analytics.difficultyStats.hard.attempted,
-            1
-        );
-
-        return (
-            <div className="flex flex-col gap-4 mt-4 w-full">
-                {['easy', 'medium', 'hard'].map(diff => {
-                    const diffData = analytics.difficultyStats[diff];
-                    const width = `${(diffData.attempted / max) * 100}%`;
-                    const acc = diffData.attempted > 0 ? Math.round((diffData.correct / diffData.attempted) * 100) : 0;
-                    return (
-                        <div key={diff} className="flex items-center">
-                            <span className="w-20 text-sm capitalize text-secondary">{diff}</span>
-                            <div className="flex-1 h-6 bg-[rgba(255,255,255,0.05)] rounded overflow-hidden">
-                                <div
-                                    className={`h-full flex items-center px-2 text-xs font-bold text-white transition-all duration-1000 ${diff === 'easy' ? 'bg-[#238636]' :
-                                        diff === 'medium' ? 'bg-[#e3b341]' :
-                                            'bg-[#da3633]'
-                                        }`}
-                                    style={{ width: diffData.attempted > 0 ? width : '0%' }}
-                                >
-                                    {diffData.attempted > 0 && `${acc}% Acc`}
-                                </div>
-                            </div>
-                            <span className="w-12 text-right text-sm">{diffData.attempted} Qs</span>
-                        </div>
-                    );
-                })}
-            </div>
-        );
-    };
-
-    const renderRecentActivity = () => {
-        if (recentAssessments.length === 0) return null;
-
-        return (
-            <div className="mt-10 pt-8 border-t border-gray-800">
-                <div className="flex justify-between items-center mb-6">
-                    <h4 className="text-sm font-bold text-[#58a6ff] uppercase tracking-widest">Recent Performance History</h4>
-                    <span className="text-[10px] text-gray-500 bg-gray-800/50 px-2 py-0.5 rounded-full uppercase tracking-tighter">Auto-Refreshing</span>
-                </div>
-                <div className="grid grid-cols-1 gap-4">
-                    {recentAssessments.map((asmt, idx) => (
-                        <div key={asmt.id} className="group relative flex items-center justify-between p-5 bg-[#0d1117] rounded-2xl border border-gray-800 hover:border-[#58a6ff]/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(88,166,255,0.1)]">
-                            <div className="flex items-center gap-4">
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg ${asmt.status === 'terminated' ? 'bg-red-900/20 text-red-500' : 'bg-blue-900/20 text-[#58a6ff]'}`}>
-                                    {asmt.score}
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-bold text-white group-hover:text-[#58a6ff] transition-colors">{asmt.topic}</span>
-                                    <span className="text-xs text-gray-500">{asmt.language} • {new Date(asmt.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-6">
-                                <div className="text-right flex flex-col items-end">
-                                    <div className="text-xs font-mono font-bold text-gray-400">
-                                        {Math.round((asmt.score / asmt.total_questions) * 100)}% <span className="text-[10px] font-normal text-gray-600">ACC</span>
-                                    </div>
-                                    <div className={`text-[9px] uppercase font-black tracking-tighter px-2 py-0.5 rounded mt-1 ${asmt.status === 'terminated' ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
-                                        {asmt.status}
-                                    </div>
-                                </div>
-                                <button className="opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-gray-800 rounded-lg hover:bg-gray-700 text-gray-400" title="Review Analysis">
-                                    🔍
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        );
-    };
-
-    const renderExpertAnalysis = () => {
-        const stats = analytics.topicStats;
-        if (Object.keys(stats).length === 0) return null;
-
-        // Calculate specific stats for the narrative
-        const bestStats = stats[analytics.bestTopic] || { attempted: 0, correct: 0 };
-        const bestAcc = bestStats.attempted > 0 ? Math.round((bestStats.correct / bestStats.attempted) * 100) : 0;
-
-        const weakStats = stats[analytics.weakTopic] || { attempted: 0, correct: 0 };
-        const weakAcc = weakStats.attempted > 0 ? Math.round((weakStats.correct / weakStats.attempted) * 100) : 0;
-
-        return (
-            <div className="mt-12 p-8 bg-[#0d1117] rounded-3xl border border-gray-800 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[60px] rounded-full group-hover:bg-blue-500/10 transition-all duration-500"></div>
-
-                <h4 className="text-xs font-bold text-[#58a6ff] uppercase tracking-widest mb-6 flex items-center gap-3">
-                    <span className="w-2 h-2 bg-[#58a6ff] rounded-full animate-pulse shadow-[0_0_8px_#58a6ff]"></span>
-                    Deep Analysis Output
-                </h4>
-
-                <div className="space-y-6 relative z-10">
-                    <div className="flex flex-col gap-2">
-                        <span className="text-[10px] text-gray-500 font-mono uppercase">Primary Specialization</span>
-                        <p className="text-gray-300 text-base leading-relaxed">
-                            Your performance data identifies <span className="text-white font-bold">{analytics.bestTopic || 'Core Systems'}</span> as your <span className="text-[#238636] font-bold">domain of excellence</span>. With a current accuracy of <span className="text-white font-mono">{bestAcc}%</span> over <span className="text-white font-mono">{bestStats.attempted}</span> rigorous evaluations, this pillar anchors your analytical profile.
-                        </p>
-                    </div>
-
-                    <div className="border-l-4 border-[#da3633] bg-red-500/5 p-5 rounded-r-xl">
-                        <span className="text-[10px] text-red-400 font-mono uppercase block mb-1">Growth Constraint Detected</span>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                            The Skill Matrix illustrates a significant contraction in <span className="text-white font-bold">{analytics.weakTopic || 'untested areas'}</span>. Your <span className="text-white font-mono">{weakAcc}%</span> hit-rate in this topic suggests a conceptual bottleneck. Prioritizing reattempts in this area will stabilize your matrix shape and prevent performance decay in complex scenarios.
-                        </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-gray-800/50">
-                        <div className="grid grid-cols-2 gap-6">
-                            <div className="flex flex-col gap-2">
-                                <div className="text-[10px] text-gray-500 uppercase tracking-tighter">Matrix Stability</div>
-                                <div className="flex items-center gap-2">
-                                    <div className="flex-1 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                        <div className="h-full bg-[#238636] w-[85%] rounded-full shadow-[0_0_10px_rgba(35,134,54,0.4)]"></div>
-                                    </div>
-                                    <span className="text-xs font-mono text-[#238636] font-bold">85%</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-2 text-right">
-                                <div className="text-[10px] text-gray-500 uppercase tracking-tighter">Skill Maturity</div>
-                                <div className="text-sm font-bold text-white uppercase tracking-widest">{analytics.accuracy > 70 ? 'Advanced' : 'Intermediate'} Profile</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const renderTopicBadges = () => {
-        return (
-            <div className="flex flex-col gap-6 mt-4">
-                <div className="p-4 rounded border border-glass-border bg-[rgba(35,134,54,0.1)]">
-                    <div className="text-secondary text-sm mb-1">Strongest Pillar</div>
-                    <div className="text-xl text-[#238636] font-bold">
-                        {analytics.bestTopic || 'Not enough data'}
-                    </div>
-                </div>
-
-                <div className="p-4 rounded border border-glass-border bg-[rgba(218,54,51,0.1)]">
-                    <div className="text-secondary text-sm mb-1">Primary Growth Opportunity</div>
-                    <div className="text-xl text-[#da3633] font-bold">
-                        {analytics.weakTopic || 'Not enough data'}
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const renderRecommendations = () => {
-        const recommendations = [];
-
-        Object.entries(analytics.topicStats || {}).forEach(([topic, stats]) => {
-            if (stats.attempted > 0) {
-                const acc = stats.correct / stats.attempted;
-                if (acc < 0.6) {
-                    recommendations.push(
-                        <div key={topic} className="flex p-4 bg-[#161b22] border border-glass-border rounded-lg items-center justify-between hover:border-[#58a6ff] transition-colors cursor-pointer">
-                            <div>
-                                <h4 className="font-bold text-white mb-1">{topic}</h4>
-                                <p className="text-secondary text-xs">Practice Recommended • {Math.round(acc * 100)}% Accuracy</p>
-                            </div>
-                            <button
-                                onClick={() => handleReattempt(topic)}
-                                className="text-[#58a6ff] bg-[rgba(88,166,255,0.1)] px-3 py-1 text-sm rounded hover:bg-[rgba(88,166,255,0.2)] transition-colors font-bold"
-                            >
-                                Reattempt Topic
-                            </button>
-                        </div>
-                    );
-                }
-            }
-        });
-
-        if (recommendations.length === 0 && analytics.totalQuestionsAttempted > 0) {
-            return (
-                <div className="flex h-32 items-center justify-center text-secondary border border-dashed border-[#238636] bg-[rgba(35,134,54,0.05)] rounded mt-4">
-                    Excellent work! No immediate practice recommended.
-                </div>
-            );
-        }
-
-        return (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                {recommendations}
-            </div>
-        );
-    };
-
     return (
-        <div className="animate-fade-in p-6 max-w-7xl mx-auto min-h-screen">
-            {location.state?.cheated && (
-                <div className="mb-6 p-4 bg-[rgba(218,54,51,0.1)] border border-[#da3633] rounded-xl flex items-center justify-between animate-shake">
-                    <div className="flex items-center gap-3">
-                        <span className="text-2xl">⚠️</span>
-                        <div>
-                            <h4 className="text-[#da3633] font-bold">Assessment Terminated</h4>
-                            <p className="text-gray-400 text-sm">{location.state.reason || 'Integrity violation detected.'}</p>
+        <div className="relative min-h-screen w-full bg-[#0d1117] overflow-hidden selection:bg-[#58a6ff]/30">
+            {/* Background Systems */}
+            <div className="absolute inset-0 bg-dot-grid opacity-20 pointer-events-none" />
+            <div className="glow-blob top-[-20%] right-[-10%] bg-[#58a6ff]/10" />
+            <div className="glow-blob bottom-[-10%] left-[-10%] bg-[#238636]/5" />
+
+            <div className="relative z-10 p-6 lg:p-10 max-w-7xl mx-auto flex flex-col gap-10">
+
+                {/* Cheating Alert */}
+                {location.state?.cheated && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className="p-1 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-between shadow-2xl shadow-red-500/5"
+                    >
+                        <div className="flex items-center gap-4 p-3 px-5">
+                            <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-red-500">
+                                <Zap size={24} />
+                            </div>
+                            <div>
+                                <h4 className="text-red-500 font-black uppercase text-sm tracking-tighter">Integrity Violation Detected</h4>
+                                <p className="text-gray-400 text-xs font-medium">{location.state.reason || 'Assessment auto-terminated by system.'}</p>
+                            </div>
                         </div>
+                        <button
+                            onClick={() => navigate('/exam')}
+                            className="mr-3 px-6 py-3 bg-red-500 text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-black transition-all hover:scale-105 active:scale-95 shadow-lg shadow-red-500/20"
+                        >
+                            Appeal & Reattempt
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* Header Section */}
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-6">
+                    <div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161b22] border border-gray-800 mb-4">
+                            <LayoutDashboard size={12} className="text-[#58a6ff]" />
+                            <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">Command Center V2</span>
+                        </div>
+                        <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]">
+                            GREETINGS, <span className="text-gradient uppercase">{user.user_metadata?.full_name || user.email?.split('@')[0]}</span>
+                        </h1>
+                        <p className="text-gray-500 mt-4 text-lg font-medium max-w-lg">
+                            Your skill matrix is ready for synchronization. What shall we baseline today?
+                        </p>
                     </div>
                     <button
-                        onClick={() => {
-                            const config = location.state?.config || lastAssessment;
-                            if (config) {
-                                navigate('/exam', {
-                                    state: {
-                                        reattemptConfig: {
-                                            language: config.language,
-                                            topic: config.topic,
-                                            type: config.type,
-                                            difficulty: 'medium'
-                                        }
-                                    }
-                                });
-                            } else {
-                                navigate('/exam');
-                            }
-                        }}
-                        className="bg-[#da3633] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#b02a27] transition-colors"
+                        onClick={() => navigate('/exam')}
+                        className="group relative px-8 py-4 bg-white text-black font-black uppercase text-xs tracking-widest rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                     >
-                        Appeal & Reattempt
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#58a6ff] to-[#3fb950] opacity-0 group-hover:opacity-10 transition-opacity" />
+                        <span className="relative flex items-center gap-2">
+                            New Evaluation <ChevronRight size={14} />
+                        </span>
                     </button>
-                </div>
-            )}
+                </header>
 
-            <div className="mb-10 flex flex-col md:flex-row justify-between md:items-end gap-6 border-b border-gray-800 pb-6">
-                <div>
-                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-indigo-400">Welcome back, {user.user_metadata?.full_name || user.email?.split('@')[0]}</h1>
-                    <p className="text-gray-400 mt-2 text-lg">Ready for your next skill assessment?</p>
-                </div>
-                <button
-                    className="bg-[#1f6feb] hover:bg-[#3182ce] text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-[0_4px_14px_rgba(49,130,206,0.3)] hover:shadow-[0_6px_20px_rgba(49,130,206,0.5)] transform hover:-translate-y-1"
-                    onClick={() => navigate('/exam')}
-                >
-                    Start New Assessment
-                </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg relative overflow-hidden flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors">
-                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Overall Accuracy</div>
-                    <div className="text-5xl font-bold font-mono text-[#58a6ff] drop-shadow-md">{analytics.accuracy}%</div>
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#58a6ff] opacity-[0.03] rounded-bl-full"></div>
-                </div>
-                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors">
-                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Avg. Time / Q</div>
-                    <div className="text-5xl font-bold font-mono text-[#58a6ff] drop-shadow-md">{analytics.avgTimePerQuestion}s</div>
-                </div>
-                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors">
-                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Total Attempted</div>
-                    <div className="text-5xl font-bold font-mono text-[#58a6ff] drop-shadow-md">{analytics.totalQuestionsAttempted}</div>
-                </div>
-                <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 text-center shadow-lg flex flex-col items-center justify-center min-h-[140px] hover:border-gray-600 transition-colors relative overflow-hidden">
-                    <div className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">Daily Streak</div>
-                    <div className="text-5xl font-bold font-mono text-[#e3b341] drop-shadow-md flex items-center justify-center gap-2">
-                        {analytics.dailyStreak} <span className="text-3xl animate-pulse">🔥</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex flex-col gap-10 mt-12 mb-10 max-w-4xl mx-auto">
-                {/* 1. Difficulty Distribution & Recent Activity */}
-                <div className="bg-[#161b22] border border-gray-800 rounded-3xl p-10 shadow-xl">
-                    <h3 className="text-3xl mb-2 font-bold border-b border-gray-800 pb-6 text-white flex items-center gap-3">
-                        <span className="text-[#58a6ff]">📊</span> Performance Distribution
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-8">Detailed breakdown of question attempts and precision levels.</p>
-                    {analytics.totalQuestionsAttempted > 0 ? (
-                        <>
-                            {renderDifficultyGraph()}
-                            {renderRecentActivity()}
-                        </>
-                    ) : (
-                        <div className="flex flex-col h-40 items-center justify-center text-gray-500 border-2 border-dashed border-gray-800 rounded-xl mt-4 bg-[#0d1117] font-medium">
-                            Take an assessment to generate this graph
-                        </div>
-                    )}
+                {/* Main Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                    <StatCard icon={<Target className="text-[#58a6ff]" />} label="Total Accuracy" value={`${analytics.accuracy}%`} color="blue" />
+                    <StatCard icon={<Clock className="text-[#e3b341]" />} label="Avg Speed" value={`${analytics.avgTimePerQuestion}s`} color="yellow" />
+                    <StatCard icon={<BrainCircuit className="text-[#238636]" />} label="Detections" value={analytics.totalQuestionsAttempted} color="green" />
+                    <StatCard icon={<Zap className="text-[#da3633]" />} label="Streak" value={analytics.dailyStreak} color="red" isPulse />
                 </div>
 
-                {/* 2. Skill Matrix & Expert Analysis */}
-                <div className="bg-[#161b22] border border-gray-800 rounded-3xl p-10 shadow-xl flex flex-col">
-                    <h3 className="text-3xl mb-2 font-bold border-b border-gray-800 pb-6 text-white flex items-center gap-3">
-                        <span className="text-[#58a6ff]">🕸️</span> Skill Matrix
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-8">Multi-dimensional proficiency radar and deep-dive analytics.</p>
-                    <div className="flex-1 flex flex-col items-center gap-10">
-                        {analytics.totalQuestionsAttempted > 0 ? (
-                            <>
-                                <div className="w-full flex justify-center py-4">
-                                    <RadarChart data={analytics.topicStats} size={380} />
-                                </div>
-                                <div className="w-full">
-                                    {renderTopicBadges()}
-                                </div>
-                                <div className="w-full">
-                                    {renderExpertAnalysis()}
-                                </div>
-                            </>
-                        ) : (
-                            <div className="flex flex-col h-64 items-center justify-center text-gray-500 border-2 border-dashed border-gray-800 rounded-xl mt-4 bg-[#0d1117] font-medium w-full">
-                                Take an assessment to generate insights
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    {/* Left Column: Analysis & History */}
+                    <div className="lg:col-span-12 xl:col-span-8 flex flex-col gap-6">
+
+                        {/* Radar Chart Container */}
+                        <section className="bg-[#161b22]/50 backdrop-blur-md border border-gray-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
+                                <Search size={200} />
                             </div>
-                        )}
+
+                            <div className="flex flex-col md:flex-row justify-between mb-8 gap-4">
+                                <div>
+                                    <h3 className="text-2xl font-black text-white tracking-tighter uppercase italic">Proficiency Radar</h3>
+                                    <p className="text-gray-500 text-sm font-medium">Multi-dimensional mapping of your technical DNA.</p>
+                                </div>
+                                <div className="text-[10px] font-mono text-[#58a6ff] bg-[#58a6ff]/5 px-3 py-1 rounded-full border border-[#58a6ff]/20 self-start">
+                                    [ ANALYSIS_MODE_ACTIVE ]
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col md:flex-row items-center gap-10">
+                                <div className="flex-1 w-full flex justify-center">
+                                    {analytics.totalQuestionsAttempted > 0 ? (
+                                        <RadarChart data={analytics.topicStats} size={340} />
+                                    ) : (
+                                        <EmptyState message="Baseline required for radar generation" />
+                                    )}
+                                </div>
+
+                                <div className="w-full md:w-64 space-y-4">
+                                    <MiniStat label="Pillar Strength" value={analytics.bestTopic || 'UNDEFINED'} color="green" />
+                                    <MiniStat label="Growth Vector" value={analytics.weakTopic || 'UNDEFINED'} color="red" />
+                                    <div className="pt-4 border-t border-gray-800">
+                                        <div className="text-[10px] text-gray-500 uppercase mb-2 font-bold">Maturity Score</div>
+                                        <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${analytics.accuracy}%` }}
+                                                className="h-full bg-gradient-to-r from-[#58a6ff] to-[#3fb950]"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="bg-[#161b22]/50 backdrop-blur-md border border-gray-800 rounded-3xl p-8 shadow-2xl">
+                            <div className="flex justify-between items-center mb-10">
+                                <h3 className="text-xl font-black text-white tracking-tighter uppercase italic">Mission Log</h3>
+                                <button className="text-[10px] text-gray-500 font-bold hover:text-white transition-colors uppercase tracking-widest">Export JSON</button>
+                            </div>
+                            <div className="space-y-4">
+                                {recentAssessments.length > 0 ? recentAssessments.map((asmt) => (
+                                    <motion.div
+                                        key={asmt.id}
+                                        whileHover={{ x: 5 }}
+                                        className="flex items-center justify-between p-4 bg-[#0d1117]/50 rounded-2xl border border-gray-800/50 hover:border-[#58a6ff]/30 transition-all cursor-pointer group"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black ${asmt.status === 'terminated' ? 'bg-red-500/10 text-red-500' : 'bg-[#58a6ff]/10 text-[#58a6ff]'}`}>
+                                                {asmt.score}
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-black text-white uppercase group-hover:text-[#58a6ff] transition-colors">{asmt.topic}</h4>
+                                                <p className="text-[10px] text-gray-500 font-mono uppercase">{asmt.language} • {new Date(asmt.created_at).toLocaleDateString()}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right flex flex-col items-end gap-1">
+                                            <div className="text-xs font-mono font-black text-gray-400">{(asmt.score / asmt.total_questions * 100).toFixed(0)}%</div>
+                                            <div className={`text-[8px] px-2 py-0.5 rounded font-black uppercase ${asmt.status === 'terminated' ? 'bg-red-500 text-white' : 'bg-[#238636] text-white'}`}>
+                                                {asmt.status}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )) : (
+                                    <p className="text-center py-10 text-gray-600 font-mono text-sm uppercase tracking-tighter">No session logs found</p>
+                                )}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* Right Column: Recommendations & AI */}
+                    <div className="lg:col-span-12 xl:col-span-4 flex flex-col gap-6">
+                        <section className="bg-gradient-to-br from-[#161b22] to-black border border-gray-800 rounded-3xl p-8 shadow-2xl flex flex-col gap-6">
+                            <h3 className="text-xl font-black text-white tracking-tighter uppercase italic flex items-center gap-2">
+                                <BarChart3 className="text-[#e3b341]" size={20} /> Recommendations
+                            </h3>
+                            <div className="space-y-3">
+                                {Object.entries(analytics.topicStats).filter(([_, s]) => (s.correct / s.attempted) < 0.7).slice(0, 3).map(([topic, s]) => (
+                                    <div key={topic} className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-colors flex flex-col gap-3">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm font-bold text-white uppercase">{topic}</span>
+                                            <span className="text-[10px] font-mono text-red-400">{(s.correct / s.attempted * 100).toFixed(0)}%</span>
+                                        </div>
+                                        <button
+                                            onClick={() => handleReattempt(topic)}
+                                            className="w-full py-2 bg-[#58a6ff]/10 hover:bg-[#58a6ff]/20 text-[#58a6ff] font-black uppercase text-[10px] tracking-widest rounded-lg border border-[#58a6ff]/20 transition-all"
+                                        >
+                                            Baseline Topic
+                                        </button>
+                                    </div>
+                                ))}
+                                {analytics.totalQuestionsAttempted === 0 && <p className="text-gray-500 text-xs italic">Complete evaluations to unlock neural recommendations.</p>}
+                            </div>
+                        </section>
+
+                        <div className="flex-1">
+                            <div className="h-full flex flex-col items-center justify-center p-10 bg-[#58a6ff]/5 border border-[#58a6ff]/10 rounded-3xl border-dashed opacity-50 select-none">
+                                <Trophy size={48} className="text-[#58a6ff] mb-4 opacity-20" />
+                                <p className="text-center font-black text-white uppercase text-[10px] tracking-widest leading-loose">
+                                    Global Leaderboards <br /> Coming Soon
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <footer className="pt-10 mb-6 border-t border-gray-800 text-center">
+                    <p className="text-[#ffffff10] text-3xl md:text-6xl font-black tracking-tighter uppercase select-none">
+                        Mapping Professional DNA
+                    </p>
+                </footer>
             </div>
 
-            <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-8 shadow-md mb-8">
-                <h3 className="text-2xl mb-2 font-bold border-b border-gray-800 pb-4 text-[#58a6ff]">Recommended For You</h3>
-                <p className="text-gray-400 text-sm mb-6">Personalized study plan based on your adaptive performance.</p>
-                {analytics.totalQuestionsAttempted > 0 ? renderRecommendations() : (
-                    <div className="flex flex-col h-32 items-center justify-center text-gray-500 border-2 border-dashed border-gray-800 rounded-xl mt-4 bg-[#0d1117] font-medium">
-                        Take an assessment to get personalized recommendations
-                    </div>
-                )}
-            </div>
-
-            {/* AI ChatBot Assistant */}
             <ChatBot apiKey={import.meta.env.VITE_OPENROUTER_KEY} />
         </div>
     );
 };
+
+const StatCard = ({ icon, label, value, color, isPulse }) => (
+    <motion.div
+        whileHover={{ y: -5 }}
+        className="bg-[#161b22] border border-gray-800 rounded-2xl p-6 flex flex-col items-start gap-4 hover:border-gray-600 transition-all"
+    >
+        <div className={`p-3 rounded-xl bg-white/5 ${isPulse ? 'animate-pulse' : ''}`}>
+            {icon}
+        </div>
+        <div>
+            <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-1">{label}</div>
+            <div className={`text-3xl font-black tracking-tighter ${color === 'red' ? 'text-red-500' : 'text-white'}`}>{value}</div>
+        </div>
+    </motion.div>
+);
+
+const MiniStat = ({ label, value, color }) => (
+    <div className="flex flex-col gap-1">
+        <span className="text-[10px] text-gray-500 font-bold uppercase tracking-tighter">{label}</span>
+        <span className={`text-lg font-black uppercase tracking-tighter truncate ${color === 'green' ? 'text-[#238636]' :
+                color === 'red' ? 'text-red-500' :
+                    'text-white'
+            }`}>{value}</span>
+    </div>
+);
+
+const EmptyState = ({ message }) => (
+    <div className="flex flex-col items-center justify-center min-h-[300px] text-gray-600 opacity-50">
+        <BarChart3 size={48} className="mb-4" />
+        <p className="font-mono text-xs uppercase tracking-widest">{message}</p>
+    </div>
+);
 
 export default Dashboard;

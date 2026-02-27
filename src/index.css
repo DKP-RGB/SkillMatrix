@@ -41,9 +41,40 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  background-image:
-    radial-gradient(circle at 15% 50%, rgba(88, 166, 255, 0.04), transparent 30%),
-    radial-gradient(circle at 85% 30%, rgba(35, 134, 54, 0.04), transparent 30%);
+}
+
+/* Background Systems */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 30px 30px;
+}
+
+.bg-mesh {
+  background:
+    radial-gradient(circle at 15% 50%, rgba(88, 166, 255, 0.05), transparent 30%),
+    radial-gradient(circle at 85% 30%, rgba(35, 134, 54, 0.05), transparent 30%);
+}
+
+.glow-blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+  filter: blur(100px);
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+  animation: blob-float 20s infinite alternate;
+}
+
+@keyframes blob-float {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(100px, 50px) scale(1.1);
+  }
 }
 
 /* Base Utility Classes */

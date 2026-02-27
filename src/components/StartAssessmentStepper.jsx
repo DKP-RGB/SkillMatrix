@@ -72,17 +72,17 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                     key={lang}
                                     type="button"
                                     onClick={() => updateSelection('language', lang)}
-                                    className={`py-8 rounded-2xl transition-all duration-500 flex flex-col items-center justify-center gap-4 group relative overflow-hidden transform hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,163,255,0.2)] ${selection.language === lang
-                                        ? 'bg-[rgba(22,27,34,0.9)] backdrop-blur-xl shadow-[0_0_40px_rgba(0,163,255,0.3)] ring-[3px] ring-[#00a3ff] text-white scale-[1.02]'
+                                    className={`py-4 rounded-xl transition-all duration-500 flex flex-col items-center justify-center gap-2 group relative overflow-hidden transform hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,163,255,0.15)] ${selection.language === lang
+                                        ? 'bg-[rgba(22,27,34,0.9)] backdrop-blur-xl shadow-[0_0_30px_rgba(0,163,255,0.2)] ring-[2px] ring-[#00a3ff] text-white scale-[1.01]'
                                         : 'bg-[#161b22] hover:bg-[#1c2128] ring-1 ring-gray-800 hover:ring-gray-600 text-gray-500 hover:text-white'
                                         }`}
                                 >
                                     <img
                                         src={LANG_ICONS[lang]}
                                         alt={`${lang} logo`}
-                                        className={`w-16 h-16 object-contain transition-transform duration-300 ${selection.language === lang ? 'scale-110' : 'group-hover:scale-110 grayscale-[0.2]'}`}
+                                        className={`w-10 h-10 object-contain transition-transform duration-300 ${selection.language === lang ? 'scale-110' : 'group-hover:scale-110 grayscale-[0.2]'}`}
                                     />
-                                    <span className={`text-2xl font-black font-heading tracking-wider transition-all duration-300 transform group-hover:scale-105 ${selection.language === lang ? 'text-white' : ''}`}>{lang}</span>
+                                    <span className={`text-lg font-black font-heading tracking-wider transition-all duration-300 transform group-hover:scale-105 ${selection.language === lang ? 'text-white' : ''}`}>{lang}</span>
                                     {selection.language === lang && (
                                         <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[#00a3ff] to-transparent animate-pulse" />
                                     )}
@@ -100,8 +100,8 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                 <button
                                     key={topic}
                                     onClick={() => updateSelection('topic', topic)}
-                                    className={`p-6 rounded-xl border-[3px] transition-all duration-500 transform hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(0,163,255,0.2)] text-base font-black tracking-widest uppercase ${selection.topic === topic
-                                        ? 'border-[#00a3ff] bg-[rgba(0,163,255,0.1)] text-white shadow-[0_0_25px_rgba(0,163,255,0.25)] scale-105'
+                                    className={`p-3 rounded-xl border-[2px] transition-all duration-500 transform hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,163,255,0.15)] text-[10px] font-black tracking-widest uppercase ${selection.topic === topic
+                                        ? 'border-[#00a3ff] bg-[rgba(0,163,255,0.1)] text-white shadow-[0_0_20px_rgba(0,163,255,0.2)] scale-105'
                                         : 'border-gray-800 bg-[#161b22] text-gray-600 hover:border-gray-500 hover:text-gray-200'
                                         }`}
                                     style={{ color: selection.topic === topic ? '#ffffff' : undefined }}
@@ -154,13 +154,13 @@ export const StartAssessmentStepper = ({ onComplete }) => {
                                 <button
                                     key={type}
                                     onClick={() => updateSelection('type', type)}
-                                    className={`p-10 rounded-2xl border-[3px] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center gap-6 ${selection.type === type
-                                        ? 'border-[#00a3ff] bg-[rgba(0,163,255,0.1)] shadow-[0_0_35px_rgba(0,163,255,0.2)] text-white scale-[1.03]'
+                                    className={`p-6 rounded-xl border-[2px] transition-all duration-500 transform hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] flex flex-col items-center justify-center gap-4 ${selection.type === type
+                                        ? 'border-[#00a3ff] bg-[rgba(0,163,255,0.1)] shadow-[0_0_25px_rgba(0,163,255,0.15)] text-white scale-[1.02]'
                                         : 'border-gray-800 bg-[#161b22] hover:border-gray-600 hover:bg-[#1c2128] text-gray-600 hover:text-white'
                                         }`}
                                     style={{ color: selection.type === type ? '#ffffff' : undefined }}
                                 >
-                                    <span className="text-2xl font-bold tracking-wide">
+                                    <span className="text-lg font-black uppercase tracking-wider">
                                         {type === 'mcq' ? 'Multiple Choice' : 'Code Writing'}
                                     </span>
                                 </button>
