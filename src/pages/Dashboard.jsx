@@ -262,8 +262,8 @@ const Dashboard = () => {
 
                         <section className="bg-[#161b22]/50 backdrop-blur-md border border-gray-800 rounded-3xl p-8 shadow-2xl">
                             <div className="flex justify-between items-center mb-10">
-                                <h3 className="text-xl font-black text-white tracking-tighter uppercase italic">Mission Log</h3>
-                                <button className="text-[10px] text-gray-500 font-bold hover:text-white transition-colors uppercase tracking-widest">Export JSON</button>
+                                <h3 className="text-xl font-black text-white tracking-tighter uppercase italic text-gradient">Session Ledger</h3>
+                                <button className="text-[10px] text-gray-500 font-bold hover:text-white transition-colors uppercase tracking-widest px-3 py-1 bg-white/5 rounded-lg border border-white/5">Export Index</button>
                             </div>
                             <div className="space-y-4">
                                 {recentAssessments.length > 0 ? recentAssessments.map((asmt) => (
@@ -297,26 +297,60 @@ const Dashboard = () => {
 
                     {/* Right Column: Recommendations & AI */}
                     <div className="lg:col-span-12 xl:col-span-4 flex flex-col gap-6">
-                        <section className="bg-gradient-to-br from-[#161b22] to-black border border-gray-800 rounded-3xl p-8 shadow-2xl flex flex-col gap-6">
+                        <section className="bg-gradient-to-br from-[#161b22] to-black border border-gray-800 rounded-3xl p-8 shadow-2xl flex flex-col gap-6 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+                                <BrainCircuit size={40} className="text-[#e3b341]" />
+                            </div>
                             <h3 className="text-xl font-black text-white tracking-tighter uppercase italic flex items-center gap-2">
-                                <BarChart3 className="text-[#e3b341]" size={20} /> Recommendations
+                                <BarChart3 className="text-[#e3b341]" size={20} /> AI Recommendations
                             </h3>
-                            <div className="space-y-3">
-                                {Object.entries(analytics.topicStats).filter(([_, s]) => (s.correct / s.attempted) < 0.7).slice(0, 3).map(([topic, s]) => (
-                                    <div key={topic} className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-colors flex flex-col gap-3">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm font-bold text-white uppercase">{topic}</span>
-                                            <span className="text-[10px] font-mono text-red-400">{(s.correct / s.attempted * 100).toFixed(0)}%</span>
+                            <div className="space-y-4">
+                                {Object.entries(analytics.topicStats)
+                                    .filter(([_, s]) => (s.correct / s.attempted) < 0.75)
+                                    .sort((a, b) => (a[1].correct / a[1].attempted) - (b[1].correct / b[1].attempted))
+                                    .slice(0, 3)
+                                    .map(([topic, s]) => {
+                                        const topicAcc = (s.correct / s.attempted) * 100;
+                                        let aiInsight = "";
+
+                                        if (topicAcc < 30) aiInsight = "Critical gap in foundational logic identified.";
+                                        else if (topicAcc < 50) aiInsight = "Execution consistency below optimal threshold.";
+                                        else if (topicAcc < 70) aiInsight = "Recent evaluation shows declining precision.";
+                                        else aiInsight = "Needs reinforcement to reach mastery level.";
+
+                                        return (
+                                            <div key={topic} className="p-5 bg-white/[0.03] border border-white/5 rounded-2xl hover:bg-white/[0.05] transition-all group/rec">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <div>
+                                                        <span className="text-sm font-black text-white uppercase tracking-tight">{topic}</span>
+                                                        <p className="text-[9px] text-[#e3b341] font-mono mt-1 flex items-center gap-1">
+                                                            <Zap size={8} /> {aiInsight}
+                                                        </p>
+                                                    </div>
+                                                    <span className={`text-[10px] font-mono font-bold ${topicAcc < 50 ? 'text-red-500' : 'text-yellow-500'}`}>
+                                                        {topicAcc.toFixed(0)}%
+                                                    </span>
+                                                </div>
+                                                <div className="h-1.5 bg-white/5 rounded-full mb-4 overflow-hidden">
+                                                    <div className="h-full bg-gradient-to-r from-red-500 to-[#e3b341]" style={{ width: `${topicAcc}%` }} />
+                                                </div>
+                                                <button
+                                                    onClick={() => handleReattempt(topic)}
+                                                    className="w-full py-2.5 bg-white text-black font-black uppercase text-[10px] tracking-[0.2em] rounded-xl hover:bg-[#58a6ff] hover:text-white transition-all transform active:scale-95 shadow-lg shadow-white/5"
+                                                >
+                                                    Reattempt Evaluation
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                {analytics.totalQuestionsAttempted === 0 && (
+                                    <div className="py-8 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
+                                        <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <Search size={16} className="text-gray-600" />
                                         </div>
-                                        <button
-                                            onClick={() => handleReattempt(topic)}
-                                            className="w-full py-2 bg-[#58a6ff]/10 hover:bg-[#58a6ff]/20 text-[#58a6ff] font-black uppercase text-[10px] tracking-widest rounded-lg border border-[#58a6ff]/20 transition-all"
-                                        >
-                                            Baseline Topic
-                                        </button>
+                                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest italic">Baseline Required <br />[ Neural Link Inactive ]</p>
                                     </div>
-                                ))}
-                                {analytics.totalQuestionsAttempted === 0 && <p className="text-gray-500 text-xs italic">Complete evaluations to unlock neural recommendations.</p>}
+                                )}
                             </div>
                         </section>
 
@@ -362,8 +396,8 @@ const MiniStat = ({ label, value, color }) => (
     <div className="flex flex-col gap-1">
         <span className="text-[10px] text-gray-500 font-bold uppercase tracking-tighter">{label}</span>
         <span className={`text-lg font-black uppercase tracking-tighter truncate ${color === 'green' ? 'text-[#238636]' :
-                color === 'red' ? 'text-red-500' :
-                    'text-white'
+            color === 'red' ? 'text-red-500' :
+                'text-white'
             }`}>{value}</span>
     </div>
 );
