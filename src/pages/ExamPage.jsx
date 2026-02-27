@@ -30,9 +30,10 @@ const ExamPage = () => {
     const [setupComplete, setSetupComplete] = useState(false);
     const [examConfig, setExamConfig] = useState(null);
     const [fullResults, setFullResults] = useState([]);
-    const [reattemptCountdown, setReattemptCountdown] = useState(
-        location.state?.reattemptConfig ? 3 : null
+    const [isLoadingTransition, setIsLoadingTransition] = useState(
+        !!location.state?.reattemptConfig
     );
+    const [loadingProgress, setLoadingProgress] = useState(0);
 
     // Core Exam State
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -164,15 +165,29 @@ const ExamPage = () => {
     }, [cheatWarnings, examFinished, finishAssessment, navigate, examConfig]);
 
     useEffect(() => {
-        const runCountdown = async () => {
-            if (reattemptCountdown !== null && reattemptCountdown > 0) {
-                const timer = setTimeout(() => setReattemptCountdown(prev => prev - 1), 1000);
-                return () => clearTimeout(timer);
-            } else if (reattemptCountdown === 0) {
-                const config = location.state.reattemptConfig;
-                // Important: Ensure we have the latest historical IDs
-                const historicalIds = await getHistoricalQuestionIds();
+        const runTransition = async () => {
+            if (isLoadingTransition) {
+                // Smooth progress bar simulation
+                const progressInterval = setInterval(() => {
+                    setLoadingProgress(prev => {
+                        if (prev >= 100) {
+                            clearInterval(progressInterval);
+                            return 100;
+                        }
+                        return prev + 5;
+                    });
+                }, 100);
 
+                // Artificial delay for feel (1.5s - 2s)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                const config = location.state?.reattemptConfig;
+                if (!config) {
+                    setIsLoadingTransition(false);
+                    return;
+                }
+
+                const historicalIds = await getHistoricalQuestionIds();
                 const availableQuestions = questionsData.filter(q => !historicalIds.includes(q.id));
                 const pool = availableQuestions.length > 0 ? availableQuestions : questionsData;
                 const firstQ = getInitialQuestion(pool, config);
@@ -183,18 +198,19 @@ const ExamPage = () => {
                 setCurrentQuestion(firstQ);
                 setTimeRemaining(firstQ.timeLimit);
                 setSetupComplete(true);
-                setReattemptCountdown(null);
+                setIsLoadingTransition(false);
+                clearInterval(progressInterval);
             }
         };
-        runCountdown();
-    }, [reattemptCountdown, location.state, startAssessment, getHistoricalQuestionIds]);
+        runTransition();
+    }, [isLoadingTransition, location.state, startAssessment, getHistoricalQuestionIds]);
 
     // Handle initial state if reattemptConfig is present
     useEffect(() => {
-        if (location.state?.reattemptConfig && !setupComplete && reattemptCountdown === null && !examFinished && !isTerminated) {
-            setReattemptCountdown(3);
+        if (location.state?.reattemptConfig && !setupComplete && !isLoadingTransition && !examFinished && !isTerminated) {
+            setIsLoadingTransition(true);
         }
-    }, [location.state, setupComplete, reattemptCountdown, examFinished, isTerminated]);
+    }, [location.state, setupComplete, isLoadingTransition, examFinished, isTerminated]);
 
     // User Input State
     const [mcqAnswer, setMcqAnswer] = useState('');
@@ -392,8 +408,8 @@ const ExamPage = () => {
         }
     };
 
-    // Render Setup Flow (Only if no reattempt countdown is active)
-    if (!setupComplete && reattemptCountdown === null) {
+    // Render Setup Flow (Only if no loading transition is active)
+    if (!setupComplete && !isLoadingTransition) {
         return (
             <div className="pt-10">
                 <div className="text-center mb-10">
@@ -431,8 +447,8 @@ const ExamPage = () => {
         );
     }
 
-    // Render Loading State (But not if countdown is active)
-    if (!currentQuestion && reattemptCountdown === null) {
+    // Render Loading State (But not if transition is active)
+    if (!currentQuestion && !isLoadingTransition) {
         return (
             <div className="flex flex-col items-center justify-center h-[80vh] animate-fade-in">
                 <div className="w-12 h-12 border-4 border-[#58a6ff] border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -521,9 +537,9 @@ const ExamPage = () => {
                 </div>
             )}
 
-            {/* Reattempt Countdown Overlay */}
+            {/* Reattempt Loading Overlay */}
             <AnimatePresence>
-                {reattemptCountdown !== null && (
+                {isLoadingTransition && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -531,21 +547,39 @@ const ExamPage = () => {
                         className="fixed inset-0 z-[2000] bg-[#0d1117] flex flex-col items-center justify-center backdrop-blur-3xl overflow-hidden"
                     >
                         <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
+                            initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="text-white text-9xl font-black mb-4 flex flex-col items-center"
+                            className="flex flex-col items-center max-w-md w-full px-8"
                         >
-                            <span className="text-2xl text-[#58a6ff] uppercase tracking-[1em] mb-8 animate-pulse text-center px-4">Reattempt Beginning In</span>
-                            <motion.span
-                                key={reattemptCountdown}
-                                initial={{ y: 50, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={{ y: -50, opacity: 0 }}
-                                className="drop-shadow-[0_0_30px_rgba(88,166,255,0.5)]"
-                            >
-                                {reattemptCountdown === 0 ? 'GO!' : reattemptCountdown}
-                            </motion.span>
+                            <div className="w-20 h-20 bg-[#58a6ff]/10 rounded-3xl flex items-center justify-center mb-8 border border-[#58a6ff]/20">
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                    className="w-10 h-10 border-4 border-[#58a6ff] border-t-transparent rounded-full"
+                                />
+                            </div>
+
+                            <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest text-center">
+                                Initializing Reattempt
+                            </h2>
+                            <p className="text-gray-400 text-sm mb-12 text-center">
+                                {loadingProgress < 40 ? "Synchronizing topic data..." :
+                                    loadingProgress < 80 ? "Calibrating adaptive engine..." : "Securing environment..."}
+                            </p>
+
+                            <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden mb-4 relative">
+                                <motion.div
+                                    className="h-full bg-gradient-to-r from-[#58a6ff] to-[#3fb950]"
+                                    style={{ width: `${loadingProgress}%` }}
+                                    transition={{ duration: 0.1 }}
+                                />
+                            </div>
+                            <div className="flex justify-between w-full text-[10px] font-mono text-gray-500 uppercase">
+                                <span>Engine State: Ready</span>
+                                <span>{loadingProgress}%</span>
+                            </div>
                         </motion.div>
+
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent pointer-events-none opacity-50" />
                         <div className="w-96 h-96 bg-[#58a6ff] rounded-full blur-[150px] opacity-[0.05] absolute -bottom-48 -right-48 animate-pulse" />
                     </motion.div>

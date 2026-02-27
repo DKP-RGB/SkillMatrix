@@ -167,8 +167,15 @@ export const AnalyticsProvider = ({ children }) => {
         try {
             const { data: attempts, error } = await supabase
                 .from('question_attempts')
-                .select('*')
-                .eq('user_id', user.id);
+                .select(`
+                    *,
+                    assessments (
+                        language,
+                        type
+                    )
+                `)
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: true }); // Ascending to ensure 'last' is actually the latest
 
             if (error) throw error;
 
@@ -186,12 +193,25 @@ export const AnalyticsProvider = ({ children }) => {
             };
 
             attempts.forEach(a => {
+                const topic = a.topic;
+                const asmt = a.assessments || {};
+
                 // Topic aggregation
-                if (!summary.topicStats[a.topic]) {
-                    summary.topicStats[a.topic] = { attempted: 0, correct: 0 };
+                if (!summary.topicStats[topic]) {
+                    summary.topicStats[topic] = {
+                        attempted: 0,
+                        correct: 0,
+                        lastLanguage: asmt.language || 'JavaScript',
+                        lastType: asmt.type || 'mcq'
+                    };
                 }
-                summary.topicStats[a.topic].attempted++;
-                if (a.is_correct) summary.topicStats[a.topic].correct++;
+
+                summary.topicStats[topic].attempted++;
+                if (a.is_correct) summary.topicStats[topic].correct++;
+
+                // Update with latest metadata (since we ordered by created_at ascending)
+                summary.topicStats[topic].lastLanguage = asmt.language || summary.topicStats[topic].lastLanguage;
+                summary.topicStats[topic].lastType = asmt.type || summary.topicStats[topic].lastType;
 
                 // Difficulty aggregation
                 if (summary.difficultyStats[a.difficulty]) {

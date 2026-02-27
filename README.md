@@ -1,16 +1,64 @@
-# React + Vite
+# SkillMatrix 🕸️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SkillMatrix** is a premium, AI-powered adaptive assessment platform designed for high-stakes technical evaluations and personalized skill development. It combines advanced proctoring technology with a sophisticated adaptive engine to deliver a secure, intelligent, and immersive testing experience.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Adaptive Assessment Engine
+- **Dynamic Scaling**: Questions adjust in real-time based on user performance (Accuracy, Time Taken, and Historical Data).
+- **Multi-Category Support**: Seamlessly switch between **C**, **C++**, **JavaScript**, and **Python**.
+- **Assessment Types**: Support for both **MCQ (Single Choice)** and **Code Writing** with real-time output verification.
 
-## React Compiler
+### 2. AI-Driven Proctoring Suite
+- **Real-time Detection**: Integrated camera proctoring using TensorFlow.js (COCO-SSD) to detect mobile phones and multiple people.
+- **Integrity Tracking**: Monitors tab switching and focus loss with a "Trust Factor" warning system.
+- **Graceful Termination**: Automated disqualification flow if a mobile device is detected for more than 10 seconds, ensuring system integrity.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 3. Advanced Skill Matrix Analytics
+- **Live Radar Chart**: A stable, alphabetically-sorted "Skill Matrix" that visualizes your proficiency across 10+ core computer science topics.
+- **Expert Analysis**: AI-generated narrative insights identifying your "Strongest Pillars" and "Primary Growth Opportunities."
+- **Activity Log**: Comprehensive history of recent assessments with precision-tracking and status reports.
 
-## Expanding the ESLint configuration
+### 4. Intelligent Reattempts
+- **Context Persistence**: The system remembers your last-used language and assessment type for every individual topic.
+- **Engine Warm-up**: A premium loading transition replaces legacy countdowns, featuring smooth progress bars and engine synchronization status.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Technology Stack
+
+- **Frontend**: React 18, Vite, Tailwind CSS (Vanilla CSS Architecture).
+- **Animations**: Framer Motion (Glassmorphism & Micro-animations).
+- **Backend/Database**: Supabase (PostgreSQL, Real-time Channels, Auth).
+- **AI/ML**: TensorFlow.js, COCO-SSD (Computer Vision).
+- **State Management**: React Context & Custom Hooks.
+
+## 📂 Project Structure
+
+- `/src/pages`: Core application views (Dashboard, Exam, Review, Login).
+- `/src/analytics`: Custom hooks for real-time performance aggregation.
+- `/src/utils`: Adaptive engine logic, proctoring algorithms, and anti-cheat initialization.
+- `/src/components`: Premium UI components (RadarChart, AttemptingLayout, Steppers).
+- `/src/data`: Question bank (500+ questions across multiple topics/difficulties).
+
+## 🔧 Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Environment Setup**:
+   Create a `.env` file with your Supabase credentials:
+   ```env
+   VITE_SUPABASE_URL=your_url
+   VITE_SUPABASE_ANON_KEY=your_key
+   ```
+4. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+
+## 🏆 Hackathon Ready
+SkillMatrix is designed with a "Wow-Factor" first impression, utilizing vibrant gradients, dark-mode aesthetics, and a fluid, responsive layout optimized for full-width analytical displays.
