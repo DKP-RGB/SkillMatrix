@@ -12,8 +12,30 @@ export const AttemptingLayout = ({
     setMcqAnswer,
     consoleOutput,
     runCode,
-    submitAnswer
+    submitAnswer,
+    isRunning // New prop for loading state
 }) => {
+
+    // Tab Key support for textarea
+    const handleKeyDown = (e) => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+
+            // set textarea value to: text before caret + tab + text after caret
+            setCodeAnswer(
+                codeAnswer.substring(0, start) +
+                "    " +
+                codeAnswer.substring(end)
+            );
+
+            // put caret at right position again
+            setTimeout(() => {
+                e.target.selectionStart = e.target.selectionEnd = start + 4;
+            }, 0);
+        }
+    };
 
     const formatTime = (seconds) => {
         const m = Math.floor(seconds / 60);
@@ -103,9 +125,15 @@ export const AttemptingLayout = ({
                             {question?.type === 'code' && (
                                 <button
                                     onClick={runCode}
-                                    className="flex items-center gap-2 text-sm px-4 py-1.5 rounded bg-transparent border border-gray-700 text-gray-300 hover:bg-gray-800 transition-colors"
+                                    disabled={isRunning}
+                                    className={`flex items-center gap-2 text-sm px-4 py-1.5 rounded bg-transparent border border-gray-700 text-gray-300 hover:bg-gray-800 transition-colors ${isRunning ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
-                                    <Play size={14} /> Run
+                                    {isRunning ? (
+                                        <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                                    ) : (
+                                        <Play size={14} />
+                                    )}
+                                    {isRunning ? 'Running...' : 'Run'}
                                 </button>
                             )}
                             <button
@@ -147,7 +175,8 @@ export const AttemptingLayout = ({
                                 className="w-full h-full bg-[#1e1e1e] text-[#c9d1d9] font-mono p-6 resize-none focus:outline-none focus:ring-1 focus:ring-[#58a6ff] border-none"
                                 value={codeAnswer}
                                 onChange={(e) => setCodeAnswer(e.target.value)}
-                                placeholder={`// Write your ${question?.language} code here...\n\n#include <stdio.h>\n\nint main() {\n    // Type here\n    return 0;\n}`}
+                                onKeyDown={handleKeyDown}
+                                placeholder={`// Write your ${question?.language} code here...`}
                                 spellCheck="false"
                             />
                         )}
@@ -155,12 +184,17 @@ export const AttemptingLayout = ({
 
                     {/* Bottom Console Panel (Code Only) */}
                     {question?.type === 'code' && (
-                        <div className="h-48 border-t border-gray-800 bg-[#0d1117] flex flex-col">
-                            <div className="px-4 py-2 border-b border-gray-800 text-xs text-gray-500 uppercase tracking-widest font-semibold">
-                                Output
+                        <div className="h-48 border-t border-gray-800 bg-[#0d1117] flex flex-col font-mono">
+                            <div className="px-4 py-2 border-b border-gray-800 text-[10px] text-gray-500 uppercase tracking-widest font-bold flex justify-between items-center bg-[#0d1117]">
+                                <span>Output Terminal</span>
+                                <div className="flex gap-1.5">
+                                    <div className="w-2 h-2 rounded-full bg-red-500/20"></div>
+                                    <div className="w-2 h-2 rounded-full bg-yellow-500/20"></div>
+                                    <div className="w-2 h-2 rounded-full bg-green-500/20"></div>
+                                </div>
                             </div>
-                            <div className="p-4 font-mono text-sm overflow-y-auto flex-1 text-gray-400 whitespace-pre-wrap">
-                                {consoleOutput || '// Run your code to see output here'}
+                            <div className="p-4 text-sm overflow-y-auto flex-1 text-gray-300 whitespace-pre-wrap scrollbar-thin scrollbar-thumb-gray-800">
+                                {consoleOutput || <span className="text-gray-600 italic">// Code execution results will appear here...</span>}
                             </div>
                         </div>
                     )}

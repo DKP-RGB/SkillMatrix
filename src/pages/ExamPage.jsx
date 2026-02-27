@@ -7,6 +7,7 @@ import { useProctor } from '../utils/useProctor';
 import { getNextQuestion, getInitialQuestion } from '../utils/adaptiveEngine';
 import { motion, AnimatePresence } from 'framer-motion';
 import questionsData from '../data/questions.json';
+import { executeCode, getBoilerplate } from '../utils/codeExecution';
 
 // Components
 import { StartAssessmentStepper } from '../components/StartAssessmentStepper';
@@ -218,6 +219,7 @@ const ExamPage = () => {
     const [mcqAnswer, setMcqAnswer] = useState('');
     const [codeAnswer, setCodeAnswer] = useState('');
     const [consoleOutput, setConsoleOutput] = useState('');
+    const [isRunning, setIsRunning] = useState(false);
 
     // Handle CSS body class for full width layout
     useEffect(() => {
@@ -258,6 +260,11 @@ const ExamPage = () => {
         const pool = availableQuestions.length > 0 ? availableQuestions : questionsData;
 
         const firstQ = getInitialQuestion(pool, config);
+
+        // Auto-fill boilerplate if it's a code question
+        if (config.type === 'code') {
+            setCodeAnswer(getBoilerplate(config.language));
+        }
 
         setAttemptedIds([...historicalIds, firstQ.id]);
         setCurrentQuestion(firstQ);
@@ -321,7 +328,7 @@ const ExamPage = () => {
         setTimeRemaining(q.timeLimit);
         setLostFocusThisQuestion(false);
         setMcqAnswer('');
-        setCodeAnswer('');
+        setCodeAnswer(q.type === 'code' ? getBoilerplate(q.language) : '');
         setConsoleOutput('');
     };
 
@@ -329,16 +336,39 @@ const ExamPage = () => {
         submitAnswer(false, true); // Failed due to timeout
     };
 
-    // Simulated Code Execution
-    const runCode = () => {
-        setConsoleOutput('Executing code...');
-        setTimeout(() => {
-            if (codeAnswer.includes(currentQuestion.expectedOutput)) {
-                setConsoleOutput(currentQuestion.expectedOutput + '\n\n[Process completed]');
-            } else {
-                setConsoleOutput('Output mismatch. Compilation/Logic error.\nExpected: ' + currentQuestion.expectedOutput);
+    // Real Code Execution via Piston API
+    const runCode = async () => {
+        if (!codeAnswer.trim()) {
+            setConsoleOutput('// No code to execute.');
+            return;
+        }
+
+        setIsRunning(true);
+        setConsoleOutput('>> Initializing runtime...\n');
+
+        try {
+            const result = await executeCode(currentQuestion.language, codeAnswer);
+
+            let finalOutput = "";
+            if (result.stdout) finalOutput += result.stdout;
+            if (result.stderr) finalOutput += `\n[ERROR]\n${result.stderr}`;
+
+            if (result.cpuTime || result.memory) {
+                finalOutput += `\n\n------------------------\n`;
+                if (result.cpuTime) finalOutput += `CPU Time: ${result.cpuTime}s  `;
+                if (result.memory) finalOutput += `Memory: ${result.memory}kb`;
             }
-        }, 1000);
+
+            if (!result.stdout && !result.stderr) {
+                finalOutput = "[Process completed with no output]";
+            }
+
+            setConsoleOutput(finalOutput);
+        } catch (error) {
+            setConsoleOutput(`[FATAL ERROR] Failed to connect to execution engine.\n${error.message}`);
+        } finally {
+            setIsRunning(false);
+        }
     };
 
     const submitAnswer = (userForcedSubmit = true, timedOut = false) => {
@@ -646,6 +676,7 @@ const ExamPage = () => {
                     consoleOutput={consoleOutput}
                     runCode={runCode}
                     submitAnswer={submitAnswer}
+                    isRunning={isRunning}
                 />
             )}
         </div>
