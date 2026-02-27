@@ -50,38 +50,29 @@ const ExamPage = () => {
     const [isTerminated, setIsTerminated] = useState(false);
     const [proctorReason, setProctorReason] = useState('');
     const [isAILoading, setIsAILoading] = useState(true);
-    const [detectionTimer, setDetectionTimer] = useState(0); // For 10s threshold
-    const [showWarning, setShowWarning] = useState(false); // For 5s disqualification window
-    const [warningCountdown, setWarningCountdown] = useState(5);
+    const [violationType, setViolationType] = useState(null); // 'MOBILE' or 'PERSON'
+    const [detectionProgress, setDetectionProgress] = useState(0); // 0 to 3000ms
+    const [isViolating, setIsViolating] = useState(false);
 
     const canvasRef = useRef(null);
 
     const handleViolation = (msg) => {
         if (msg.type === 'STATUS') {
-            if (msg.status === 'MOBILE_DETECTED') {
-                if (!showWarning && !isTerminated) {
-                    setDetectionTimer(prev => {
-                        const next = prev + 1;
-                        if (next >= 10) {
-                            setShowWarning(true);
-                            setLastViolationSource('AI Camera (Mobile Device)');
-                        }
-                        return next;
-                    });
+            if (msg.status === 'MOBILE_DETECTED' || msg.status === 'MULTIPLE_PEOPLE') {
+                if (!isTerminated) {
+                    setIsViolating(true);
+                    setViolationType(msg.status === 'MOBILE_DETECTED' ? 'MOBILE' : 'PERSON');
                 }
             } else if (msg.status === 'CLEAR') {
-                if (!showWarning && !isTerminated) {
-                    setDetectionTimer(0);
-                }
+                setIsViolating(false);
+                setDetectionProgress(0);
             }
 
-            // Handle soft violations still
-            if (msg.status === 'NO_FACE' || msg.status === 'MULTIPLE_PEOPLE') {
-                // Throttle soft warnings to not overwhelm
+            if (msg.status === 'NO_FACE') {
                 const now = Date.now();
                 if (!window.lastSoftWarning || now - window.lastSoftWarning > 3000) {
                     setCheatWarnings(prev => prev + 1);
-                    setLastViolationSource('AI Camera (Frame Integrity)');
+                    setLastViolationSource('AI Camera (No Face Detected)');
                     setLostFocusThisQuestion(true);
                     window.lastSoftWarning = now;
                 }
@@ -89,29 +80,40 @@ const ExamPage = () => {
         }
     };
 
-    // Warning Countdown Logic
+    // 3-Second Detection Logic
     useEffect(() => {
-        if (showWarning && warningCountdown > 0) {
-            const timer = setTimeout(() => setWarningCountdown(prev => prev - 1), 1000);
-            return () => clearTimeout(timer);
-        } else if (showWarning && warningCountdown === 0) {
-            setIsTerminated(true);
-            setExamFinished(true);
-            setProctorReason('Mobile Phone Detected');
+        let interval;
+        if (isViolating && !isTerminated) {
+            interval = setInterval(() => {
+                setDetectionProgress(prev => {
+                    const next = prev + 100; // Increment by 100ms
+                    if (next >= 3000) {
+                        clearInterval(interval);
+                        // Trigger Termination
+                        setIsTerminated(true);
+                        setExamFinished(true);
+                        setProctorReason(violationType === 'MOBILE' ? 'Mobile Phone Detected' : 'Unauthorized Person(s) Detected');
+                        finishAssessment('terminated');
 
-            // Record failure and go to Dashboard
-            finishAssessment('terminated');
-            setTimeout(() => {
-                navigate('/dashboard', {
-                    state: {
-                        cheated: true,
-                        reason: 'Mobile Phone Detected',
-                        config: examConfig
+                        setTimeout(() => {
+                            navigate('/dashboard', {
+                                state: {
+                                    cheated: true,
+                                    reason: violationType === 'MOBILE' ? 'Mobile Phone Detected' : 'Unauthorized Person(s) Detected',
+                                    config: examConfig
+                                }
+                            });
+                        }, 3000);
+                        return 3000;
                     }
+                    return next;
                 });
-            }, 3000);
+            }, 100);
+        } else {
+            setDetectionProgress(0);
         }
-    }, [showWarning, warningCountdown, logout, navigate]);
+        return () => clearInterval(interval);
+    }, [isViolating, isTerminated, violationType, navigate, examConfig, finishAssessment]);
 
     const { videoRef, isModelLoading, predictions, startRecording, startDetection, stopDetection } = useProctor(handleViolation);
 
@@ -421,8 +423,8 @@ const ExamPage = () => {
         );
     }
 
-    // Render Finished State
-    if (examFinished) {
+    // Render Finished State (Success)
+    if (examFinished && !isTerminated) {
         return (
             <div className="w-full max-w-2xl mx-auto mt-20 p-10 bg-[#161b22] border border-gray-800 rounded-3xl shadow-2xl text-center animate-fade-in">
                 <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#58a6ff] to-[#3fb950] mb-6">Assessment Complete!</h2>
@@ -447,6 +449,31 @@ const ExamPage = () => {
         );
     }
 
+    // Render Terminated State (High Priority Disqualification)
+    if (isTerminated) {
+        return (
+            <div className="fixed inset-0 z-[1100] bg-[#0d1117]/95 backdrop-blur-xl flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+                <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mb-8 border-2 border-red-500/50 animate-pulse">
+                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+                <h2 className="text-6xl font-black text-white mb-4 tracking-tighter uppercase">Disqualified</h2>
+                <p className="text-2xl text-red-500 font-bold mb-4 uppercase tracking-widest">{proctorReason}</p>
+                <p className="text-gray-400 max-w-lg mb-10 text-lg leading-relaxed">
+                    The AI Proctoring system has identified a severe integrity violation.
+                    This session has been invalidated and terminated immediately.
+                </p>
+                <div className="flex flex-col items-center gap-2">
+                    <div className="w-48 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-red-600 animate-progress-indefinite"></div>
+                    </div>
+                    <span className="text-red-400/60 text-xs font-mono uppercase mt-2">Redirecting to Dashboard...</span>
+                </div>
+            </div>
+        );
+    }
+
     // Render Loading State (But not if transition is active)
     if (!currentQuestion && !isLoadingTransition) {
         return (
@@ -465,8 +492,8 @@ const ExamPage = () => {
     // Render the Professional Split Interface (Attempting Phase)
     return (
         <div className="w-full relative">
-            {/* AI Proctoring Camera Preview */}
-            <div className="fixed top-24 right-8 z-[100] w-48 h-36 bg-black rounded-2xl border-2 border-[#00a3ff] shadow-[0_0_20px_rgba(0,163,255,0.3)] overflow-hidden group">
+            {/* AI Proctoring Camera Preview - Moved to Bottom Left */}
+            <div className="fixed bottom-8 left-8 z-[100] w-48 h-36 bg-black rounded-2xl border-2 border-[#00a3ff] shadow-[0_0_20px_rgba(0,163,255,0.3)] overflow-hidden group">
                 <video
                     ref={videoRef}
                     autoPlay
@@ -481,58 +508,73 @@ const ExamPage = () => {
                     className="absolute inset-0 w-full h-full pointer-events-none scale-x-[-1]"
                 />
                 <div className="absolute top-2 left-2 bg-[rgba(0,0,0,0.6)] px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1 z-10">
-                    <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${detectionTimer > 0 ? 'bg-yellow-500' : 'bg-green-500'}`} />
-                    {detectionTimer > 0 ? 'RISK DETECTED' : 'AI PROCTORING LIVE'}
+                    <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${isViolating ? 'bg-red-500' : 'bg-green-500'}`} />
+                    {isViolating ? 'RISK DETECTED' : 'AI PROCTORING LIVE'}
                 </div>
 
-                {/* Detection Progress Bar */}
-                {detectionTimer > 0 && (
-                    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gray-900 overflow-hidden">
+                {/* Violation Progress Bar Overlay */}
+                {isViolating && (
+                    <div className="absolute inset-0 bg-red-500/20 flex flex-col justify-end">
                         <div
-                            className="h-full bg-yellow-500 transition-all duration-1000"
-                            style={{ width: `${(detectionTimer / 10) * 100}%` }}
+                            className="bg-red-600 h-1.5 transition-all duration-100"
+                            style={{ width: `${(detectionProgress / 3000) * 100}%` }}
                         />
                     </div>
                 )}
             </div>
 
-            {/* Warning Overlay (5s Window) */}
-            {(showWarning && !isTerminated) && (
-                <div className="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-10 text-center animate-fade-in">
-                    <div className="w-24 h-24 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500 mb-8 animate-pulse">
-                        <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
-                        </svg>
-                    </div>
-                    <h2 className="text-5xl font-bold text-white mb-4">Cheating Detected!</h2>
-                    <p className="text-2xl text-yellow-500 font-bold mb-6 uppercase tracking-widest leading-tight">
-                        You are cheating and you're being logged out
-                    </p>
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="text-6xl font-black text-white bg-red-600 w-24 h-24 flex items-center justify-center rounded-full shadow-2xl border-4 border-white animate-bounce">
-                            {warningCountdown}
+            {/* Warning Popup Overlay */}
+            <AnimatePresence>
+                {(isViolating && !isTerminated) && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 50, scale: 0.9 }}
+                        className="fixed bottom-48 left-8 z-[200] max-w-xs bg-[#da3633] text-white p-4 rounded-xl shadow-2xl border-2 border-white/20"
+                    >
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center animate-bounce">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
+                                </svg>
+                            </div>
+                            <h4 className="font-black uppercase tracking-tight text-sm">Cheating Warning!</h4>
                         </div>
-                        <p className="text-gray-400 text-lg">Disqualification in progress...</p>
-                    </div>
-                </div>
-            )}
+                        <p className="text-white/90 text-[11px] leading-relaxed mb-3 font-medium">
+                            {violationType === 'MOBILE' ? 'Mobile phone detected in frame.' : 'Additional person detected in frame.'}
+                            Session will terminate in **{Math.max(0, Math.ceil((3000 - detectionProgress) / 1000))}** seconds.
+                        </p>
+                        <div className="w-full h-1 bg-black/20 rounded-full overflow-hidden">
+                            <motion.div
+                                className="h-full bg-white"
+                                animate={{ width: `${(detectionProgress / 3000) * 100}%` }}
+                                transition={{ ease: "linear" }}
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-            {/* Final Termination Overlay */}
+
+            {/* Final Termination Overlay - Red Themed */}
             {isTerminated && (
-                <div className="fixed inset-0 z-[1100] bg-[#0d1117] flex flex-col items-center justify-center p-10 text-center animate-fade-in">
-                    <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mb-8">
+                <div className="fixed inset-0 z-[1100] bg-[#0d1117]/95 backdrop-blur-xl flex flex-col items-center justify-center p-10 text-center animate-fade-in">
+                    <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mb-8 border-2 border-red-500/50 animate-pulse">
                         <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.27 0 2.066-1.333 1.47-2.4l-6.938-12a2 2 0 00-3.412 0l-6.938 12c-.597 1.067.199 2.4 1.47 2.4z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </div>
-                    <h2 className="text-5xl font-bold text-white mb-4">Disqualified</h2>
-                    <p className="text-xl text-red-400 font-medium mb-2 uppercase tracking-widest">Assessment Invalidated Due to Cheating</p>
-                    <p className="text-gray-400 max-w-lg mb-10">
-                        Our AI Proctoring system has confirmed a persistent integrity violation.
-                        You have been disqualified from this session.
+                    <h2 className="text-6xl font-black text-white mb-4 tracking-tighter">DISQUALIFIED</h2>
+                    <p className="text-2xl text-red-500 font-bold mb-4 uppercase tracking-widest">{proctorReason}</p>
+                    <p className="text-gray-400 max-w-lg mb-10 text-lg">
+                        The AI Proctoring system has identified a severe integrity violation.
+                        This session has been invalidated and terminated immediately.
                     </p>
-                    <div className="text-secondary animate-pulse text-lg">
-                        Finalizing logout...
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="w-48 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-600 animate-progress-indefinite"></div>
+                        </div>
+                        <span className="text-red-400/60 text-xs font-mono uppercase mt-2">Redirecting to Dashboard...</span>
                     </div>
                 </div>
             )}
