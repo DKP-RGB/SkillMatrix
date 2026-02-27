@@ -60,5 +60,3 @@
    npm run dev
    ```
 
-## 🏆 Hackathon Ready
-SkillMatrix is designed with a "Wow-Factor" first impression, utilizing vibrant gradients, dark-mode aesthetics, and a fluid, responsive layout optimized for full-width analytical displays.
